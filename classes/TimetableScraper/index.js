@@ -7,7 +7,7 @@ const Teacher = require('./timetableObjects/Teacher');
 const Classroom = require('./timetableObjects/Classroom');
 const SchoolClass = require('./timetableObjects/SchoolClass');
 
-class Timetable {
+class TimetableScraper {
 
     constructor({ documents, selectors }) {
 
@@ -228,4 +228,4 @@ class Timetable {
     }
 }
 
-module.exports = Timetable;
+module.exports = TimetableScraper;

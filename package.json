@@ -1,0 +1,20 @@
+{
+  "name": "api",
+  "version": "1.0.0",
+  "description": "Lessons timetable API (for web app and mobile app) and scraper created for my high school",
+  "main": "index.js",
+  "scripts": {
+    "start-dev": "SET NODE_ENV=development&& nodemon index.js",
+    "start": "SET NODE_ENV=production&& node index.js"
+  },
+  "author": "b-galazka",
+  "license": "ISC",
+  "dependencies": {
+    "body-parser": "^1.17.2",
+    "cheerio": "^1.0.0-rc.1",
+    "express": "^4.15.3",
+    "joi": "^11.1.1",
+    "lodash": "^4.17.4",
+    "mongoose": "^4.10.6"
+  }
+}

@@ -1,0 +1,34 @@
+[
+    {
+        "character": "ę",
+        "replacement": "e"
+    },
+    {
+        "character": "ó",
+        "replacement": "o"
+    },
+    {
+        "character": "ą",
+        "replacement": "a"
+    },
+    {
+        "character": "ś",
+        "replacement": "s"
+    },
+    {
+        "character": "ł",
+        "replacement": "l"
+    },
+    {
+        "character": "[żź]",
+        "replacement": "z"
+    },
+    {
+        "character": "ć",
+        "replacement": "c"
+    },
+    {
+        "character": "ń",
+        "replacement": "n"
+    }
+]

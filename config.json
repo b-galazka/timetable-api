@@ -1,0 +1,27 @@
+{
+    "hashSecret": "example string",
+
+    "port": 3000,
+    "ip": "127.0.0.1",
+    "mongoUrl": "mongodb://localhost/timetable_api",
+    "allowedDomains": ["http://example.com"],
+
+    "scraperSelectors": {
+        "row": ".tabela tr",
+        "lesson": "td.l",
+        "schoolClass": "span.tytulnapis",
+        "teacher": "span.n, span.p + span.p",
+        "subject": "span.p",
+        "classroom": "span.s",
+        "hour": ".tabela td.g"
+    },
+
+    "documentsDownloaderUrls": {
+        "base": "http://80-sochaczew.pl/dla_uczniow/plan/",
+        "list": "http://80-sochaczew.pl/dla_uczniow/plan/lista.html"
+    },
+
+    "documentsDownloaderListSelector": "ul a",
+
+    "userUpdateRequestTimeLimit": 3600000
+}

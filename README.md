@@ -4,14 +4,14 @@ Scraper downloads list of all required HTML documents from http://80-sochaczew.p
 
 # Routes
 
-All routes respond with a JSON.
-All not existing routes (or existing with an invalid param provided) respond with 404 HTTP status code and `not found` message;
-All existing routes responds with 500 HTTP status code and `something went wrong` message when an unknown error has occured.
-Authorization header must be in `Basic credentials` format where `credentials` is a login:password base64 encoded string.
+All routes respond with a JSON.  
+All not existing routes (or existing with an invalid param provided) respond with 404 HTTP status code and `not found` message.  
+All existing routes responds with 500 HTTP status code and `something went wrong` message when an unknown error has occured.  
+Authorization header must be in `Basic credentials` format where `credentials` is a login:password base64 encoded string.  
 
 ## GET /classes
 
-Responds with an array of all classes objects sorted ascending by slug.
+Responds with an array of all classes objects sorted ascending by slug.  
 Schema of each object in array:
 
 {  
@@ -21,7 +21,7 @@ Schema of each object in array:
 
 ## GET /classes/:slug
 
-Responds with a class object of provided slug.
+Responds with a class object of provided slug.  
 Schema of a response:
 
 {  
@@ -53,7 +53,7 @@ Schema of a response:
 
 ## GET /classrooms
 
-Responds with an array of all classrooms objects sorted ascending by number (as string);
+Responds with an array of all classrooms objects sorted ascending by number (as string).  
 Schema of each classroom object in array:
 
 {  
@@ -63,7 +63,7 @@ Schema of each classroom object in array:
 
 ## GET /classrooms/:number
 
-Responds with a classroom object of provided number.
+Responds with a classroom object of provided number.  
 Schema of a response:
 
 {  
@@ -95,7 +95,7 @@ Schema of a response:
 
 ## GET /teachers
 
-Responds with an array of all teachers objects sorted ascending by lastname.
+Responds with an array of all teachers objects sorted ascending by lastname.  
 Schema of each object in array:
 
 {  
@@ -106,7 +106,7 @@ Schema of each object in array:
 
 ## GET /teachers/:slug
 
-Responds with a teacher object of provided slug.
+Responds with a teacher object of provided slug.  
 Schema of a response:
 
 {  
@@ -138,7 +138,7 @@ Schema of a response:
 
 ## GET /hours
 
-Responds with an array of all lesson hours.
+Responds with an array of all lesson hours.  
 Schema of each object in array:
 
 {  
@@ -149,7 +149,7 @@ Schema of each object in array:
 
 ## GET /mobile-app
 
-Responds with data about mobile application.
+Responds with data about mobile application.  
 Schema of a response:
 
 {  
@@ -161,7 +161,7 @@ Schema of a response:
 
 ## PUT /mobile-app
 
-Updates (or adds if there's no data in database) informations about mobile application. Responds with added data or data before and after update.
+Updates (or adds if there's no data in database) informations about mobile application. Responds with added data or data before and after update.  
 Authorization header and request body are required.
 
 Schema of a request body (at least one field is required):
@@ -174,7 +174,7 @@ Schema of a request body (at least one field is required):
 
 ## PUT /mobile-app/users
 
-Adds (or updates if user already exists) mobile application user to the database. Responds with added data or data before and after update.
+Adds (or updates if user already exists) mobile application user to the database. Responds with added data or data before and after update.  
 Authorization header and request body are required.
 
 Schema of a request body (only phoneID and phoneModel fields are required):
@@ -192,15 +192,15 @@ Schema of a request body (only phoneID and phoneModel fields are required):
 
 ## PUT /timetable
 
-Generates a new timetable and saves it to the database. Responds with `updated` message.
+Generates a new timetable and saves it to the database. Responds with `updated` message.  
 Authorization header is required.
 
 ## PUT /request-update
 
-This route allows applications users to update out-of-date timetable.
-Checks if there are any changes in the timetable. If they are, generates new timetable and saves it to the database. It also saves requestor phone ID, request datetime and information if timetable has been updated. 
-Changes are checked only one time per hour by default (it can be set in config.json file).
-Assuming that valid headers and request body have been sent, it can respond with `updated` message (200 HTTP status code) or one of: `no changes in timetable detected`, `your request cannot be processed, because of time limit` and 403 HTTP status code.
+This route allows applications users to update out-of-date timetable.  
+Checks if there are any changes in the timetable. If they are, generates new timetable and saves it to the database. It also saves requestor phone ID, request datetime and information if timetable has been updated.  
+Changes are checked only one time per hour by default (it can be set in config.json file).  
+Assuming that valid headers and request body have been sent, it can respond with `updated` message (200 HTTP status code) or one of: `no changes in timetable detected`, `your request cannot be processed, because of time limit` and 403 HTTP status code.  
 Authorization header and request body are required.
 
 Schema of a request body:

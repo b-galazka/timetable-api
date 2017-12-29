@@ -100,13 +100,13 @@ class UpdateRequest {
     static _compareTimetableObjects(newObject, currentObject) {
 
         const { _compareTimetableObjects, _isNullOrUndefined, _haveTheSameKeys } = UpdateRequest;
-
+        
         if (!_haveTheSameKeys(newObject, currentObject)) {
 
             return false;
         }
 
-        for (const key in currentObject) {
+        for (const key of Object.keys(currentObject)) {
 
             const newObjectField = newObject[key];
             const currentObjectField = currentObject[key];

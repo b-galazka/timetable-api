@@ -156,7 +156,8 @@ Schema of a response:
 &nbsp;&nbsp;&nbsp;&nbsp;_id: string,  
 &nbsp;&nbsp;&nbsp;&nbsp;version: string in \d{1,3}.\d{1,2} format,  
 &nbsp;&nbsp;&nbsp;&nbsp;message: string,  
-&nbsp;&nbsp;&nbsp;&nbsp;changelog: array of strings  
+&nbsp;&nbsp;&nbsp;&nbsp;changelog: array of strings,  
+&nbsp;&nbsp;&nbsp;&nbsp;apkFileUrl: empty string (if URL is not set) or URL string  
 }  
 
 ## PUT /mobile-app
@@ -169,7 +170,8 @@ Schema of a request body (at least one field is required):
 {  
 &nbsp;&nbsp;&nbsp;&nbsp;version: string in \d{1,3}.\d{1,2} format,  
 &nbsp;&nbsp;&nbsp;&nbsp;message: string,  
-&nbsp;&nbsp;&nbsp;&nbsp;changelog: array of strings  
+&nbsp;&nbsp;&nbsp;&nbsp;changelog: array of strings,  
+&nbsp;&nbsp;&nbsp;&nbsp;apkFileUrl: string (valid http or https URL with a domain name or IP)  
 }  
 
 ## PUT /mobile-app/users

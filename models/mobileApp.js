@@ -17,6 +17,12 @@ const mobileAppSchema = new mongoose.Schema({
         default: '',
         type: String,
         trim: true
+    },
+
+    apkFileUrl: {
+        type: String,
+        trim: true,
+        default: ''
     }
 });
 

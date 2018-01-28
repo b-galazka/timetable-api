@@ -5,14 +5,15 @@ const DatabaseObject = require('./DatabaseObject');
 
 class MobileApp extends DatabaseObject {
 
-    constructor({ version, changelog, message }) {
+    constructor({ version, changelog, message, apkFileUrl }) {
 
         super();
 
         this.data = {
             version,
             changelog,
-            message
+            message,
+            apkFileUrl
         };
 
         this.existingData = null;
@@ -50,13 +51,15 @@ class MobileApp extends DatabaseObject {
         const {
             version = '1.0',
             changelog = [],
-            message = ''
+            message = '',
+            apkFileUrl = ''
         } = this.data;
 
         return MobileAppModel.create({
             version,
             changelog,
-            message
+            message,
+            apkFileUrl
         });
     }
 

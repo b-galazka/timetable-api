@@ -26,7 +26,7 @@ class UpdateRequest {
         const lastUpdateRequest = await updateRequestModel.findOne(
             {},
             { dateTime: true },
-            { sort: { id: -1 } }
+            { sort: { _id: -1 } }
         );
 
         if (!lastUpdateRequest) {

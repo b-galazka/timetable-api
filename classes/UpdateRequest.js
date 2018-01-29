@@ -99,7 +99,7 @@ class UpdateRequest {
 
     static _compareTimetableObjects(newObject, currentObject) {
 
-        const { _compareTimetableObjects, _isNullOrUndefined, _haveTheSameKeys } = UpdateRequest;
+        const { _compareTimetableObjectsFields, _haveTheSameKeys } = UpdateRequest;
         
         if (!_haveTheSameKeys(newObject, currentObject)) {
 
@@ -111,45 +111,51 @@ class UpdateRequest {
             const newObjectField = newObject[key];
             const currentObjectField = currentObject[key];
 
-            if (typeof newObjectField !== 'object' && typeof currentObjectField !== 'object') {
-
-                if (!_.isEqual(newObjectField, currentObjectField)) {
-
-                    return false;
-                }
-
-                continue;
-            }
-
-            if (_isNullOrUndefined(currentObjectField) || _.isEqual(currentObjectField, [null])) {
-
-                if (!_isNullOrUndefined(newObjectField) && !_.isEqual(newObjectField, [null])) {
-
-                    return false;
-                }
-
-                continue;
-            }
-
-            if (Array.isArray(newObjectField) && Array.isArray(currentObjectField)) {
-
-                if (
-                    newObjectField.length !== currentObjectField.length ||
-                    !_compareTimetableObjects(newObjectField, currentObjectField)
-                ) {
-
-                    return false;
-                }
-
-                continue;
-            }
-
-            if (!_.isEqual(newObjectField, currentObjectField)) {
+            if (!_compareTimetableObjectsFields(newObjectField, currentObject)) {
 
                 return false;
             }
         }
 
+        return true;
+    }
+
+    static _compareTimetableObjectsFields(newObjectField, currentObjectField) {
+
+        const { _compareTimetableObjects, _isNullOrUndefined } = UpdateRequest;
+
+        if (typeof newObjectField !== 'object' && typeof currentObjectField !== 'object') {
+
+            if (!_.isEqual(newObjectField, currentObjectField)) {
+
+                return false;
+            }
+
+        } else if (
+            _isNullOrUndefined(currentObjectField) ||
+            _.isEqual(currentObjectField, [null])
+        ) {
+
+            if (!_isNullOrUndefined(newObjectField) && !_.isEqual(newObjectField, [null])) {
+
+                return false;
+            }
+
+        } else if (Array.isArray(newObjectField) && Array.isArray(currentObjectField)) {
+
+            if (
+                newObjectField.length !== currentObjectField.length ||
+                !_compareTimetableObjects(newObjectField, currentObjectField)
+            ) {
+
+                return false;
+            }
+
+        } else if (!_.isEqual(newObjectField, currentObjectField)) {
+
+            return false;
+        }
+        
         return true;
     }
 
@@ -162,14 +168,14 @@ class UpdateRequest {
 
         const object1Keys = (
             Array.isArray(object1) ?
-            _.range(object1.length - 1) :
-            Object.keys(object1).sort()
+                _.range(object1.length - 1) :
+                Object.keys(object1).sort()
         );
         
         const object2Keys = (
             Array.isArray(object2) ?
-            _.range(object2.length - 1) :
-            Object.keys(object2).sort()
+                _.range(object2.length - 1) :
+                Object.keys(object2).sort()
         );
 
         return _.isEqual(object1Keys, object2Keys);

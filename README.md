@@ -5,7 +5,7 @@ Scraper downloads list of all required HTML documents from http://80-sochaczew.p
 # Routes
 
 All routes respond with a JSON.  
-All not existing routes (or existing with an invalid param provided) respond with 404 HTTP status code and `not found` message.  
+All not existing routes respond with 404 HTTP status code and `not found` message.  
 All existing routes responds with 500 HTTP status code and `something went wrong` message when an unknown error has occured.  
 Authorization header must be in `Basic credentials` format where `credentials` is a login:password base64 encoded string.  
 

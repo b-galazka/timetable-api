@@ -138,7 +138,12 @@ class Timetable {
     static _replacePolishCharacters(str) {
 
         return charactersReplacements
-            .reduce((str, { char, replacement }) => str.replace(new RegExp(char, 'gi'), replacement), str)
+            .reduce(
+                (str, { character, replacement }) => (
+                    str.replace(new RegExp(character, 'gi'), replacement)
+                ), 
+                str
+            )
             .toUpperCase();
     }
 

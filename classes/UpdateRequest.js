@@ -111,7 +111,7 @@ class UpdateRequest {
             const newObjectField = newObject[key];
             const currentObjectField = currentObject[key];
 
-            if (!_compareTimetableObjectsFields(newObjectField, currentObject)) {
+            if (!_compareTimetableObjectsFields(newObjectField, currentObjectField)) {
 
                 return false;
             }

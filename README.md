@@ -185,6 +185,7 @@ Schema of a request body (only phoneID and phoneModel fields are required):
 &nbsp;&nbsp;&nbsp;&nbsp;phoneModel: string,  
 &nbsp;&nbsp;&nbsp;&nbsp;phoneID: string,  
 &nbsp;&nbsp;&nbsp;&nbsp;appVersion: string,  
+&nbsp;&nbsp;&nbsp;&nbsp;osVersion: string,  
 
 &nbsp;&nbsp;&nbsp;&nbsp;mostPopularTimetable: {  
 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;type: "teacher", "class" or "classroom",  

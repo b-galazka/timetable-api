@@ -23,8 +23,12 @@ const mobileAppUserSchema = new mongoose.Schema({
     
     appVersion: {
         type: String,
-        trim: true,
-        default: null
+        trim: true
+    },
+
+    osVersion: {
+        type: String,
+        trim: true
     },
 
     lastSeen: {

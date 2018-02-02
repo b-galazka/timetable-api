@@ -6,7 +6,13 @@ const DatabaseObject = require('./DatabaseObject');
 
 class MobileAppUser extends DatabaseObject {
 
-    constructor({ phoneModel, phoneID, mostPopularTimetable, appVersion }) {
+    constructor({ 
+        phoneModel,
+        phoneID,
+        mostPopularTimetable,
+        appVersion,
+        osVersion
+    }) {
 
         super();
 
@@ -15,6 +21,7 @@ class MobileAppUser extends DatabaseObject {
             phoneID,
             mostPopularTimetable,
             appVersion,
+            osVersion,
             lastSeen: new Date().toISOString()
         };
 

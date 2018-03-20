@@ -1,7 +1,7 @@
 const router = require('express').Router();
 
-const MobileApp = require('../classes/MobileApp');
-const MobileAppUser = require('../classes/MobileAppUser');
+const MobileApp = require('../models/MobileApp');
+const MobileAppUser = require('../models/MobileAppUser');
 const authorization = require('../middlewares/authorization');
 const mobileAppValidation = require('../middlewares/mobileAppValidation');
 const mobileAppUserValidation = require('../middlewares/mobileAppUserValidation');
@@ -15,9 +15,9 @@ router.get('/', async (req, res) => {
 
     try {
 
-        const mobileApp = await MobileApp.loadData();
+        const mobileApp = await MobileApp.findOne();
 
-        res.send(mobileApp);
+        res.send(mobileApp || {});
     } catch (err) {
 
         console.error(err);
@@ -30,9 +30,9 @@ router.put('/', async (req, res) => {
 
     try {
 
-        const mobileApp = new MobileApp(req.body);
+        const mobileApp = await MobileApp.createOrUpdate(req.body);
 
-        res.send(await mobileApp.save());
+        res.send(mobileApp);
     } catch (err) {
 
         console.error(err);
@@ -45,9 +45,9 @@ router.put('/users', async (req, res) => {
 
     try {
 
-        const user = new MobileAppUser(req.body);
+        const user = await MobileAppUser.createOrUpdate(req.body);
 
-        res.send(await user.save());
+        res.send(user);
     } catch (err) {
 
         console.error(err);

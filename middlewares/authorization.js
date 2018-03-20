@@ -1,7 +1,6 @@
 const { StringDecoder } = require('string_decoder');
 
 const User = require('../models/user');
-const hash = require('../functions/hash');
 
 const decoder = new StringDecoder('utf-8');
 
@@ -57,10 +56,7 @@ module.exports = async (req, res, next) => {
 
     try {
 
-        const user = await User.findOne({
-            username: username,
-            password: hash(password)
-        });
+        const user = await User.findOne({ username, password });
 
         if (user) {
 

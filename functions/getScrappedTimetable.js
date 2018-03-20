@@ -4,8 +4,8 @@ const {
     documentsDownloaderListSelector
 } = require('../config');
 
-const TimetableScraper = require('../classes/TimetableScraper');
-const DocumentsDownloader = require('../classes/DocumentsDownloader');
+const TimetableScraper = require('../tools/TimetableScraper');
+const DocumentsDownloader = require('../tools/DocumentsDownloader');
 
 module.exports = async () => {
 

@@ -1,34 +1,34 @@
 [
     {
-        "character": "ę",
+        "char": "ę",
         "replacement": "e"
     },
     {
-        "character": "ó",
+        "char": "ó",
         "replacement": "o"
     },
     {
-        "character": "ą",
+        "char": "ą",
         "replacement": "a"
     },
     {
-        "character": "ś",
+        "char": "ś",
         "replacement": "s"
     },
     {
-        "character": "ł",
+        "char": "ł",
         "replacement": "l"
     },
     {
-        "character": "[żź]",
+        "char": "[żź]",
         "replacement": "z"
     },
     {
-        "character": "ć",
+        "char": "ć",
         "replacement": "c"
     },
     {
-        "character": "ń",
+        "char": "ń",
         "replacement": "n"
     }
 ]

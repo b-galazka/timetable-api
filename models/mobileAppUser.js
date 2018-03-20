@@ -1,40 +1,70 @@
 const mongoose = require('mongoose');
 
-const timetable = require('./timetable');
+const timetable = require('./schemas/timetable');
 
-const mobileAppUserSchema = new mongoose.Schema({
+const mobileAppUserSchema = new mongoose.Schema(
     
-    phoneModel: {
-        required: true,
-        trim: true,
-        type: String
-    },
-    
-    phoneID: {
-        required: true,
-        trim: true,
-        type: String
+    {
+        phoneModel: {
+            required: true,
+            trim: true,
+            type: String
+        },
+        
+        phoneID: {
+            required: true,
+            trim: true,
+            type: String
+        },
+
+        mostPopularTimetable: {
+            type: timetable,
+            default: null
+        },
+        
+        appVersion: {
+            type: String,
+            trim: true
+        },
+
+        osVersion: {
+            type: String,
+            trim: true
+        },
+
+        lastSeen: {
+            type: Date,
+            default: Date.now
+        }
     },
 
-    mostPopularTimetable: {
-        type: timetable,
-        default: null
-    },
-    
-    appVersion: {
-        type: String,
-        trim: true
-    },
+    { versionKey: false }
+);
 
-    osVersion: {
-        type: String,
-        trim: true
-    },
+mobileAppUserSchema.statics = {
 
-    lastSeen: {
-        type: Date,
-        default: Date.now
+    async createOrUpdate(data) {
+
+        if (!data.phoneID) {
+
+            throw new Error('phoneID field is required');
+        }
+
+        const existingUser = await this.findOne({ phoneID: data.phoneID });
+
+        if (!existingUser) {
+
+            return this.create(data);
+
+        } else {
+
+            const updatedUser = Object.assign(existingUser, data);
+
+            updatedUser.lastSeen = new Date();
+
+            return updatedUser.save();
+        }
     }
-});
+};
 
 module.exports = mongoose.model('mobileAppUser', mobileAppUserSchema);

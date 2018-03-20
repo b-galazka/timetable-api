@@ -1,30 +1,54 @@
 const mongoose = require('mongoose');
 
-const lessonSchema = require('./lesson');
+const lessonSchema = require('./schemas/lesson');
 
-const classroomSchema = new mongoose.Schema({
+const classroomSchema = new mongoose.Schema(
 
-    number: {
-        required: true,
-        type: String,
-        trim: true
-    },
+    {
+        number: {
+            required: true,
+            type: String,
+            trim: true
+        },
 
-    type: {
-        type: String,
-        default: 'classroom'
-    },
+        type: {
+            type: String,
+            default: 'classroom'
+        },
 
-    update: {
-        type: Date,
-        default: Date.now
-    },
-    
-    timetable: [
-        [
-            [lessonSchema]
+        update: {
+            type: Date,
+            default: Date.now
+        },
+        
+        timetable: [
+            [
+                [lessonSchema]
+            ]
         ]
-    ]
-});
+    },
+
+    { versionKey: false }
+);
+
+classroomSchema.statics = {
+
+    loadList() {
+
+        const fields = {
+            number: true,
+            _id: true
+        };
+
+        const ordering = {
+
+            sort: {
+                number: 1
+            }
+        };
+
+        return this.find({}, fields, ordering);
+    }
+};
 
 module.exports = mongoose.model('classroom', classroomSchema);

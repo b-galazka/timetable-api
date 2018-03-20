@@ -1,22 +1,51 @@
 const mongoose = require('mongoose');
 
-const updateRequestSchema = new mongoose.Schema({
+const { userUpdateRequestTimeLimit } = require('../config');
 
-    requestorPhoneID: {
-        required: true,
-        trim: true,
-        type: String
+const updateRequestSchema = new mongoose.Schema(
+
+    {
+        requestorPhoneID: {
+            required: true,
+            trim: true,
+            type: String
+        },
+
+        timetableUpdated: {
+            required: true,
+            type: Boolean
+        },
+
+        dateTime: {
+            type: Date,
+            default: Date.now
+        }
     },
 
-    timetableUpdated: {
-        required: true,
-        type: Boolean
+    { versionKey: false }
+);
+
+updateRequestSchema.statics = {
+
+    loadNewest() {
+
+        return this.findOne({}, { dateTime: true }, { sort: { _id: -1 } });
     },
 
-    dateTime: {
-        type: Date,
-        default: Date.now
+    async canBeProcessed() {
+
+        const lastUpdateRequest = await this.loadNewest();
+
+        if (!lastUpdateRequest) {
+
+            return true;
+        }
+
+        const lastUpdateRequestTime = new Date(lastUpdateRequest.dateTime).getTime();
+        const currentTime = Date.now();
+
+        return (currentTime - lastUpdateRequestTime > userUpdateRequestTimeLimit);
     }
-});
+};
 
 module.exports = mongoose.model('updateRequest', updateRequestSchema);

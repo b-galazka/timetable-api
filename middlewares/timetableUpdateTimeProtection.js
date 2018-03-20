@@ -1,4 +1,4 @@
-const UpdateRequest = require('../classes/UpdateRequest');
+const UpdateRequest = require('../models/UpdateRequest');
 
 module.exports = async (req, res, next) => {
 
@@ -14,9 +14,12 @@ module.exports = async (req, res, next) => {
         });
 
         const { phoneID } = req.body;
-        const updateRequest = new UpdateRequest(phoneID, false);
 
-        await updateRequest.save();
+        await UpdateRequest.create({
+            requestorPhoneID: phoneID,
+            timetableUpdated: false
+        });
+
     } catch (err) {
 
         console.error(err);

@@ -1,12 +1,12 @@
 const router = require('express').Router();
 
-const Timetable = require('../classes/Timetable');
+const Class = require('../models/Class');
 
 router.get('/', async (req, res) => {
 
     try {
 
-        res.send(await Timetable.loadClassesList());
+        res.send(await Class.loadList());
     } catch (err) {
 
         console.error(err);
@@ -19,7 +19,9 @@ router.get('/:slug', async (req, res) => {
 
     try {
 
-        const schoolClass = await Timetable.loadSchoolClass(req.params.slug);
+        const { slug } = req.params;
+
+        const schoolClass = await Class.findOne({ slug });
 
         if (schoolClass) {
 

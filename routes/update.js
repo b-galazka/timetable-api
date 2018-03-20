@@ -4,10 +4,11 @@ const getScrappedTimetable = require('../functions/getScrappedTimetable');
 const authorization = require('../middlewares/authorization');
 const userRequestValidation = require('../middlewares/timetableUpdateUserRequestValidation');
 const timeProtection = require('../middlewares/timetableUpdateTimeProtection');
-const Timetable = require('../classes/Timetable');
-const TimetableScraper = require('../classes/TimetableScraper');
-const DocumentsDownloader = require('../classes/DocumentsDownloader');
-const UpdateRequest = require('../classes/UpdateRequest');
+const TimetableUpdater = require('../tools/TimetableUpdater');
+const TimetableScraper = require('../tools/TimetableScraper');
+const DocumentsDownloader = require('../tools/DocumentsDownloader');
+const UpdateRequest = require('../models/UpdateRequest');
+const TimetablesComparator = require('../tools/TimetablesComparator');
 
 router.put('/timetable', authorization);
 router.put('/request-update', authorization);
@@ -19,9 +20,9 @@ router.put('/timetable', async (req, res) => {
     try {
 
         const scrappedTimetable = await getScrappedTimetable();
-        const timetable = new Timetable(scrappedTimetable);
+        const timetableUpdater = new TimetableUpdater(scrappedTimetable);
 
-        await timetable.update();
+        await timetableUpdater.update();
 
         res.send({ message: 'updated' });
     } catch (error) {
@@ -38,27 +39,31 @@ router.put('/request-update', async (req, res) => {
 
         const { phoneID } = req.body;
         const scrappedTimetable = await getScrappedTimetable();
+        const comparator = new TimetablesComparator(scrappedTimetable.teachers);
 
-        if (! await UpdateRequest.areChangesInTimetable(scrappedTimetable.teachers)) {
+        if (! await comparator.areChangesInTimetable()) {
 
             res.status(403).send({
                 message: 'no changes in timetable detected'
             });
 
-            const updateRequest = new UpdateRequest(phoneID, false);
-
-            return await updateRequest.save();
+            return await UpdateRequest.create({
+                requestorPhoneID: phoneID,
+                timetableUpdated: false
+            });
         }
 
-        const timetable = new Timetable(scrappedTimetable);
+        const timetableUpdater = new TimetableUpdater(scrappedTimetable);
 
-        await timetable.update();
+        await timetableUpdater.update();
 
         res.send({ message: 'updated' });
 
-        const updateRequest = new UpdateRequest(phoneID);
+        await UpdateRequest.create({
+            requestorPhoneID: phoneID,
+            timetableUpdated: true
+        });
 
-        await updateRequest.save();
     } catch (error) {
 
         console.error(error);

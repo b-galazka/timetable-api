@@ -1,12 +1,12 @@
 const router = require('express').Router();
 
-const Timetable = require('../classes/Timetable');
+const Hour = require('../models/Hour');
 
 router.get('/', async (req, res) => {
 
     try {
         
-        res.send(await Timetable.loadHoursList());
+        res.send(await Hour.loadList());
     } catch (err) {
 
         console.error(err);

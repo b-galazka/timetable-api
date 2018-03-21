@@ -96,6 +96,8 @@ Schema of a response:
 ## GET /teachers
 
 Responds with an array of all teachers objects sorted ascending by lastname.  
+Teachers without defined lastname are placed at the end of array and sorted ascending by slug.  
+Teachers with slugs which starts with "#" are placed as the last items in array.  
 Schema of each object in array:
 
 {  
@@ -138,7 +140,7 @@ Schema of a response:
 
 ## GET /hours
 
-Responds with an array of all lesson hours.  
+Responds with an array of all lesson hours sorted by `start` ascending.  
 Schema of each object in array:
 
 {  
@@ -158,11 +160,11 @@ Schema of a response:
 &nbsp;&nbsp;&nbsp;&nbsp;message: string,  
 &nbsp;&nbsp;&nbsp;&nbsp;changelog: array of strings,  
 &nbsp;&nbsp;&nbsp;&nbsp;apkFileUrl: empty string (if URL is not set) or URL string  
-}  
+} or {}
 
 ## PUT /mobile-app
 
-Updates (or adds if there's no data in database) informations about mobile application. Responds with added data or data before and after update.  
+Updates (or adds if there's no data in database) informations about mobile application. Responds with added or updated data.   
 Authorization header and request body are required.
 
 Schema of a request body (at least one field is required):
@@ -176,7 +178,7 @@ Schema of a request body (at least one field is required):
 
 ## PUT /mobile-app/users
 
-Adds (or updates if user already exists) mobile application user to the database. Responds with added data or data before and after update.  
+Adds (or updates if user already exists) mobile application user to the database. Responds with added or updated data.  
 Authorization header and request body are required.
 
 Schema of a request body (only phoneID and phoneModel fields are required):
@@ -216,7 +218,7 @@ Schema of a request body:
 
 1. Run `npm install` command.
 2. Set secrets, IP, port, allowed domains and MongoDB URL in config.json file.
-3. Create API user, which has to be an object with `username` and `password` fields. Use functions/hash.js to generate a password hash.
+3. Create API user using models/User.js.
 4. Run `npm start` or `npm run start-dev`.
 
 <hr>

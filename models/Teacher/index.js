@@ -1,7 +1,7 @@
 const mongoose = require('mongoose');
 
 const lessonSchema = require('../schemas/lesson');
-const charsReplacements = require('./charactersReplacements');
+const alphabet = require('./alphabet');
 
 const teacherSchema = new mongoose.Schema(
 
@@ -68,57 +68,51 @@ teacherSchema.statics = {
 
     _sortTeachersWithNames(teachers) {
 
-        return teachers.sort((a, b) => {
+        return teachers.sort((teacher1, teacher2) => {
 
-            const aLastname = this._replacePolishCharacters(
-                a.name.substring(a.name.lastIndexOf(' ') + 1)
+            const teacher1Lastname = teacher1.name.substring(
+                teacher1.name.lastIndexOf(' ') + 1
             );
 
-            const bLastname = this._replacePolishCharacters(
-                b.name.substring(b.name.lastIndexOf(' ') + 1)
+            const teacher2Lastname = teacher2.name.substring(
+                teacher2.name.lastIndexOf(' ') + 1
             );
 
-            if (aLastname > bLastname) {
-
-                return 1;
-            } else if (aLastname < bLastname) {
-
-                return -1;
-            } else {
-
-                return 0;
-            }
+            return this._compareStrings(teacher1Lastname, teacher2Lastname);
         });
     },
 
     _sortTeachersWithoutNames(teachers) {
 
-        return teachers.sort((a, b) => {
-
-            const aSlug = this._replacePolishCharacters(a.slug);
-            const bSlug = this._replacePolishCharacters(b.slug);
-
-            if (aSlug > bSlug) {
-
-                return 1;
-            } else if (aSlug < bSlug) {
-
-                return -1;
-            } else {
-
-                return 0;
-            }
-        });
+        return teachers.sort((teacher1, teacher2) => 
+            this._compareStrings(teacher1.slug, teacher2.slug)
+        );
     },
 
-    _replacePolishCharacters(str) {
+    _compareStrings(string1, string2) {
 
-        const output = charsReplacements.reduce((str, { char, replacement }) => (
+        const str1 = string1.toUpperCase();
+        const str2 = string2.toUpperCase();
 
-            str.replace(new RegExp(char, 'gi'), replacement)
-        ), str);
+        if (str1 === str2) {
 
-        return output.toUpperCase();
+            return 0;
+        }
+
+        let str1Value;
+        let str2Value;
+
+        for (
+            let i = 0;
+            (i < str1.length || i < str2.length) && str1Value === str2Value;
+            i++
+        ) {
+
+            str1Value = alphabet.indexOf(str1[i]);
+            str2Value = alphabet.indexOf(str2[i]);
+        }
+
+        return str1Value - str2Value;
     }
 };
 

@@ -49,10 +49,10 @@ teacherSchema.statics = {
 
         const teachers = await this.find({}, fields);
 
-        return this._sortTeachers(teachers);
+        return this._sortTeachersAlphabetically(teachers);
     },
 
-    _sortTeachers(teachers) {
+    _sortTeachersAlphabetically(teachers) {
 
         const teachersWithNames = teachers.filter(
             teacher => teacher.name !== null

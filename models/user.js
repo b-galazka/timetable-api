@@ -37,4 +37,11 @@ userSchema.pre('findOne', function (next) {
     next();
 });
 
+userSchema.pre('save', function (next) {
+
+    this.password = hash(this.password);
+
+    next();
+});
+
 module.exports = mongoose.model('user', userSchema);

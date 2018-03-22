@@ -1,7 +1,7 @@
 const cheerio = require('cheerio');
 
 const teachersNames = require('./teachersNames.json');
-const teachersHashes = require('./teachersHashes.json');
+const teachersHashtags = require('./teachersHashtags.json');
 
 const Teacher = require('./timetableObjects/Teacher');
 const Classroom = require('./timetableObjects/Classroom');
@@ -171,7 +171,7 @@ class TimetableScraper {
     _addTeacher(slug) {
 
         const { teachers } = this;
-        const correctSlug = (teachersHashes[slug]) ? teachersHashes[slug] : slug;
+        const correctSlug = teachersHashtags[slug] || slug;
         
         let teacher = teachers.find(teacher => teacher.slug === correctSlug);
 

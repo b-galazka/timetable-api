@@ -24,14 +24,9 @@ class TimetableScraper {
 
         return (async () => {
 
-            const promises = [];
-
-            this.documents.forEach((doc) => {
-
-                const promise = this._getScrapingSingleDocumentPromise(doc);
-
-                promises.push(promise);
-            });
+            const promises = this.documents.map(doc => (
+                this._getScrapingSingleDocumentPromise(doc)
+            ));
 
             await Promise.all(promises);
 

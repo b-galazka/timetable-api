@@ -7,6 +7,17 @@ module.exports = url => (
             
             let data = '';
 
+            const { statusCode } = res;
+
+            if (statusCode >= 400) {
+
+                return reject({
+                    method: 'GET',
+                    url,
+                    statusCode
+                });
+            }
+
             res.on('data', (chunk) => { data += chunk });
             res.on('end', () => resolve(data));
         });

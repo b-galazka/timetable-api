@@ -1,16 +1,20 @@
+const cors = require('cors');
+
 const { domainsWhitelist } = require('../config');
 
-module.exports = (req, res, next) => {
+const corsOptions = {
 
-    const domain = req.headers.origin;
+    origin(origin, callback) {
 
-    if (domainsWhitelist.includes(domain)) {
+        if (!origin || domainsWhitelist.includes(origin)) {
 
-        res.set('Access-Control-Allow-Origin', domain);
+            callback(null, true);
+
+        } else {
+
+            callback(new Error('Not allowed by CORS'));
+        }
     }
-    
-    res.set('Access-Control-Allow-Methods', 'GET, PUT');
-    res.set('Access-Control-Allow-Headers', 'Content-Type, Authorization');
-
-    next();
 };
+
+module.exports = cors(corsOptions);

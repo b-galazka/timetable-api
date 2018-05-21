@@ -1,6 +1,6 @@
 const cheerio = require('cheerio');
 
-const request = require('../functions/request');
+const HttpConnection = require('./HttpConnection');
 
 class DocumentsDownloader {
 
@@ -18,7 +18,9 @@ class DocumentsDownloader {
         return (async () => {
 
             const urls = await this._downloadList();
-            const promises = urls.map(url => request(this.baseUrl + url));
+
+            const promises = urls.map(url => HttpConnection.get(this.baseUrl + url));
+
             const documents = await Promise.all(promises);
 
             this.documents = documents;
@@ -31,7 +33,8 @@ class DocumentsDownloader {
 
         return (async () => {
 
-            const html = await request(this.listUrl);
+            const html = await HttpConnection.get(this.listUrl);
+            
             const $ = cheerio.load(html);
             const urls = [];
 

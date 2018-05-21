@@ -1,6 +1,7 @@
 const mongoose = require('mongoose');
+const crypto = require('crypto');
 
-const hash = require('../functions/hash');
+const { hashSecret } = require('../config');
 
 const userSchema = new mongoose.Schema(
 
@@ -20,6 +21,17 @@ const userSchema = new mongoose.Schema(
     { versionKey: false }
 );
 
+userSchema.statics = {
+
+    _hash(password) {
+
+        return crypto
+            .createHmac('sha256', hashSecret)
+            .update(password)
+            .digest('hex');
+    }
+};
+
 userSchema.pre('findOne', function (next) {
 
     const { username, password } = this.getQuery();
@@ -31,7 +43,7 @@ userSchema.pre('findOne', function (next) {
 
     if (password) {
 
-        this.where({ password: hash(password) });
+        this.where({ password: this.model._hash(password) });
     }
 
     next();
@@ -39,7 +51,7 @@ userSchema.pre('findOne', function (next) {
 
 userSchema.pre('save', function (next) {
 
-    this.password = hash(this.password);
+    this.password = this.model._hash(this.password);
 
     next();
 });

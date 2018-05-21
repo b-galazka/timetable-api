@@ -1,8 +1,7 @@
 const router = require('express').Router();
 
-router.all('/*', (req, res) => {
-    
-    res.status(404).send({ message: 'not found' });
-});
+const controllers = require('../controllers/notFound');
+
+router.all('/*', controllers.responseWithNotFoundMessage);
 
 module.exports = router;

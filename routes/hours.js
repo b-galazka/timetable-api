@@ -1,18 +1,7 @@
 const router = require('express').Router();
 
-const Hour = require('../models/Hour');
+const controllers = require('../controllers/hours');
 
-router.get('/', async (req, res) => {
-
-    try {
-        
-        res.send(await Hour.loadList());
-    } catch (err) {
-
-        console.error(err);
-        
-        res.status(500).send({ message: 'something went wrong' });
-    }
-});
+router.get('/', controllers.getAll);
 
 module.exports = router;

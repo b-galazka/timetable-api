@@ -217,9 +217,10 @@ Schema of a request body:
 # How to use:
 
 1. Run `npm install` command.
-2. Set secrets, IP, port, allowed domains and MongoDB URL in config.json file.
-3. Create API user using models/User.js.
-4. Run `npm start` or `npm run start-dev`.
+2. Create .env file if it doesn't exist.
+3. Look at example.env and set required configuration data.
+4. Create API user using models/User.js.
+5. Run `npm start` or `npm run start-dev`.
 
 <hr>
 

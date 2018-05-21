@@ -1,10 +1,10 @@
-const { allowedDomains } = require('../config');
+const { domainsWhitelist } = require('../config');
 
 module.exports = (req, res, next) => {
 
     const domain = req.headers.origin;
 
-    if (allowedDomains.includes(domain)) {
+    if (domainsWhitelist.includes(domain)) {
 
         res.set('Access-Control-Allow-Origin', domain);
     }

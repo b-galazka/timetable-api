@@ -2,6 +2,7 @@ const TimetableObject = require('./TimetableObject');
 
 class Teacher extends TimetableObject {
 
+    // name cannot be undefined, because this object is sent as JSON
     constructor(slug, name = null) {
 
         super();

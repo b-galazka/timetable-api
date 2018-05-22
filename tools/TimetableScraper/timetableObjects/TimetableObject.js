@@ -7,7 +7,7 @@ class TimetableObject {
 
     addLesson(day, hour, lesson) {
 
-        const timetable = this.timetable;
+        const { timetable } = this;
 
         if (timetable[day][hour] === undefined) {
 

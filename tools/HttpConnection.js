@@ -17,7 +17,7 @@ class HttpConnection {
                     return reject({ method: 'GET', url, statusCode });
                 }
 
-                res.on('data', (chunk) => { data += chunk });
+                res.on('data', (chunk) => { data += chunk; });
                 res.on('end', () => resolve(data));
             });
 

@@ -145,7 +145,7 @@ class TimetableScraper {
 
         if ($tds.length <= hours.length) {
 
-            return hours;
+            return;
         }
 
         hours.length = 0;
@@ -154,13 +154,8 @@ class TimetableScraper {
 
             const [start, end] = $(td).text().split('-');
 
-            hours.push({
-                start: start,
-                end: end
-            });
+            hours.push({ start, end });
         });
-
-        return hours;
     }
 
     _addTeacher(slug) {

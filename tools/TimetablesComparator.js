@@ -28,15 +28,14 @@ class TimetablesComparator {
                 type: false
             };
 
-            const currentTeachersTimetable = await Teacher.find(
-                {}, excludedFields
-            );
-            
-            this._currentTeachersTimetable = currentTeachersTimetable.sort(
-                _sortingTeachersCallback
-            );
+            const options = {
+                sort: { slug: 1 }
+            };
 
-            const currentTimetable = this._currentTeachersTimetable;
+            const currentTimetable = await Teacher.find({}, excludedFields, options);
+            
+            this._currentTeachersTimetable = currentTimetable;
+
             const newTimetable = this._newTeachersTimetable;
 
             return (

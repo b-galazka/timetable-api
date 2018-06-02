@@ -123,47 +123,27 @@ class TimetablesComparator {
         } = TimetablesComparator;
 
         if (
-            typeof newObjectField !== 'object' &&
-            typeof currentObjectField !== 'object'
-        ) {
-
-            if (!_.isEqual(newObjectField, currentObjectField)) {
-
-                return false;
-            }
-
-        } else if (
             _isNullOrUndefined(currentObjectField) ||
             _.isEqual(currentObjectField, [null])
         ) {
 
-            if (
-                !_isNullOrUndefined(newObjectField) &&
-                !_.isEqual(newObjectField, [null])
-            ) {
-
-                return false;
-            }
+            return (
+                _isNullOrUndefined(newObjectField) ||
+                _.isEqual(newObjectField, [null])
+            );
 
         } else if (
             Array.isArray(newObjectField) &&
             Array.isArray(currentObjectField)
         ) {
 
-            if (
-                newObjectField.length !== currentObjectField.length ||
-                !_compareTimetableObjects(newObjectField, currentObjectField)
-            ) {
-
-                return false;
-            }
-
-        } else if (!_.isEqual(newObjectField, currentObjectField)) {
-
-            return false;
+            return (
+                newObjectField.length === currentObjectField.length &&
+                _compareTimetableObjects(newObjectField, currentObjectField)
+            );
         }
 
-        return true;
+        return _.isEqual(newObjectField, currentObjectField);
     }
 
     static _isNullOrUndefined(value) {
@@ -171,21 +151,15 @@ class TimetablesComparator {
         return (value === null || value === undefined);
     }
 
-    static _haveTheSameKeys(object1, object2) {
+    static _haveTheSameKeys(...objects) {
 
-        const object1Keys = (
-            Array.isArray(object1) ?
-                _.range(object1.length - 1) :
-                Object.keys(object1).sort()
-        );
+        const objectsKeys = objects.map(obj => (
+            Array.isArray(obj) ?
+                _.range(obj.length - 1) :
+                Object.keys(obj).sort()
+        ));
 
-        const object2Keys = (
-            Array.isArray(object2) ?
-                _.range(object2.length - 1) :
-                Object.keys(object2).sort()
-        );
-
-        return _.isEqual(object1Keys, object2Keys);
+        return _.isEqual(...objectsKeys);
     }
 }
 

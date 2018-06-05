@@ -4,6 +4,8 @@ const SchoolClass = require('./Class');
 
 describe('Class.loadList', () => {
 
+    let findDbResponse;
+
     const originalFindMethod = SchoolClass.find;
 
     beforeAll(() => {
@@ -14,7 +16,12 @@ describe('Class.loadList', () => {
             const areFieldsValid = _.isEqual(fields, { slug: true, _id: true });
             const areOptionsValid = _.isEqual(options, { sort: { slug: 1 } });
 
-            return Promise.resolve(areCriteriaValid && areFieldsValid && areOptionsValid);
+            if (areCriteriaValid && areFieldsValid && areOptionsValid) {
+
+                return Promise.resolve(findDbResponse);
+            }
+
+            console.error('Class.find called with invalid params');
         };
     });
 
@@ -25,12 +32,16 @@ describe('Class.loadList', () => {
 
     it('should resolve a promise with Class.find (called with proper params) output', async () => {
 
-            expect.assertions(1);
+        expect.assertions(2);
 
-            const result = await SchoolClass.loadList();
+        findDbResponse = 'database response';
 
-            expect(result).toBe(true);
-        });
+        expect(await SchoolClass.loadList()).toBe('database response');
+
+        findDbResponse = 'another database response';
+
+        expect(await SchoolClass.loadList()).toBe('another database response');
+    });
 
     afterAll(() => {
 

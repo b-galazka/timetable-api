@@ -2,8 +2,6 @@ const MobileApp = require('./MobileApp');
 
 describe('MobileApp.createOrUpdate', () => {
 
-    let existingApp;
-
     const originalFindOneMethod = MobileApp.findOne;
     const originalCreateMethod = MobileApp.create;
 

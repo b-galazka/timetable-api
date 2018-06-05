@@ -32,7 +32,7 @@ updateRequestSchema.statics = {
         return this.findOne({}, { dateTime: true }, { sort: { _id: -1 } });
     },
 
-    async canBeProcessed() {
+    async canBeProcessed(minimalTimePeriod = userUpdateRequestTimeLimit) {
 
         const lastUpdateRequest = await this.loadNewest();
 
@@ -44,7 +44,7 @@ updateRequestSchema.statics = {
         const lastUpdateRequestTime = new Date(lastUpdateRequest.dateTime).getTime();
         const currentTime = Date.now();
 
-        return (currentTime - lastUpdateRequestTime > userUpdateRequestTimeLimit);
+        return (currentTime - lastUpdateRequestTime > minimalTimePeriod);
     }
 };
 

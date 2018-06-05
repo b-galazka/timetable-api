@@ -1,17 +1,47 @@
+const _ = require('lodash');
+
 const TimetablesComparator = require('./TimetablesComparator');
 const Teacher = require('../models/Teacher');
-const teacherFindMethod = require('../mocks/comparatorTeacherFindMethod');
 
 describe('TimetablesComparator.prototype.areChangesInTimetable', () => {
+
+    let dbRecords;
 
     const originalTeacherFindMethod = Teacher.find;
 
     beforeAll(() => {
 
-        Teacher.find = teacherFindMethod([]);
+        Teacher.find = (critieria, fields, options) => {
+
+            const areCriteriaValid = _.isEqual(critieria, {});
+
+            const areFieldsValid = _.isEqual(fields, {
+                _id: false,
+                update: false,
+                'timetable._id': false,
+                type: false
+            });
+
+            const areOptionsValid = _.isEqual(options, {
+                sort: { slug: 1 }
+            });
+
+            if (!areCriteriaValid || !areFieldsValid || !areOptionsValid) {
+
+                return void console.error('Teacher.find called with invalid params');
+            }
+
+            const response = dbRecords.map((obj, index) => (
+                { toJSON: () => dbRecords[index] }
+            ));
+
+            return Promise.resolve(response);
+        };
     });
 
     it('should return a promise', () => {
+
+        dbRecords = [];
 
         const comparator = new TimetablesComparator([]);
 
@@ -23,7 +53,7 @@ describe('TimetablesComparator.prototype.areChangesInTimetable', () => {
 
         expect.assertions(1);
 
-        Teacher.find = teacherFindMethod([{}, {}]);
+        dbRecords = [{}, {}];
 
         const timetable = [{}, {}, {}];
         const comparator = new TimetablesComparator(timetable);
@@ -38,7 +68,7 @@ describe('TimetablesComparator.prototype.areChangesInTimetable', () => {
 
         expect.assertions(1);
 
-        Teacher.find = teacherFindMethod([{}, {}, {}]);
+        dbRecords = [{}, {}, {}];
 
         const timetable = [{}, {}];
         const comparator = new TimetablesComparator(timetable);
@@ -53,7 +83,7 @@ describe('TimetablesComparator.prototype.areChangesInTimetable', () => {
 
         expect.assertions(1);
 
-        Teacher.find = teacherFindMethod([{ a: 10, b: 20 }]);
+        dbRecords = [{ a: 10, b: 20 }];
 
         const timetable = [{ a: 100, b: 200 }];
         const comparator = new TimetablesComparator(timetable);
@@ -68,7 +98,7 @@ describe('TimetablesComparator.prototype.areChangesInTimetable', () => {
 
         expect.assertions(1);
 
-        Teacher.find = teacherFindMethod([{ a: 10, b: 20 }]);
+        dbRecords = [{ a: 10, b: 20 }];
 
         const timetable = [{ b: 20, a: 10 }];
         const comparator = new TimetablesComparator(timetable);
@@ -84,7 +114,7 @@ describe('TimetablesComparator.prototype.areChangesInTimetable', () => {
 
         expect.assertions(1);
 
-        Teacher.find = teacherFindMethod([{ a: null }]);
+        dbRecords = [{ a: null }];
 
         const timetable = [{ a: [null] }];
         const comparator = new TimetablesComparator(timetable);
@@ -100,7 +130,7 @@ describe('TimetablesComparator.prototype.areChangesInTimetable', () => {
 
         expect.assertions(1);
 
-        Teacher.find = teacherFindMethod([{ a: null }]);
+        dbRecords = [{ a: null }];
 
         const timetable = [{ a: undefined }];
         const comparator = new TimetablesComparator(timetable);
@@ -116,7 +146,7 @@ describe('TimetablesComparator.prototype.areChangesInTimetable', () => {
 
         expect.assertions(1);
 
-        Teacher.find = teacherFindMethod([{ a: [null] }]);
+        dbRecords = [{ a: [null] }];
 
         const timetable = [{ a: null }];
         const comparator = new TimetablesComparator(timetable);
@@ -132,7 +162,7 @@ describe('TimetablesComparator.prototype.areChangesInTimetable', () => {
 
         expect.assertions(1);
 
-        Teacher.find = teacherFindMethod([{ a: [null] }]);
+        dbRecords = [{ a: [null] }];
 
         const timetable = [{ a: undefined }];
         const comparator = new TimetablesComparator(timetable);
@@ -148,7 +178,7 @@ describe('TimetablesComparator.prototype.areChangesInTimetable', () => {
 
         expect.assertions(1);
 
-        Teacher.find = teacherFindMethod([{ a: undefined }]);
+        dbRecords = [{ a: undefined }];
 
         const timetable = [{ a: null }];
         const comparator = new TimetablesComparator(timetable);
@@ -164,7 +194,7 @@ describe('TimetablesComparator.prototype.areChangesInTimetable', () => {
 
         expect.assertions(1);
 
-        Teacher.find = teacherFindMethod([{ a: undefined }]);
+        dbRecords = [{ a: undefined }];
 
         const timetable = [{ a: [null] }];
         const comparator = new TimetablesComparator(timetable);
@@ -179,7 +209,7 @@ describe('TimetablesComparator.prototype.areChangesInTimetable', () => {
 
         expect.assertions(1);
 
-        Teacher.find = teacherFindMethod([{ a: [1, 2, 3] }]);
+        dbRecords = [{ a: [1, 2, 3] }];
 
         const timetable = [{ a: [1, 2, 3] }];
         const comparator = new TimetablesComparator(timetable);
@@ -194,7 +224,7 @@ describe('TimetablesComparator.prototype.areChangesInTimetable', () => {
 
         expect.assertions(1);
 
-        Teacher.find = teacherFindMethod([{ a: [{ a: 1, b: 2, c: 3 }] }]);
+        dbRecords = [{ a: [{ a: 1, b: 2, c: 3 }] }];
 
         const timetable = [{ a: [{ a: 1, b: 2, c: 3 }] }];
         const comparator = new TimetablesComparator(timetable);
@@ -209,7 +239,7 @@ describe('TimetablesComparator.prototype.areChangesInTimetable', () => {
 
         expect.assertions(1);
 
-        Teacher.find = teacherFindMethod([{ a: { a: 1, b: 2, c: 3 } }]);
+        dbRecords = [{ a: { a: 1, b: 2, c: 3 } }];
 
         const timetable = [{ a: { a: 1, b: 2, c: 3 } }];
         const comparator = new TimetablesComparator(timetable);
@@ -224,7 +254,7 @@ describe('TimetablesComparator.prototype.areChangesInTimetable', () => {
 
         expect.assertions(1);
 
-        Teacher.find = teacherFindMethod([
+        dbRecords = [
             {
                 a: {
                     a: { a: 10 },
@@ -232,7 +262,7 @@ describe('TimetablesComparator.prototype.areChangesInTimetable', () => {
                     c: 3
                 }
             }
-        ]);
+        ];
 
         const timetable = [
             {
@@ -257,7 +287,7 @@ describe('TimetablesComparator.prototype.areChangesInTimetable', () => {
 
         expect.assertions(1);
 
-        Teacher.find = teacherFindMethod([{ a: null }]);
+        dbRecords = [{ a: null }];
 
         const timetable = [{ a: false }];
         const comparator = new TimetablesComparator(timetable);
@@ -273,7 +303,7 @@ describe('TimetablesComparator.prototype.areChangesInTimetable', () => {
 
         expect.assertions(1);
 
-        Teacher.find = teacherFindMethod([{ a: [null] }]);
+        dbRecords = [{ a: [null] }];
 
         const timetable = [{ a: false }];
         const comparator = new TimetablesComparator(timetable);
@@ -289,7 +319,7 @@ describe('TimetablesComparator.prototype.areChangesInTimetable', () => {
 
         expect.assertions(1);
 
-        Teacher.find = teacherFindMethod([{ a: undefined }]);
+        dbRecords = [{ a: undefined }];
 
         const timetable = [{ a: false }];
         const comparator = new TimetablesComparator(timetable);
@@ -304,7 +334,7 @@ describe('TimetablesComparator.prototype.areChangesInTimetable', () => {
 
         expect.assertions(1);
 
-        Teacher.find = teacherFindMethod([{ a: [1, 2, 3] }]);
+        dbRecords = [{ a: [1, 2, 3] }];
 
         const timetable = [{ a: [1, 2, 4] }];
         const comparator = new TimetablesComparator(timetable);
@@ -319,7 +349,7 @@ describe('TimetablesComparator.prototype.areChangesInTimetable', () => {
 
         expect.assertions(1);
 
-        Teacher.find = teacherFindMethod([{ a: { a: 1, b: 2, c: 3, d: 4 } }]);
+        dbRecords = [{ a: { a: 1, b: 2, c: 3, d: 4 } }];
 
         const timetable = [{ a: { a: 1, b: 2, c: 3 } }];
         const comparator = new TimetablesComparator(timetable);
@@ -333,7 +363,7 @@ describe('TimetablesComparator.prototype.areChangesInTimetable', () => {
 
         expect.assertions(1);
 
-        Teacher.find = teacherFindMethod([{ a: 1 }]);
+        dbRecords = [{ a: 1 }];
 
         const timetable = [{ a: '1' }];
         const comparator = new TimetablesComparator(timetable);
@@ -348,7 +378,7 @@ describe('TimetablesComparator.prototype.areChangesInTimetable', () => {
 
         expect.assertions(1);
 
-        Teacher.find = teacherFindMethod([{ a: [{ a: 1 }, { b: 2 }] }]);
+        dbRecords = [{ a: [{ a: 1 }, { b: 2 }] }];
 
         const timetable = [{ a: [{ b: 2 }, { a: 1 }] }];
         const comparator = new TimetablesComparator(timetable);
@@ -364,12 +394,12 @@ describe('TimetablesComparator.prototype.areChangesInTimetable', () => {
 
         expect.assertions(1);
 
-        Teacher.find = teacherFindMethod([
+        dbRecords = [
             {
                 a: 1,
                 b: { a: 1 }
             }
-        ]);
+        ];
 
         const timetable = [
             {

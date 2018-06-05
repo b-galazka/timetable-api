@@ -1,45 +1,42 @@
-module.exports = function getMongooseModel() {
-
-    return {
+module.exports = () => ({
         
-        insertMany(data) {
+    insertMany(data) {
 
-            return new Promise((resolve, reject) => {
+        return new Promise((resolve, reject) => {
 
-                setImmediate(() => {
+            setImmediate(() => {
 
-                    const { collection } = this;
+                const { collection } = this;
 
-                    if (!Array.isArray(data)) {
+                if (!Array.isArray(data)) {
 
-                        return reject();
-                    }
+                    return reject();
+                }
 
-                    if (!Array.isArray(collection.data)) {
+                if (!Array.isArray(collection.data)) {
 
-                        collection.data = [];
-                    }
+                    collection.data = [];
+                }
 
-                    this.collection.data.push(...data);
+                this.collection.data.push(...data);
 
-                    resolve(data);
-                });
+                resolve(data);
             });
-        },
+        });
+    },
 
-        collection: {
+    collection: {
 
-            data: null,
+        data: null,
 
-            drop(callback) {
+        drop(callback) {
 
-                setImmediate(() => {
+            setImmediate(() => {
 
-                    this.data = null;
+                this.data = null;
 
-                    callback();
-                });
-            }
+                callback();
+            });
         }
-    };
-}
+    }
+});

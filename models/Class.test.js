@@ -23,7 +23,7 @@ describe('Class.loadList', () => {
         expect(SchoolClass.loadList()).toBeInstanceOf(Promise);
     });
 
-    it('should resolve a promise with Class.find output', async () => {
+    it('should resolve a promise with Class.find (called with proper params) output', async () => {
 
             expect.assertions(1);
 

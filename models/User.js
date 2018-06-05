@@ -32,6 +32,7 @@ userSchema.statics = {
     }
 };
 
+// create static findByUsernameAndPassoword method
 userSchema.pre('findOne', function (next) {
 
     const { username, password } = this.getQuery();
@@ -49,6 +50,7 @@ userSchema.pre('findOne', function (next) {
     next();
 });
 
+// change pre-save to pre-validate
 userSchema.pre('save', function (next) {
 
     this.password = this.model._hash(this.password);

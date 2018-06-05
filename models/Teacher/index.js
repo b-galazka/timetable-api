@@ -1,7 +1,7 @@
 const mongoose = require('mongoose');
 
 const lessonSchema = require('../schemas/lesson');
-const alphabet = require('./alphabet');
+const characters = require('./characters');
 
 const teacherSchema = new mongoose.Schema(
 
@@ -108,8 +108,8 @@ teacherSchema.statics = {
             i++
         ) {
 
-            str1Value = alphabet.indexOf(str1[i]);
-            str2Value = alphabet.indexOf(str2[i]);
+            str1Value = characters.indexOf(str1[i]);
+            str2Value = characters.indexOf(str2[i]);
         }
 
         return str1Value - str2Value;

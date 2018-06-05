@@ -22,7 +22,7 @@ describe('Teacher.loadList', () => {
 
         Teacher.find = findMethodMock;
 
-        const result = await Teacher.loadList()
+        const result = await Teacher.loadList();
 
         expect(result).toEqual([
             { name: 'A. A' },

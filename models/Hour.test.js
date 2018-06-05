@@ -1,47 +1,77 @@
+const _ = require('lodash');
+
 const Hour = require('./Hour');
 
 describe('Hour.loadList', () => {
+
+    let findDbResponse;
 
     const originalFindMethod = Hour.find;
 
     beforeAll(() => {
 
-        Hour.find = () => Promise.resolve([]);
+        Hour.find = (criteria, fields, options) => {
+
+            const areCriteriaValid = (criteria === undefined || _.isEqual(criteria, {}));
+
+            const areFieldsValid = (
+                fields === undefined ||
+                _.isEqual(fields, { number: true, _id: true })
+            );
+
+            const areOptionsValid = (
+                options === undefined ||
+                _.isEqual(options, { sort: { number: 1 } })
+            );
+
+            if (areCriteriaValid && areFieldsValid && areOptionsValid) {
+
+                return Promise.resolve(findDbResponse);
+            }
+
+            console.error('Hourd.find called with invalid params');
+        };
     });
 
     it('should return a promise', () => {
+
+        findDbResponse = [];
 
         expect(Hour.loadList()).toBeInstanceOf(Promise);
     });
 
     it('should resolve a promise with hours sorted ascending', async () => {
 
-            expect.assertions(1);
+        expect.assertions(2);
 
-            Hour.find = (...args) => {
+        findDbResponse = [
+            { start: '1:32', end: '2:19' },
+            { start: '0:30', end: '1:15' },
+            { start: '4:02', end: '5:17' },
+            { start: '3:56', end: '4:00' }
+        ];
 
-                if (args.length > 0) {
+        expect(await Hour.loadList()).toEqual([
+            { start: '0:30', end: '1:15' },
+            { start: '1:32', end: '2:19' },
+            { start: '3:56', end: '4:00' },
+            { start: '4:02', end: '5:17' } 
+        ]);
 
-                    throw new Error('Hour.find called with invalid params');
-                }
+        findDbResponse = [
+            { start: '19:32', end: '20:19' },
+            { start: '11:30', end: '12:15' },
+            { start: '23:02', end: '23:59' },
+            { start: '3:56', end: '4:00' }
+        ];
 
-                return Promise.resolve([
-                    { start: '1:32', end: '2:19' },
-                    { start: '0:30', end: '1:15' },
-                    { start: '4:02', end: '5:17' },
-                    { start: '3:56', end: '4:00' }
-                ]);
-            };
-
-            const result = await Hour.loadList();
-
-            expect(result).toEqual([
-                { start: '0:30', end: '1:15' },
-                { start: '1:32', end: '2:19' },
-                { start: '3:56', end: '4:00' },
-                { start: '4:02', end: '5:17' } 
-            ]);
-        });
+        expect(await Hour.loadList()).toEqual([
+            { start: '3:56', end: '4:00' },
+            { start: '11:30', end: '12:15' },
+            { start: '19:32', end: '20:19' },
+            { start: '23:02', end: '23:59' }
+        ]);
+    });
 
     afterAll(() => {
 

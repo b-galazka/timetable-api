@@ -14,7 +14,7 @@ describe('Teacher.loadList', () => {
 
             const areCriteriaValid = _.isEqual(criteria, {});
             const areFieldsValid = _.isEqual(fields, { slug: true, name: true, _id: true });
-            const areOptionsValid = (options === undefined || _.isEqual(options, {}));
+            const areOptionsValid = options === undefined || _.isEqual(options, {});
 
             if (areCriteriaValid && areFieldsValid && areOptionsValid) {
 

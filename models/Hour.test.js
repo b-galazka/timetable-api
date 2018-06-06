@@ -12,7 +12,7 @@ describe('Hour.loadList', () => {
 
         Hour.find = (criteria, fields, options) => {
 
-            const areCriteriaValid = (criteria === undefined || _.isEqual(criteria, {}));
+            const areCriteriaValid = criteria === undefined || _.isEqual(criteria, {});
 
             const areFieldsValid = (
                 fields === undefined ||

@@ -29,31 +29,20 @@ userSchema.statics = {
             .createHmac('sha256', hashSecret)
             .update(password)
             .digest('hex');
+    },
+
+    findByUsernameAndPassoword(username, password) {
+
+        return this.findOne({
+            username: new RegExp(`^${username.trim()}$`, 'i'),
+            password: this._hash(password)
+        });
     }
 };
 
-// create static findByUsernameAndPassoword method
-userSchema.pre('findOne', function (next) {
+userSchema.pre('validate', function (next) {
 
-    const { username, password } = this.getQuery();
-
-    if (username) {
-
-        this.where({ username: new RegExp(`^${username.trim()}$`, 'i') })
-    }
-
-    if (password) {
-
-        this.where({ password: this.model._hash(password) });
-    }
-
-    next();
-});
-
-// change pre-save to pre-validate
-userSchema.pre('save', function (next) {
-
-    this.password = this.model._hash(this.password);
+    this.password = this.schema.statics._hash(this.password);
 
     next();
 });

@@ -56,7 +56,7 @@ module.exports = async (req, res, next) => {
 
     try {
 
-        const user = await User.findOne({ username, password });
+        const user = await User.findByUsernameAndPassoword(username, password);
 
         if (user) {
 

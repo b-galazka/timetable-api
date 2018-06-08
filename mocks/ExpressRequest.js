@@ -5,13 +5,13 @@ class ExpressRequest {
         body = {}
     } = {}) {
 
-        this._headers = headers;
+        this.headers = headers;
         this.body = body;
     }
 
     header(headerName) {
 
-        return this._headers[headerName];
+        return this.headers[headerName];
     }
 }
 

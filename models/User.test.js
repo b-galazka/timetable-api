@@ -12,7 +12,7 @@ const hash = str => crypto
     .update(password)
     .digest('hex');
 
-describe('User.findByUsernameAndPassoword', () => {
+describe('User.findByUsernameAndPassword', () => {
 
     let findOneDbResponse;
 
@@ -41,7 +41,7 @@ describe('User.findByUsernameAndPassoword', () => {
 
     it('should return a promise', () => {
 
-        const returnedValue = User.findByUsernameAndPassoword(username, password);
+        const returnedValue = User.findByUsernameAndPassword(username, password);
 
         expect(returnedValue).toBeInstanceOf(Promise);
     });
@@ -52,12 +52,12 @@ describe('User.findByUsernameAndPassoword', () => {
         expect.assertions(2);
 
         findOneDbResponse = 'database response';
-        const result1 = await User.findByUsernameAndPassoword(username, password);
+        const result1 = await User.findByUsernameAndPassword(username, password);
 
         expect(result1).toBe('database response');
 
         findOneDbResponse = 'another database response';
-        const result2 = await User.findByUsernameAndPassoword(username, password);
+        const result2 = await User.findByUsernameAndPassword(username, password);
 
         expect(result2).toBe('another database response');
     });

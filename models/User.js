@@ -31,7 +31,7 @@ userSchema.statics = {
             .digest('hex');
     },
 
-    findByUsernameAndPassoword(username, password) {
+    findByUsernameAndPassword(username, password) {
 
         return this.findOne({
             username: new RegExp(`^${username.trim()}$`, 'i'),

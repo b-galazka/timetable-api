@@ -1,5 +1,10 @@
 class ExpressResponse {
 
+    constructor() {
+
+        this.headers = {};
+    }
+
     status() {
 
         return this;
@@ -8,6 +13,16 @@ class ExpressResponse {
     send() {
 
         return this;
+    }
+
+    setHeader(name, value) {
+
+        this.headers[name] = value;
+    }
+
+    getHeader(name) {
+
+        return this.headers[name];
     }
 }
 

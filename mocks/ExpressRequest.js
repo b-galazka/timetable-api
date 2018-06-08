@@ -1,10 +1,12 @@
 class ExpressRequest {
 
     constructor({
-        headers = {}
+        headers = {},
+        body = {}
     } = {}) {
 
         this._headers = headers;
+        this.body = body;
     }
 
     header(headerName) {

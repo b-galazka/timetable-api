@@ -3,6 +3,7 @@ class ExpressResponse {
     constructor() {
 
         this.headers = {};
+        this.headersSent = false;
     }
 
     status() {
@@ -11,6 +12,8 @@ class ExpressResponse {
     }
 
     send() {
+
+        this.headersSent = true;
 
         return this;
     }

@@ -2,11 +2,13 @@ class ExpressRequest {
 
     constructor({
         headers = {},
-        body = {}
+        body = {},
+        params = {}
     } = {}) {
 
         this.headers = headers;
         this.body = body;
+        this.params = params;
     }
 
     header(headerName) {

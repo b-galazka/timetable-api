@@ -26,7 +26,8 @@ describe('classes.getAll controller', () => {
 
         expect.assertions(4);
 
-        const spy = jest.spyOn(res, 'send');
+        let res = new ExpressResponse();
+        let spy = jest.spyOn(res, 'send');
 
         responseValue = 'classes list';
 
@@ -36,7 +37,10 @@ describe('classes.getAll controller', () => {
         expect(spy).toHaveBeenCalledWith(responseValue);
 
         spy.mockReset();
+        spy.mockRestore();
 
+        res = new ExpressResponse();
+        spy = jest.spyOn(res, 'send');
         responseValue = 'another classes list';
 
         await getAll(req, res);

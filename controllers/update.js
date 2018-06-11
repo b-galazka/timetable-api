@@ -1,7 +1,5 @@
 const getScrappedTimetable = require('../functions/getScrappedTimetable');
 const TimetableUpdater = require('../tools/TimetableUpdater');
-const TimetableScraper = require('../tools/TimetableScraper');
-const DocumentsDownloader = require('../tools/DocumentsDownloader');
 const UpdateRequest = require('../models/UpdateRequest');
 const TimetablesComparator = require('../tools/TimetablesComparator');
 

@@ -6,7 +6,7 @@ describe('MobileAppUser.createOrUpdate', () => {
     const originalCreateMethod = MobileAppUser.create;
     const DateCopy = Date;
 
-    beforeAll(() => {
+    beforeEach(() => {
 
         MobileAppUser.findOne = () => Promise.resolve(null);
         MobileAppUser.create = args => Promise.resolve(args);
@@ -101,7 +101,7 @@ describe('MobileAppUser.createOrUpdate', () => {
         });
     });
 
-    afterAll(() => {
+    afterEach(() => {
 
         MobileAppUser.findOne = originalFindOneMethod;
         MobileAppUser.create = originalCreateMethod;

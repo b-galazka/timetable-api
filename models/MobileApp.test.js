@@ -5,7 +5,7 @@ describe('MobileApp.createOrUpdate', () => {
     const originalFindOneMethod = MobileApp.findOne;
     const originalCreateMethod = MobileApp.create;
 
-    beforeAll(() => {
+    beforeEach(() => {
 
         MobileApp.findOne = () => Promise.resolve(null);
         MobileApp.create = args => Promise.resolve(args);
@@ -70,7 +70,7 @@ describe('MobileApp.createOrUpdate', () => {
         expect(result).toEqual({ a: 1, b: 20, c: 30, save });
     });
 
-    afterAll(() => {
+    afterEach(() => {
 
         MobileApp.findOne = originalFindOneMethod;
         MobileApp.create = originalCreateMethod;

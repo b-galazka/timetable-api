@@ -13,12 +13,9 @@ describe('teachers.getAll controller', () => {
 
     const originalLoadListMethod = Teacher.loadList;
 
-    beforeAll(() => {
+    beforeEach(() => {
 
         Teacher.loadList = () => Promise.resolve(responseValue);
-    });
-
-    beforeEach(() => {
 
         req = new ExpressRequest();
         res = new ExpressResponse();
@@ -92,7 +89,7 @@ describe('teachers.getAll controller', () => {
         spy.mockRestore();
     });
 
-    afterAll(() => {
+    afterEach(() => {
 
         Teacher.loadList = originalLoadListMethod;
     });
@@ -106,7 +103,7 @@ describe('teachers.getOneBySlug controller', () => {
 
     const originalFindOneMethod = Teacher.findOne
 
-    beforeAll(() => {
+    beforeEach(() => {
 
         Teacher.findOne = (criteria, fields, options) => {
 
@@ -121,9 +118,6 @@ describe('teachers.getOneBySlug controller', () => {
 
             console.error('Teacher.findOne called with invalid params');
         };
-    });
-
-    beforeEach(() => {
 
         req = new ExpressRequest();
         res = new ExpressResponse();
@@ -246,7 +240,7 @@ describe('teachers.getOneBySlug controller', () => {
         spy.mockRestore();
     });
 
-    afterAll(() => {
+    afterEach(() => {
 
         Teacher.findOne = originalFindOneMethod;
     });

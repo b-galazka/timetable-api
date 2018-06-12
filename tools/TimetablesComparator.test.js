@@ -9,7 +9,7 @@ describe('TimetablesComparator.prototype.areChangesInTimetable', () => {
 
     const originalTeacherFindMethod = Teacher.find;
 
-    beforeAll(() => {
+    beforeEach(() => {
 
         Teacher.find = (critieria, fields, options) => {
 
@@ -415,7 +415,7 @@ describe('TimetablesComparator.prototype.areChangesInTimetable', () => {
         expect(result).toBe(true);
     });
 
-    afterAll(() => {
+    afterEach(() => {
 
         Teacher.find = originalTeacherFindMethod;
     });

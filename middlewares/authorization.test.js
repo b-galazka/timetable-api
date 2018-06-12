@@ -10,7 +10,7 @@ describe('authorization middleware', () => {
 
     const originalFindByUsernameAndPasswordMethod = User.findByUsernameAndPassword;
 
-    beforeAll(() => {
+    beforeEach(() => {
 
         User.findByUsernameAndPassword = (username, password) => {
 
@@ -20,9 +20,6 @@ describe('authorization middleware', () => {
                     null
             );
         };
-    });
-
-    beforeEach(() => {
 
         req = new ExpressRequest();
         res = new ExpressResponse();
@@ -281,7 +278,7 @@ describe('authorization middleware', () => {
         spy.mockRestore();
     });
 
-    afterAll(() => {
+    afterEach(() => {
 
         User.findByUsernameAndPassword = originalFindByUsernameAndPasswordMethod;
     });

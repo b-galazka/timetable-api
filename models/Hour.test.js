@@ -8,7 +8,7 @@ describe('Hour.loadList', () => {
 
     const originalFindMethod = Hour.find;
 
-    beforeAll(() => {
+    beforeEach(() => {
 
         Hour.find = (criteria, fields, options) => {
 
@@ -73,7 +73,7 @@ describe('Hour.loadList', () => {
         ]);
     });
 
-    afterAll(() => {
+    afterEach(() => {
 
         Hour.find = originalFindMethod;
     });

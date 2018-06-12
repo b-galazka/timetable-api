@@ -22,7 +22,7 @@ let findOneDbResponse;
 
 describe('UpdateRequest.loadNewest', () => {
 
-    beforeAll(() => {
+    beforeEach(() => {
 
         UpdateRequest.findOne = findOneMethodMock;
     });
@@ -46,7 +46,7 @@ describe('UpdateRequest.loadNewest', () => {
             expect(await UpdateRequest.loadNewest()).toBe('another database response');
         });
 
-    afterAll(() => {
+    afterEach(() => {
 
         UpdateRequest.find = originalFindOneMethod;
     });
@@ -54,7 +54,7 @@ describe('UpdateRequest.loadNewest', () => {
 
 describe('UpdateRequest.canBeProcessed', () => {
 
-    beforeAll(() => {
+    beforeEach(() => {
 
         UpdateRequest.findOne = findOneMethodMock;
     });
@@ -95,7 +95,7 @@ describe('UpdateRequest.canBeProcessed', () => {
         expect(await UpdateRequest.canBeProcessed(1e6)).toBe(false);
     });
 
-    afterAll(() => {
+    afterEach(() => {
 
         UpdateRequest.findOne = originalFindOneMethod;
     });

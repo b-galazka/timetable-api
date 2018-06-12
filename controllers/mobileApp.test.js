@@ -19,7 +19,7 @@ describe('mobileApp.getMobileAppInfo controller', () => {
 
     const originalFindOneMethod = MobileApp.findOne;
 
-    beforeAll(() => {
+    beforeEach(() => {
 
         MobileApp.findOne = (criteria, fields, options) => {
 
@@ -34,9 +34,6 @@ describe('mobileApp.getMobileAppInfo controller', () => {
 
             console.error('MobileApp.findOne called with invalid params');
         };
-    });
-
-    beforeEach(() => {
 
         req = new ExpressRequest();
         res = new ExpressResponse();
@@ -128,7 +125,7 @@ describe('mobileApp.getMobileAppInfo controller', () => {
         spy.mockRestore();
     });
 
-    afterAll(() => {
+    afterEach(() => {
 
         MobileApp.findOne = originalFindOneMethod;
     });
@@ -142,12 +139,9 @@ describe('mobileApp.updateMobileAppInfo controller', () => {
 
     const originalCreateOrUpdateMethod = MobileApp.createOrUpdate;
 
-    beforeAll(() => {
+    beforeEach(() => {
 
         MobileApp.createOrUpdate = () => Promise.resolve(responseValue);
-    });
-
-    beforeEach(() => {
 
         req = new ExpressRequest();
         res = new ExpressResponse();
@@ -237,7 +231,7 @@ describe('mobileApp.updateMobileAppInfo controller', () => {
         spy.mockRestore();
     });
 
-    afterAll(() => {
+    afterEach(() => {
 
         MobileApp.createOrUpdate = originalCreateOrUpdateMethod;
     });
@@ -251,12 +245,9 @@ describe('mobileApp.putMobileAppUser controller', () => {
 
     const originalCreateOrUpdateMethod = MobileAppUser.createOrUpdate;
 
-    beforeAll(() => {
+    beforeEach(() => {
 
         MobileAppUser.createOrUpdate = () => Promise.resolve(responseValue);
-    });
-
-    beforeEach(() => {
 
         req = new ExpressRequest();
         res = new ExpressResponse();
@@ -346,7 +337,7 @@ describe('mobileApp.putMobileAppUser controller', () => {
         spy.mockRestore();
     });
 
-    afterAll(() => {
+    afterEach(() => {
 
         MobileAppUser.createOrUpdate = originalCreateOrUpdateMethod;
     });

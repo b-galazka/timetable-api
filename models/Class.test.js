@@ -8,7 +8,7 @@ describe('Class.loadList', () => {
 
     const originalFindMethod = SchoolClass.find;
 
-    beforeAll(() => {
+    beforeEach(() => {
 
         SchoolClass.find = (criteria, fields, options) => {
 
@@ -43,7 +43,7 @@ describe('Class.loadList', () => {
         expect(await SchoolClass.loadList()).toBe('another database response');
     });
 
-    afterAll(() => {
+    afterEach(() => {
 
         SchoolClass.find = originalFindMethod;
     });

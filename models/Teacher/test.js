@@ -8,7 +8,7 @@ describe('Teacher.loadList', () => {
 
     const originalFindMethod = Teacher.find;
 
-    beforeAll(() => {
+    beforeEach(() => {
 
         Teacher.find = (criteria, fields, options) => {
 
@@ -97,7 +97,7 @@ describe('Teacher.loadList', () => {
         ]);
     });
 
-    afterAll(() => {
+    afterEach(() => {
 
         Teacher.find = originalFindMethod;
     });

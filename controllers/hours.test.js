@@ -11,12 +11,9 @@ describe('hours.getAll controller', () => {
 
     const originalLoadListMethod = Hour.loadList;
 
-    beforeAll(() => {
+    beforeEach(() => {
 
         Hour.loadList = () => Promise.resolve(responseValue);
-    });
-
-    beforeEach(() => {
 
         req = new ExpressRequest();
         res = new ExpressResponse();
@@ -90,7 +87,7 @@ describe('hours.getAll controller', () => {
         spy.mockRestore();
     });
 
-    afterAll(() => {
+    afterEach(() => {
 
         Hour.loadList = originalLoadListMethod;
     });

@@ -18,7 +18,7 @@ describe('User.findByUsernameAndPassword', () => {
 
     const originalFindOneMethod = User.findOne;
 
-    beforeAll(() => {
+    beforeEach(() => {
 
         User.findOne = (criteria, fields, options) => {
 
@@ -62,7 +62,7 @@ describe('User.findByUsernameAndPassword', () => {
         expect(result2).toBe('another database response');
     });
 
-    afterAll(() => {
+    afterEach(() => {
 
         User.findOne = originalFindOneMethod;
     });

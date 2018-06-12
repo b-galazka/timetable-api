@@ -72,7 +72,7 @@ describe('MobileApp.createOrUpdate', () => {
 
     afterAll(() => {
 
-        MobileApp.findOne = originalFindMethod;
+        MobileApp.findOne = originalFindOneMethod;
         MobileApp.create = originalCreateMethod;
     });
 });

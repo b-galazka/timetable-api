@@ -103,7 +103,7 @@ describe('MobileAppUser.createOrUpdate', () => {
 
     afterAll(() => {
 
-        MobileAppUser.findOne = originalFindMethod;
+        MobileAppUser.findOne = originalFindOneMethod;
         MobileAppUser.create = originalCreateMethod;
         Date = DateCopy;
     });

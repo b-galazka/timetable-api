@@ -2,6 +2,11 @@ class TimetableObject {
 
     constructor() {
 
+        if (this.constructor === TimetableObject) {
+
+            throw new Error('Cannot create instance of abstract TimetableObject class');
+        }
+
         this.timetable = [[], [], [], [], []];
     }
 

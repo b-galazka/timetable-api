@@ -1,12 +1,11 @@
 const express = require('express');
 const mongoose = require('mongoose');
-const bodyParser = require('body-parser');
 
 const updatingRoutes = require('./routes/update');
 const teachersRoutes = require('./routes/teachers');
 const classesRoutes = require('./routes/classes');
 const classroomsRoutes = require('./routes/classrooms');
-const hoursRoutes = require('./routes/hours'); 
+const hoursRoutes = require('./routes/hours');
 const mobileApp = require('./routes/mobileApp');
 const notFound = require('./routes/notFound');
 
@@ -25,7 +24,7 @@ app.disable('x-powered-by');
 
 app.use(setCorsHeaders);
 app.use(catchCorsError);
-app.use(bodyParser.json());
+app.use(express.json());
 app.use(catchJsonParsingError);
 
 //routes

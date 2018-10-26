@@ -2,11 +2,12 @@ const express = require('express');
 const mongoose = require('mongoose');
 const bodyParser = require('body-parser');
 
+const homeRoutes = require('./routes/home');
 const updatingRoutes = require('./routes/update');
 const teachersRoutes = require('./routes/teachers');
 const classesRoutes = require('./routes/classes');
 const classroomsRoutes = require('./routes/classrooms');
-const hoursRoutes = require('./routes/hours'); 
+const hoursRoutes = require('./routes/hours');
 const mobileApp = require('./routes/mobileApp');
 const notFound = require('./routes/notFound');
 
@@ -29,6 +30,7 @@ app.use(bodyParser.json());
 app.use(catchJsonParsingError);
 
 //routes
+app.use(homeRoutes);
 app.use('/', updatingRoutes);
 app.use('/teachers', teachersRoutes);
 app.use('/classes', classesRoutes);

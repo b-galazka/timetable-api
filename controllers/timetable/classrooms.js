@@ -1,4 +1,4 @@
-const Classroom = require('../../models/Classroom');
+const Classroom = require('../../models/timetable/Classroom');
 
 module.exports = {
 

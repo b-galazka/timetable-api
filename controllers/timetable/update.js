@@ -1,6 +1,6 @@
 const getScrappedTimetable = require('../../functions/getScrappedTimetable');
 const TimetableUpdater = require('../../tools/TimetableUpdater');
-const UpdateRequest = require('../../models/UpdateRequest');
+const UpdateRequest = require('../../models/mobileApp/UpdateRequest');
 const TimetablesComparator = require('../../tools/TimetablesComparator');
 
 module.exports = {

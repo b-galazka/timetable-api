@@ -1,7 +1,7 @@
 const _ = require('lodash');
 
 const TimetablesComparator = require('./TimetablesComparator');
-const Teacher = require('../models/Teacher');
+const Teacher = require('../models/timetable/Teacher');
 
 describe('TimetablesComparator.prototype.areChangesInTimetable', () => {
 

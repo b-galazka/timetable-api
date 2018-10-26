@@ -1,6 +1,6 @@
 const mongoose = require('mongoose');
 
-const { userUpdateRequestTimeLimit } = require('../config');
+const { userUpdateRequestTimeLimit } = require('../../config');
 
 const updateRequestSchema = new mongoose.Schema(
 

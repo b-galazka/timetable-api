@@ -1,13 +1,13 @@
 const TimetableUpdater = require('./TimetableUpdater');
-const Teacher = require('../models/Teacher');
-const Classroom = require('../models/Classroom');
-const SchoolClass = require('../models/Class');
-const Hour = require('../models/Hour');
+const Teacher = require('../models/timetable/Teacher');
+const Classroom = require('../models/timetable/Classroom');
+const SchoolClass = require('../models/timetable/Class');
+const Hour = require('../models/timetable/Hour');
 
-jest.mock('../models/Teacher', () => require('../mocks/3rdPartyModules/mongooseModel')());
-jest.mock('../models/Classroom', () => require('../mocks/3rdPartyModules/mongooseModel')());
-jest.mock('../models/Class', () => require('../mocks/3rdPartyModules/mongooseModel')());
-jest.mock('../models/Hour', () => require('../mocks/3rdPartyModules/mongooseModel')());
+jest.mock('../models/timetable/Teacher', () => require('../mocks/3rdPartyModules/mongooseModel')());
+jest.mock('../models/timetable/Classroom', () => require('../mocks/3rdPartyModules/mongooseModel')());
+jest.mock('../models/timetable/Class', () => require('../mocks/3rdPartyModules/mongooseModel')());
+jest.mock('../models/timetable/Hour', () => require('../mocks/3rdPartyModules/mongooseModel')());
 
 describe('TimetableUpdater.drop', () => {
 

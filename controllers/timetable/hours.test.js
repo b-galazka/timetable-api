@@ -1,7 +1,7 @@
 const { getAll } = require('./hours');
 const ExpressRequest = require('../../mocks/3rdPartyModules/ExpressRequest');
 const ExpressResponse = require('../../mocks/3rdPartyModules/ExpressResponse');
-const Hour = require('../../models/Hour');
+const Hour = require('../../models/timetable/Hour');
 
 describe('hours.getAll controller', () => {
 

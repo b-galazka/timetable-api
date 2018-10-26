@@ -1,4 +1,4 @@
-const Class = require('../../models/Class');
+const Class = require('../../models/timetable/Class');
 
 module.exports = {
 

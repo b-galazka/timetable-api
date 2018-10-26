@@ -1,16 +1,16 @@
 const mongoose = require('mongoose');
 
-const timetable = require('./schemas/timetable');
+const timetable = require('../timetable/schemas/timetable');
 
 const mobileAppUserSchema = new mongoose.Schema(
-    
+
     {
         phoneModel: {
             required: true,
             trim: true,
             type: String
         },
-        
+
         phoneID: {
             required: true,
             trim: true,
@@ -21,7 +21,7 @@ const mobileAppUserSchema = new mongoose.Schema(
             type: timetable,
             default: null
         },
-        
+
         appVersion: {
             type: String,
             trim: true

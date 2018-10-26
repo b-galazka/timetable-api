@@ -1,6 +1,6 @@
 const _ = require('lodash');
 
-const Teacher = require('../models/Teacher');
+const Teacher = require('../models/timetable/Teacher');
 
 class TimetablesComparator {
 
@@ -33,13 +33,13 @@ class TimetablesComparator {
             };
 
             const currentTimetable = await Teacher.find({}, excludedFields, options);
-            
+
             this._currentTeachersTimetable = currentTimetable;
 
             const newTimetable = this._newTeachersTimetable;
 
             return (
-                currentTimetable.length !== newTimetable.length || 
+                currentTimetable.length !== newTimetable.length ||
                 !this._compareTimetables()
             );
         })();
@@ -86,9 +86,9 @@ class TimetablesComparator {
 
     static _compareTimetableObjects(newObject, currentObject) {
 
-        const { 
+        const {
             _compareTimetableObjectsFields,
-            _haveTheSameKeys 
+            _haveTheSameKeys
         } = TimetablesComparator;
 
         if (!_haveTheSameKeys(newObject, currentObject)) {
@@ -116,7 +116,7 @@ class TimetablesComparator {
 
     static _compareTimetableObjectsFields(newObjectField, currentObjectField) {
 
-        const { 
+        const {
             _compareTimetableObjects,
             _isNullOrUndefined
         } = TimetablesComparator;

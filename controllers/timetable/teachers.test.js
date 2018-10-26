@@ -3,7 +3,7 @@ const _ = require('lodash');
 const { getAll, getOneBySlug } = require('./teachers');
 const ExpressRequest = require('../../mocks/3rdPartyModules/ExpressRequest');
 const ExpressResponse = require('../../mocks/3rdPartyModules/ExpressResponse');
-const Teacher = require('../../models/Teacher');
+const Teacher = require('../../models/timetable/Teacher');
 
 describe('teachers.getAll controller', () => {
 

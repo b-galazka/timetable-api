@@ -1,5 +1,5 @@
-const MobileApp = require('../../models/MobileApp');
-const MobileAppUser = require('../../models/MobileAppUser');
+const MobileApp = require('../../models/mobileApp/MobileApp');
+const MobileAppUser = require('../../models/mobileApp/MobileAppUser');
 
 module.exports = {
 

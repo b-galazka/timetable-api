@@ -1,7 +1,7 @@
-const Teacher = require('../models/Teacher');
-const SchoolClass = require('../models/Class');
-const Classroom = require('../models/Classroom');
-const Hour = require('../models/Hour');
+const Teacher = require('../models/timetable/Teacher');
+const SchoolClass = require('../models/timetable/Class');
+const Classroom = require('../models/timetable/Classroom');
+const Hour = require('../models/timetable/Hour');
 
 class TimetableUpdater {
 

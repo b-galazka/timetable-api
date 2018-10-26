@@ -1,4 +1,4 @@
-const Hour = require('../../models/Hour');
+const Hour = require('../../models/timetable/Hour');
 
 module.exports = {
 

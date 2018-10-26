@@ -8,8 +8,8 @@ const {
 
 const ExpressRequest = require('../../mocks/3rdPartyModules/ExpressRequest');
 const ExpressResponse = require('../../mocks/3rdPartyModules/ExpressResponse');
-const MobileApp = require('../../models/MobileApp');
-const MobileAppUser = require('../../models/MobileAppUser');
+const MobileApp = require('../../models/mobileApp/MobileApp');
+const MobileAppUser = require('../../models/mobileApp/MobileAppUser');
 
 describe('mobileApp.getMobileAppInfo controller', () => {
 

@@ -1,5 +1,5 @@
-const MobileApp = require('../models/MobileApp');
-const MobileAppUser = require('../models/MobileAppUser');
+const MobileApp = require('../../models/MobileApp');
+const MobileAppUser = require('../../models/MobileAppUser');
 
 module.exports = {
 
@@ -42,7 +42,7 @@ module.exports = {
             const user = await MobileAppUser.createOrUpdate(req.body);
 
             res.send(user);
-            
+
         } catch (err) {
 
             console.error(err);

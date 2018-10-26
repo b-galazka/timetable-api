@@ -6,10 +6,10 @@ const {
     updateMobileAppInfo
 } = require('./mobileApp');
 
-const ExpressRequest = require('../mocks/ExpressRequest');
-const ExpressResponse = require('../mocks/ExpressResponse');
-const MobileApp = require('../models/MobileApp');
-const MobileAppUser = require('../models/MobileAppUser');
+const ExpressRequest = require('../../mocks/ExpressRequest');
+const ExpressResponse = require('../../mocks/ExpressResponse');
+const MobileApp = require('../../models/MobileApp');
+const MobileAppUser = require('../../models/MobileAppUser');
 
 describe('mobileApp.getMobileAppInfo controller', () => {
 

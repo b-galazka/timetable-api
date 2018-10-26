@@ -3,7 +3,7 @@ const router = require('express').Router();
 const authorization = require('../middlewares/authorization');
 const userRequestValidation = require('../middlewares/timetableUpdateUserRequestValidation');
 const timeProtection = require('../middlewares/timetableUpdateTimeProtection');
-const controllers = require('../controllers/update');
+const controllers = require('../controllers/timetable/update');
 const handleInvalidHttpMethod = require('../middlewares/handleInvalidHttpMethod');
 
 router.put('/timetable', authorization);

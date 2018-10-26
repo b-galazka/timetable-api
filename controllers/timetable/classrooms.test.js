@@ -1,34 +1,34 @@
 const _ = require('lodash');
 
-const { getAll, getOneBySlug } = require('./teachers');
-const ExpressRequest = require('../mocks/ExpressRequest');
-const ExpressResponse = require('../mocks/ExpressResponse');
-const Teacher = require('../models/Teacher');
+const { getAll, getOneByNumber } = require('./classrooms');
+const ExpressRequest = require('../../mocks/ExpressRequest');
+const ExpressResponse = require('../../mocks/ExpressResponse');
+const Classroom = require('../../models/Classroom');
 
-describe('teachers.getAll controller', () => {
+describe('classrooms.getAll controller', () => {
 
     let req;
     let res;
     let responseValue;
 
-    const originalLoadListMethod = Teacher.loadList;
+    const originalLoadListMethod = Classroom.loadList;
 
     beforeEach(() => {
 
-        Teacher.loadList = () => Promise.resolve(responseValue);
+        Classroom.loadList = () => Promise.resolve(responseValue);
 
         req = new ExpressRequest();
         res = new ExpressResponse();
     });
 
-    it('should respond with teachers list', async () => {
+    it('should respond with classrooms list', async () => {
 
         expect.assertions(4);
 
         let res = new ExpressResponse();
         let spy = jest.spyOn(res, 'send');
 
-        responseValue = 'teachers list';
+        responseValue = 'classrooms list';
 
         await getAll(req, res);
 
@@ -40,7 +40,7 @@ describe('teachers.getAll controller', () => {
 
         res = new ExpressResponse();
         spy = jest.spyOn(res, 'send');
-        responseValue = 'another teachers list';
+        responseValue = 'another classrooms list';
 
         await getAll(req, res);
 
@@ -56,7 +56,7 @@ describe('teachers.getAll controller', () => {
 
         expect.assertions(1);
 
-        Teacher.loadList = () => Promise.reject(new Error());
+        Classroom.loadList = () => Promise.reject(new Error());
 
         const spy = jest.spyOn(res, 'status');
 
@@ -73,7 +73,7 @@ describe('teachers.getAll controller', () => {
 
         expect.assertions(2);
 
-        Teacher.loadList = () => Promise.reject(new Error());
+        Classroom.loadList = () => Promise.reject(new Error());
 
         const spy = jest.spyOn(res, 'send');
 
@@ -91,51 +91,51 @@ describe('teachers.getAll controller', () => {
 
     afterEach(() => {
 
-        Teacher.loadList = originalLoadListMethod;
+        Classroom.loadList = originalLoadListMethod;
     });
 });
 
-describe('teachers.getOneBySlug controller', () => {
+describe('classrooms.getOneBySlug controller', () => {
 
     let req;
     let res;
     let responseValue;
 
-    const originalFindOneMethod = Teacher.findOne
+    const originalFindOneMethod = Classroom.findOne
 
     beforeEach(() => {
 
-        Teacher.findOne = (criteria, fields, options) => {
+        Classroom.findOne = (criteria, fields, options) => {
 
-            const areCriteriaValid = _.isEqual(Object.keys(criteria), ['slug']);
+            const areCriteriaValid = _.isEqual(Object.keys(criteria), ['number']);
             const areFieldsValid = fields === undefined || _.isEqual(fields, {});
             const areOptionsValid = options === undefined || _.isEqual(options, {});
 
             if (areCriteriaValid && areFieldsValid && areOptionsValid) {
 
-                return Promise.resolve((criteria.slug === 'XYZ') ? responseValue : null);
+                return Promise.resolve((criteria.number === '30') ? responseValue : null);
             }
 
-            console.error('Teacher.findOne called with invalid params');
+            console.error('Classroom.findOne called with invalid params');
         };
 
         req = new ExpressRequest();
         res = new ExpressResponse();
     });
 
-    it('should respond with particular teacher', async () => {
+    it('should respond with particular classroom', async () => {
 
         expect.assertions(4);
 
         let req = new ExpressRequest({
-            params: { slug: 'XYZ' }
+            params: { number: '30' }
         });
 
         let spy = jest.spyOn(res, 'send');
 
-        responseValue = 'particural teacher object';
+        responseValue = 'particural classroom object';
 
-        await getOneBySlug(req, res);
+        await getOneByNumber(req, res);
 
         expect(spy).toHaveBeenCalledTimes(1);
         expect(spy).toHaveBeenCalledWith(responseValue);
@@ -144,14 +144,14 @@ describe('teachers.getOneBySlug controller', () => {
         spy.mockRestore();
 
         req = new ExpressRequest({
-            params: { slug: 'XYZ' }
+            params: { number: '30' }
         });
 
         spy = jest.spyOn(res, 'send');
 
-        responseValue = 'another teacher object';
+        responseValue = 'another classroom object';
 
-        await getOneBySlug(req, res);
+        await getOneByNumber(req, res);
 
         expect(spy).toHaveBeenCalledTimes(1);
         expect(spy).toHaveBeenCalledWith(responseValue);
@@ -161,17 +161,17 @@ describe('teachers.getOneBySlug controller', () => {
     });
 
     it('should respond with status 404 ' +
-        'if teacher with particural slug does not exist', async () => {
+        'if particural classroom does not exist', async () => {
 
         expect.assertions(1);
 
         const req = new ExpressRequest({
-            params: { slug: 'slug' }
+            params: { number: 'number' }
         });
 
         const spy = jest.spyOn(res, 'status');
 
-        await getOneBySlug(req, res);
+        await getOneByNumber(req, res);
 
         expect(spy).toHaveBeenCalledWith(404);
 
@@ -180,17 +180,17 @@ describe('teachers.getOneBySlug controller', () => {
     });
 
     it('should respond with "not found" JSON message ' +
-        'if teacher with particural slug does not exist', async () => {
+        'if particural classroom does not exist', async () => {
 
         expect.assertions(2);
 
         const req = new ExpressRequest({
-            params: { slug: 'slug' }
+            params: { number: 'number' }
         });
 
         const spy = jest.spyOn(res, 'send');
 
-        await getOneBySlug(req, res);
+        await getOneByNumber(req, res);
 
         expect(spy).toHaveBeenCalledTimes(1);
 
@@ -207,11 +207,11 @@ describe('teachers.getOneBySlug controller', () => {
 
         expect.assertions(1);
 
-        Teacher.findOne = () => Promise.reject(new Error());
+        Classroom.findOne = () => Promise.reject(new Error());
 
         const spy = jest.spyOn(res, 'status');
 
-        await getOneBySlug(req, res);
+        await getOneByNumber(req, res);
 
         expect(spy).toHaveBeenCalledWith(500);
 
@@ -224,11 +224,11 @@ describe('teachers.getOneBySlug controller', () => {
 
         expect.assertions(2);
 
-        Teacher.findOne = () => Promise.reject(new Error());
+        Classroom.findOne = () => Promise.reject(new Error());
 
         const spy = jest.spyOn(res, 'send');
 
-        await getOneBySlug(req, res);
+        await getOneByNumber(req, res);
 
         expect(spy).toHaveBeenCalledTimes(1);
 
@@ -242,6 +242,6 @@ describe('teachers.getOneBySlug controller', () => {
 
     afterEach(() => {
 
-        Teacher.findOne = originalFindOneMethod;
+        Classroom.findOne = originalFindOneMethod;
     });
 });

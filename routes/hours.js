@@ -1,6 +1,6 @@
 const router = require('express').Router();
 
-const controllers = require('../controllers/hours');
+const controllers = require('../controllers/timetable/hours');
 const handleInvalidHttpMethod = require('../middlewares/handleInvalidHttpMethod');
 
 router.get('/', controllers.getAll);

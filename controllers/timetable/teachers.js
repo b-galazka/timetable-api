@@ -1,4 +1,4 @@
-const Class = require('../models/Class');
+const Teacher = require('../../models/Teacher');
 
 module.exports = {
 
@@ -6,7 +6,7 @@ module.exports = {
 
         try {
 
-            res.send(await Class.loadList());
+            res.send(await Teacher.loadList());
 
         } catch (err) {
 
@@ -22,11 +22,11 @@ module.exports = {
 
             const { slug } = req.params;
 
-            const schoolClass = await Class.findOne({ slug });
+            const teacher = await Teacher.findOne({ slug });
 
-            if (schoolClass) {
+            if (teacher) {
 
-                res.send(schoolClass);
+                res.send(teacher);
 
             } else {
 

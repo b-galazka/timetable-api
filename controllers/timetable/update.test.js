@@ -1,20 +1,20 @@
 const { updateTimetable, handleUserTimetableUpdateRequest } = require('./update');
-const ExpressRequest = require('../mocks/ExpressRequest');
-const ExpressResponse = require('../mocks/ExpressResponse');
-const TimetableUpdater = require('../tools/TimetableUpdater');
-const TimetablesComparator = require('../tools/TimetablesComparator');
-const UpdateRequest = require('../models/UpdateRequest');
+const ExpressRequest = require('../../mocks/ExpressRequest');
+const ExpressResponse = require('../../mocks/ExpressResponse');
+const TimetableUpdater = require('../../tools/TimetableUpdater');
+const TimetablesComparator = require('../../tools/TimetablesComparator');
+const UpdateRequest = require('../../models/UpdateRequest');
 
-jest.mock('../config', () => ({
+jest.mock('../../config', () => ({
     documentsDownloaderUrls: { base: 'base url', list: 'list url' },
     documentsDownloaderListSelector: 'list selector',
     scraperSelectors: { a: 'selector1', b: 'selector2' }
 }));
 
-jest.mock('../tools/DocumentsDownloader', () => require('../mocks/DocumentsDownloader'));
-jest.mock('../tools/TimetableScraper', () => require('../mocks/TimetableScraper'));
-jest.mock('../tools/TimetableUpdater', () => require('../mocks/TimetableUpdater'));
-jest.mock('../tools/TimetablesComparator', () => require('../mocks/TimetablesComparator'));
+jest.mock('../../tools/DocumentsDownloader', () => require('../../mocks/DocumentsDownloader'));
+jest.mock('../../tools/TimetableScraper', () => require('../../mocks/TimetableScraper'));
+jest.mock('../../tools/TimetableUpdater', () => require('../../mocks/TimetableUpdater'));
+jest.mock('../../tools/TimetablesComparator', () => require('../../mocks/TimetablesComparator'));
 
 describe('update.updateTimetable controller', () => {
 

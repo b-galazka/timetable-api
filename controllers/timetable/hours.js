@@ -1,4 +1,4 @@
-const Hour = require('../models/Hour');
+const Hour = require('../../models/Hour');
 
 module.exports = {
 
@@ -7,7 +7,7 @@ module.exports = {
         try {
 
             res.send(await Hour.loadList());
-            
+
         } catch (err) {
 
             console.error(err);

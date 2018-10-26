@@ -1,4 +1,4 @@
-const Classroom = require('../models/Classroom');
+const Class = require('../../models/Class');
 
 module.exports = {
 
@@ -6,7 +6,7 @@ module.exports = {
 
         try {
 
-            res.send(await Classroom.loadList());
+            res.send(await Class.loadList());
 
         } catch (err) {
 
@@ -16,23 +16,23 @@ module.exports = {
         }
     },
 
-    async getOneByNumber(req, res) {
+    async getOneBySlug(req, res) {
 
         try {
 
-            const { number } = req.params;
+            const { slug } = req.params;
 
-            const classroom = await Classroom.findOne({ number })
+            const schoolClass = await Class.findOne({ slug });
 
-            if (classroom) {
+            if (schoolClass) {
 
-                res.send(classroom);
+                res.send(schoolClass);
 
             } else {
 
                 res.status(404).send({ message: 'not found' });
             }
-            
+
         } catch (err) {
 
             console.error(err);

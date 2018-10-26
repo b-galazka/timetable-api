@@ -3,7 +3,7 @@ const router = require('express').Router();
 const authorization = require('../middlewares/authorization');
 const mobileAppValidation = require('../middlewares/mobileAppValidation');
 const mobileAppUserValidation = require('../middlewares/mobileAppUserValidation');
-const controllers = require('../controllers/mobileApp');
+const controllers = require('../controllers/mobileApp/mobileApp');
 const handleInvalidHttpMethod = require('../middlewares/handleInvalidHttpMethod');
 
 router.put('/', authorization);

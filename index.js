@@ -39,7 +39,7 @@ app.use('/mobile-app', mobileApp);
 app.use(notFound);
 
 //connect with DB
-mongoose.connect(mongoUrl, { useMongoClient: true });
+mongoose.connect(mongoUrl, { useNewUrlParser: true });
 mongoose.Promise = Promise;
 
 //listen for requests

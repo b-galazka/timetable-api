@@ -14,10 +14,10 @@
     "cheerio": "^1.0.0-rc.1",
     "cors": "^2.8.4",
     "dotenv": "^5.0.1",
-    "express": "^4.15.3",
-    "joi": "^11.1.1",
+    "express": "^4.16.4",
+    "joi": "^14.0.1",
     "lodash": "^4.17.5",
-    "mongoose": "^4.10.6"
+    "mongoose": "^5.3.6"
   },
   "devDependencies": {
     "jest": "^22.4.4"

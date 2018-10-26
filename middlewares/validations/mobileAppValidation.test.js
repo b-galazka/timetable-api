@@ -1,8 +1,8 @@
 const Joi = require('joi');
 
 const mobileAppValidation = require('./mobileAppValidation');
-const ExpressRequest = require('../../mocks/ExpressRequest');
-const ExpressResponse = require('../../mocks/ExpressResponse');
+const ExpressRequest = require('../../mocks/3rdPartyModules/ExpressRequest');
+const ExpressResponse = require('../../mocks/3rdPartyModules/ExpressResponse');
 const mobileAppSchema = require('../../validationSchemas/mobileApp');
 
 jest.mock(

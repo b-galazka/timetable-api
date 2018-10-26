@@ -1,8 +1,8 @@
 const Joi = require('joi');
 
 const timetableUpdateUserRequestValidation = require('./timetableUpdateUserRequestValidation');
-const ExpressRequest = require('../../mocks/ExpressRequest');
-const ExpressResponse = require('../../mocks/ExpressResponse');
+const ExpressRequest = require('../../mocks/3rdPartyModules/ExpressRequest');
+const ExpressResponse = require('../../mocks/3rdPartyModules/ExpressResponse');
 const timetableUpdateUserRequestSchema = require('../../validationSchemas/timetableUpdateUserRequest');
 
 jest.mock(

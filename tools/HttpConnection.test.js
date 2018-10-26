@@ -1,6 +1,6 @@
 const HttpConnection = require('./HttpConnection');
 
-jest.mock('http', () => require('../mocks/http'));
+jest.mock('http', () => require('../mocks/nativeModules/http'));
 
 describe('HttpConnection.get', () => {
 

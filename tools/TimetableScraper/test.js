@@ -1,10 +1,10 @@
 const TimetableScraper = require('./');
 
-const testDocs = require('../../mocks/scraperTestDocs');
-const hoursTestDocs = require('../../mocks/scraperHoursTestDocs');
-const teachersTestDocs = require('../../mocks/scraperTeachersTestDocs');
-const classroomsTestDocs = require('../../mocks/scraperClassroomsTestDocs');
-const schoolClassesTestDocs = require('../../mocks/scraperSchoolClassesTestDocs');
+const testDocs = require('../../mocks/exampleData/scraperTestDocs');
+const hoursTestDocs = require('../../mocks/exampleData/scraperHoursTestDocs');
+const teachersTestDocs = require('../../mocks/exampleData/scraperTeachersTestDocs');
+const classroomsTestDocs = require('../../mocks/exampleData/scraperClassroomsTestDocs');
+const schoolClassesTestDocs = require('../../mocks/exampleData/scraperSchoolClassesTestDocs');
 
 const selectors = {
     row: 'tr',
@@ -321,7 +321,7 @@ describe('TimetableScraper.prototype.scrap', () => {
 
             {
                 slug: 'BC',
-                name: 'BC Lastname',     
+                name: 'BC Lastname',
                 timetable: [
                     [
                         null,

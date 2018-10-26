@@ -1,7 +1,7 @@
 const {
     documentsDownloaderUrls,
     documentsDownloaderListSelector
-} = require('../config');
+} = require('../../config');
 
 class DocumentsDownloader {
 

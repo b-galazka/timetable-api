@@ -1,6 +1,6 @@
 const DocumentsDownloader = require('./DocumentsDownloader');
 
-jest.mock('./HttpConnection', () => require('../mocks/HttpConnection'));
+jest.mock('./HttpConnection', () => require('../mocks/tools/HttpConnection'));
 
 describe('DocumentsDownloader.prototype.download', () => {
 
@@ -24,7 +24,7 @@ describe('DocumentsDownloader.prototype.download', () => {
         expect.assertions(1);
 
         const result = await downloader.download();
-        
+
         expect(result).toEqual([
             'domain/doc1 document',
             'domain/doc2 document',

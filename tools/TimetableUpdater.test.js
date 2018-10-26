@@ -4,10 +4,10 @@ const Classroom = require('../models/Classroom');
 const SchoolClass = require('../models/Class');
 const Hour = require('../models/Hour');
 
-jest.mock('../models/Teacher', () => require('../mocks/mongooseModel')());
-jest.mock('../models/Classroom', () => require('../mocks/MongooseModel')());
-jest.mock('../models/Class', () => require('../mocks/MongooseModel')());
-jest.mock('../models/Hour', () => require('../mocks/MongooseModel')());
+jest.mock('../models/Teacher', () => require('../mocks/3rdPartyModules/mongooseModel')());
+jest.mock('../models/Classroom', () => require('../mocks/3rdPartyModules/mongooseModel')());
+jest.mock('../models/Class', () => require('../mocks/3rdPartyModules/mongooseModel')());
+jest.mock('../models/Hour', () => require('../mocks/3rdPartyModules/mongooseModel')());
 
 describe('TimetableUpdater.drop', () => {
 

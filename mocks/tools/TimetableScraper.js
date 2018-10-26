@@ -1,6 +1,6 @@
 const _ = require('lodash');
 
-const { scraperSelectors } = require('../config');
+const { scraperSelectors } = require('../../config');
 
 class TimetableScraper {
 

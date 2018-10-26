@@ -6,8 +6,8 @@ const {
     updateMobileAppInfo
 } = require('./mobileApp');
 
-const ExpressRequest = require('../../mocks/ExpressRequest');
-const ExpressResponse = require('../../mocks/ExpressResponse');
+const ExpressRequest = require('../../mocks/3rdPartyModules/ExpressRequest');
+const ExpressResponse = require('../../mocks/3rdPartyModules/ExpressResponse');
 const MobileApp = require('../../models/MobileApp');
 const MobileAppUser = require('../../models/MobileAppUser');
 

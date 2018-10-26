@@ -1,8 +1,8 @@
 const _ = require('lodash');
 
 const { getAll, getOneByNumber } = require('./classrooms');
-const ExpressRequest = require('../../mocks/ExpressRequest');
-const ExpressResponse = require('../../mocks/ExpressResponse');
+const ExpressRequest = require('../../mocks/3rdPartyModules/ExpressRequest');
+const ExpressResponse = require('../../mocks/3rdPartyModules/ExpressResponse');
 const Classroom = require('../../models/Classroom');
 
 describe('classrooms.getAll controller', () => {

@@ -1,6 +1,6 @@
 const { StringDecoder } = require('string_decoder');
 
-const User = require('../models/User');
+const User = require('../../models/User');
 
 const decoder = new StringDecoder('utf-8');
 

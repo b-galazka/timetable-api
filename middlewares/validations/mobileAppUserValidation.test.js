@@ -1,12 +1,12 @@
 const Joi = require('joi');
 
 const mobileAppUserValidation = require('./mobileAppUserValidation');
-const ExpressRequest = require('../mocks/ExpressRequest');
-const ExpressResponse = require('../mocks/ExpressResponse');
-const mobileAppUserSchema = require('../validationSchemas/mobileAppUser');
+const ExpressRequest = require('../../mocks/ExpressRequest');
+const ExpressResponse = require('../../mocks/ExpressResponse');
+const mobileAppUserSchema = require('../../validationSchemas/mobileAppUser');
 
 jest.mock(
-    '../validationSchemas/mobileAppUser',
+    '../../validationSchemas/mobileAppUser',
     () => {
 
         const Joi = require('joi');

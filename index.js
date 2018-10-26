@@ -10,9 +10,9 @@ const hoursRoutes = require('./routes/hours');
 const mobileApp = require('./routes/mobileApp');
 const notFound = require('./routes/notFound');
 
-const catchJsonParsingError = require('./middlewares/catchJsonParsingError');
-const setCorsHeaders = require('./middlewares/setCorsHeaders');
-const catchCorsError = require('./middlewares/catchCorsError');
+const catchJsonParsingError = require('./middlewares/errorsCatchers/catchJsonParsingError');
+const setCorsHeaders = require('./middlewares/guards/setCorsHeaders');
+const catchCorsError = require('./middlewares/errorsCatchers/catchCorsError');
 
 //server configuration file
 const { port, ip, mongoUrl } = require('./config');

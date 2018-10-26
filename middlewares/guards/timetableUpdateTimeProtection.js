@@ -1,4 +1,4 @@
-const UpdateRequest = require('../models/UpdateRequest');
+const UpdateRequest = require('../../models/UpdateRequest');
 
 module.exports = async (req, res, next) => {
 

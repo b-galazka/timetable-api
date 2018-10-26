@@ -1,6 +1,6 @@
 const catchJsonParsingError = require('./catchJsonParsingError');
-const ExpressRequest = require('../mocks/ExpressRequest');
-const ExpressResponse = require('../mocks/ExpressResponse');
+const ExpressRequest = require('../../mocks/ExpressRequest');
+const ExpressResponse = require('../../mocks/ExpressResponse');
 
 describe('catchJsonParsingError middleware', () => {
 

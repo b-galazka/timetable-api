@@ -1,8 +1,8 @@
 const router = require('express').Router();
 
-const authorization = require('../middlewares/authorization');
-const mobileAppValidation = require('../middlewares/mobileAppValidation');
-const mobileAppUserValidation = require('../middlewares/mobileAppUserValidation');
+const authorization = require('../middlewares/guards/authorization');
+const mobileAppValidation = require('../middlewares/validations/mobileAppValidation');
+const mobileAppUserValidation = require('../middlewares/validations/mobileAppUserValidation');
 const controllers = require('../controllers/mobileApp/mobileApp');
 const handleInvalidHttpMethod = require('../middlewares/handleInvalidHttpMethod');
 

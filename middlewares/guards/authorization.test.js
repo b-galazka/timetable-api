@@ -1,7 +1,7 @@
 const authorization = require('./authorization');
-const ExpressRequest = require('../mocks/ExpressRequest');
-const ExpressResponse = require('../mocks/ExpressResponse');
-const User = require('../models/User');
+const ExpressRequest = require('../../mocks/ExpressRequest');
+const ExpressResponse = require('../../mocks/ExpressResponse');
+const User = require('../../models/User');
 
 describe('authorization middleware', () => {
 

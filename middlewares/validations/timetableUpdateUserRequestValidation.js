@@ -1,6 +1,6 @@
 const Joi = require('joi');
 
-const timetableUpdateRequestSchema = require('../validationSchemas/timetableUpdateUserRequest');
+const timetableUpdateRequestSchema = require('../../validationSchemas/timetableUpdateUserRequest');
 
 module.exports = (req, res, next) => {
 

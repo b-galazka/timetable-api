@@ -1,6 +1,6 @@
 const catchCorsError = require('./catchCorsError');
-const ExpressRequest = require('../mocks/ExpressRequest');
-const ExpressResponse = require('../mocks/ExpressResponse');
+const ExpressRequest = require('../../mocks/ExpressRequest');
+const ExpressResponse = require('../../mocks/ExpressResponse');
 
 describe('catchCorsError middleware', () => {
 
@@ -34,7 +34,7 @@ describe('catchCorsError middleware', () => {
         catchCorsError(err, req, res, jest.fn());
 
         expect(spy).toHaveBeenCalledTimes(1);
-        
+
         expect(spy).toHaveBeenCalledWith({
             message: err.message
         });

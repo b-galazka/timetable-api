@@ -1,8 +1,8 @@
 const setCorsHeaders = require('./setCorsHeaders');
-const ExpressRequest = require('../mocks/ExpressRequest');
-const ExpressResponse = require('../mocks/ExpressResponse');
+const ExpressRequest = require('../../mocks/ExpressRequest');
+const ExpressResponse = require('../../mocks/ExpressResponse');
 
-jest.mock('../config', () => ({ domainsWhitelist: ['domain'] }));
+jest.mock('../../config', () => ({ domainsWhitelist: ['domain'] }));
 
 describe('setCorsHeaders middleware', () => {
 

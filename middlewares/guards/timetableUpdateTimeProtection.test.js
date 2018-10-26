@@ -1,7 +1,7 @@
 const timetableUpdateTimeProtection = require('./timetableUpdateTimeProtection');
-const ExpressRequest = require('../mocks/ExpressRequest');
-const ExpressResponse = require('../mocks/ExpressResponse');
-const UpdateRequest = require('../models/UpdateRequest');
+const ExpressRequest = require('../../mocks/ExpressRequest');
+const ExpressResponse = require('../../mocks/ExpressResponse');
+const UpdateRequest = require('../../models/UpdateRequest');
 
 describe('timetableUpdateTimeProtection middleware', () => {
 

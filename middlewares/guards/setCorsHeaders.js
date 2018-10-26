@@ -1,6 +1,6 @@
 const cors = require('cors');
 
-const { domainsWhitelist } = require('../config');
+const { domainsWhitelist } = require('../../config');
 
 const corsOptions = {
 

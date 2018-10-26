@@ -1,6 +1,6 @@
 const Joi = require('joi');
 
-const mobileAppSchema = require('../validationSchemas/mobileApp');
+const mobileAppSchema = require('../../validationSchemas/mobileApp');
 
 module.exports = (req, res, next) => {
 

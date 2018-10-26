@@ -1,6 +1,5 @@
 const express = require('express');
 const mongoose = require('mongoose');
-const bodyParser = require('body-parser');
 
 const homeRoutes = require('./routes/home');
 const updatingRoutes = require('./routes/update');
@@ -26,7 +25,7 @@ app.disable('x-powered-by');
 
 app.use(setCorsHeaders);
 app.use(catchCorsError);
-app.use(bodyParser.json());
+app.use(express.json());
 app.use(catchJsonParsingError);
 
 //routes
@@ -40,7 +39,7 @@ app.use('/mobile-app', mobileApp);
 app.use(notFound);
 
 //connect with DB
-mongoose.connect(mongoUrl);
+mongoose.connect(mongoUrl, { useMongoClient: true });
 mongoose.Promise = Promise;
 
 //listen for requests

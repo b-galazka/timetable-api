@@ -6,8 +6,13 @@ Scraper downloads list of all required HTML documents from http://80-sochaczew.p
 
 All routes respond with a JSON.  
 All not existing routes respond with 404 HTTP status code and `not found` message.  
+All existing routes requested with invalid HTTP method responds with 405 HTTP status code, `method not allowed` message and list of available methods separated by a comma.  
 All existing routes responds with 500 HTTP status code and `something went wrong` message when an unknown error has occured.  
 Authorization header must be in `Basic credentials` format where `credentials` is a login:password base64 encoded string.  
+
+## GET /
+
+Responds with an empty object.  
 
 ## GET /classes
 

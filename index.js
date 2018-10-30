@@ -27,13 +27,14 @@ const app = express();
 //configure express
 app.disable('x-powered-by');
 
+app.use(setCorsHeaders);
+app.use(catchCorsError);
+
 app.use('/graphql', expressGraphql({
     schema: GraphqlSchema,
     graphiql: NODE_ENV === 'development'
 }));
 
-app.use(setCorsHeaders);
-app.use(catchCorsError);
 app.use(express.json());
 app.use(catchJsonParsingError);
 

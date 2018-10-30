@@ -1,58 +1,22 @@
-const { StringDecoder } = require('string_decoder');
+const Joi = require('joi');
 
 const User = require('../../models/User');
-
-const decoder = new StringDecoder('utf-8');
-
-const getCredentials = (authHeader) => {
-
-    const [authMethod, encodedCredentials] = authHeader.split(' ');
-    const credentialsBuffer = Buffer.from(encodedCredentials.trim(), 'base64');
-    const credentials = decoder.write(credentialsBuffer);
-
-    const [username, password] = credentials.split(':');
-
-    return {
-        authMethod,
-        username,
-        password
-    };
-};
-
-const validateAuthHeader = (authHeader) => {
-
-    if (! authHeader) {
-
-        return 'no authorization header provided';
-    }
-
-    if (! authHeader.includes(' ')) {
-
-        return 'invalid authorization header provided';
-    }
-};
+const decodeCredentials = require('../../functions/decodeCredentials');
+const authHeaderValidationSchema = require('../../validationSchemas/authHeader');
 
 module.exports = async (req, res, next) => {
 
     const authHeader = req.header('Authorization');
+    const { error } = Joi.validate(authHeader, authHeaderValidationSchema);
 
-    const err = validateAuthHeader(authHeader);
+    if (error) {
 
-    if (err) {
+        const { message } = error;
 
-        return res.status(403).send({
-            message: err
-        });
+        return res.status(403).send({ message });
     }
 
-    const { authMethod, username, password } = getCredentials(authHeader);
-
-    if (authMethod.trim().toLowerCase() !== 'basic') {
-
-        return res.status(403).send({
-            message: 'only basic authorization type is supported'
-        });
-    }
+    const { username, password } = decodeCredentials(authHeader);
 
     try {
 

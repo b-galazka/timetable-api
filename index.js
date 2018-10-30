@@ -1,5 +1,6 @@
 const express = require('express');
 const mongoose = require('mongoose');
+const expressGraphql = require('express-graphql');
 
 const homeRoutes = require('./routes/home');
 const updatingRoutes = require('./routes/update');
@@ -14,14 +15,22 @@ const catchJsonParsingError = require('./middlewares/errorsCatchers/catchJsonPar
 const setCorsHeaders = require('./middlewares/guards/setCorsHeaders');
 const catchCorsError = require('./middlewares/errorsCatchers/catchCorsError');
 
+const GraphqlSchema = require('./graphql/schema');
+
 //server configuration file
 const { port, ip, mongoUrl } = require('./config');
+const { NODE_ENV } = process.env;
 
 //start express
 const app = express();
 
 //configure express
 app.disable('x-powered-by');
+
+app.use('/graphql', expressGraphql({
+    schema: GraphqlSchema,
+    graphiql: NODE_ENV === 'development'
+}));
 
 app.use(setCorsHeaders);
 app.use(catchCorsError);

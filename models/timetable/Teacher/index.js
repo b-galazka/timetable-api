@@ -39,13 +39,7 @@ const teacherSchema = new mongoose.Schema(
 
 teacherSchema.statics = {
 
-    async loadList() {
-
-        const fields = {
-            slug: true,
-            name: true,
-            _id: true
-        };
+    async loadList(fields = {}) {
 
         const teachers = await this.find({}, fields);
 
@@ -84,7 +78,7 @@ teacherSchema.statics = {
 
     _sortTeachersWithoutNames(teachers) {
 
-        return teachers.sort((teacher1, teacher2) => 
+        return teachers.sort((teacher1, teacher2) =>
             this._compareStrings(teacher1.slug, teacher2.slug)
         );
     },

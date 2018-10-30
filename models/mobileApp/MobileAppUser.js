@@ -1,6 +1,6 @@
 const mongoose = require('mongoose');
 
-const timetable = require('../timetable/schemas/timetable');
+const timetable = require('./schemas/timetable');
 
 const mobileAppUserSchema = new mongoose.Schema(
 

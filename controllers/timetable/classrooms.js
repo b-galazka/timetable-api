@@ -6,7 +6,12 @@ module.exports = {
 
         try {
 
-            res.send(await Classroom.loadList());
+            const fields = {
+                number: true,
+                _id: true
+            };
+
+            res.send(await Classroom.loadList(fields));
 
         } catch (err) {
 

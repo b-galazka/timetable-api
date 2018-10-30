@@ -17,6 +17,7 @@
     "express": "^4.16.4",
     "express-graphql": "^0.7.1",
     "graphql": "^14.0.2",
+    "graphql-iso-date": "^3.6.1",
     "joi": "^14.0.1",
     "lodash": "^4.17.5",
     "mongoose": "^5.3.6"

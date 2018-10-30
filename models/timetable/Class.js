@@ -20,7 +20,7 @@ const classSchema = new mongoose.Schema(
             type: Date,
             default: Date.now
         },
-        
+
         timetable: [
             [
                 [lessonSchema]
@@ -33,12 +33,7 @@ const classSchema = new mongoose.Schema(
 
 classSchema.statics = {
 
-    loadList() {
-
-        const fields = {
-            slug: true,
-            _id: true
-        };
+    loadList(fields = {}) {
 
         const ordering = {
 

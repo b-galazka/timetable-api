@@ -24,6 +24,8 @@ module.exports = async (parentValue, args, req) => {
 
     } catch (err) {
 
+        console.error(err);
+
         throw new Error('something went wrong');
     }
 

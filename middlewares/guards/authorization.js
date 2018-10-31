@@ -1,7 +1,7 @@
 const { StringDecoder } = require('string_decoder');
 
 const User = require('../../models/User');
-const handleUnknownError = require('../handlers/handleUnknownError');
+const catchUnknownError = require('../errorsCatchers/catchUnknownError');
 
 const decoder = new StringDecoder('utf-8');
 
@@ -33,7 +33,7 @@ const validateAuthHeader = (authHeader) => {
     }
 };
 
-module.exports = handleUnknownError(async (req, res, next) => {
+module.exports = catchUnknownError(async (req, res, next) => {
 
     const authHeader = req.header('Authorization');
 

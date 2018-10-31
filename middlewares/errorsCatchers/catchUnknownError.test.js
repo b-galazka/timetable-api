@@ -1,8 +1,8 @@
-const handleUnknownError = require('./handleUnknownError');
+const catchUnknownError = require('./catchUnknownError');
 const ExpressRequest = require('../../mocks/3rdPartyModules/ExpressRequest');
 const ExpressResponse = require('../../mocks/3rdPartyModules/ExpressResponse');
 
-describe('handleUnknownError middleware', () => {
+describe('catchUnknownError middleware', () => {
 
     let req;
     let res;
@@ -18,7 +18,7 @@ describe('handleUnknownError middleware', () => {
 
         beforeEach(() => {
 
-            callback = handleUnknownError(() => {
+            callback = catchUnknownError(() => {
 
                 throw new Error();
             });
@@ -65,7 +65,7 @@ describe('handleUnknownError middleware', () => {
 
         it('should not set status if response has been sent', () => {
 
-            const callback = handleUnknownError((req, res) => {
+            const callback = catchUnknownError((req, res) => {
 
                 res.send();
             });
@@ -82,7 +82,7 @@ describe('handleUnknownError middleware', () => {
 
         it('should not try to send second response', () => {
 
-            const callback = handleUnknownError((req, res) => {
+            const callback = catchUnknownError((req, res) => {
 
                 res.send();
             });
@@ -99,7 +99,7 @@ describe('handleUnknownError middleware', () => {
 
         it('should work with async callback', async () => {
 
-            const callback = handleUnknownError((req, res) => Promise.reject(new Error()));
+            const callback = catchUnknownError((req, res) => Promise.reject(new Error()));
 
             const sendSpy = jest.spyOn(res, 'send');
             const statusSpy = jest.spyOn(res, 'status');
@@ -124,7 +124,7 @@ describe('handleUnknownError middleware', () => {
 
         beforeEach(() => {
 
-            callback = handleUnknownError(() => {});
+            callback = catchUnknownError(() => { });
         });
 
         it('should not set status', () => {

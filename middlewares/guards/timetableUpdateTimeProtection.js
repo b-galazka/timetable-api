@@ -1,7 +1,7 @@
 const UpdateRequest = require('../../models/mobileApp/UpdateRequest');
-const handleUnknownError = require('../handlers/handleUnknownError');
+const catchUnknownError = require('../errorsCatchers/catchUnknownError');
 
-module.exports = handleUnknownError(async (req, res, next) => {
+module.exports = catchUnknownError(async (req, res, next) => {
 
     if (await UpdateRequest.canBeProcessed()) {
 

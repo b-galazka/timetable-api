@@ -1,12 +1,12 @@
 const Class = require('../../models/timetable/Class');
-const handleUnknownError = require('../../middlewares/handlers/handleUnknownError');
+const catchUnknownError = require('../../middlewares/errorsCatchers/catchUnknownError');
 
-const getAll = handleUnknownError(async (req, res) => {
+const getAll = catchUnknownError(async (req, res) => {
 
     res.send(await Class.loadList());
 });
 
-const getOneBySlug = handleUnknownError(async (req, res) => {
+const getOneBySlug = catchUnknownError(async (req, res) => {
 
     const { slug } = req.params;
 

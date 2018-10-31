@@ -1,12 +1,12 @@
 const Classroom = require('../../models/timetable/Classroom');
-const handleUnknownError = require('../../middlewares/handlers/handleUnknownError');
+const catchUnknownError = require('../../middlewares/errorsCatchers/catchUnknownError');
 
-const getAll = handleUnknownError(async (req, res) => {
+const getAll = catchUnknownError(async (req, res) => {
 
     res.send(await Classroom.loadList());
 });
 
-const getOneByNumber = handleUnknownError(async (req, res) => {
+const getOneByNumber = catchUnknownError(async (req, res) => {
 
     const { number } = req.params;
 

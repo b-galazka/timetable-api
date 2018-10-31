@@ -2,9 +2,9 @@ const getScrappedTimetable = require('../../functions/getScrappedTimetable');
 const TimetableUpdater = require('../../tools/TimetableUpdater');
 const UpdateRequest = require('../../models/mobileApp/UpdateRequest');
 const TimetablesComparator = require('../../tools/TimetablesComparator');
-const handleUnknownError = require('../../middlewares/handlers/handleUnknownError');
+const catchUnknownError = require('../../middlewares/errorsCatchers/catchUnknownError');
 
-const updateTimetable = handleUnknownError(async (req, res) => {
+const updateTimetable = catchUnknownError(async (req, res) => {
 
     const scrappedTimetable = await getScrappedTimetable();
     const timetableUpdater = new TimetableUpdater(scrappedTimetable);
@@ -14,7 +14,7 @@ const updateTimetable = handleUnknownError(async (req, res) => {
     res.send({ message: 'updated' });
 });
 
-const handleUserTimetableUpdateRequest = handleUnknownError(async (req, res) => {
+const handleUserTimetableUpdateRequest = catchUnknownError(async (req, res) => {
 
     const { phoneID } = req.body;
     const scrappedTimetable = await getScrappedTimetable();

@@ -1,7 +1,7 @@
 const Hour = require('../../models/timetable/Hour');
-const handleUnknownError = require('../../middlewares/handlers/handleUnknownError');
+const catchUnknownError = require('../../middlewares/errorsCatchers/catchUnknownError');
 
-const getAll = handleUnknownError(async (req, res) => {
+const getAll = catchUnknownError(async (req, res) => {
 
     res.send(await Hour.loadList());
 });

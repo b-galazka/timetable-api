@@ -30,7 +30,7 @@ describe('handleInvalidHttpMethod middleware', () => {
 
         const spy = jest.spyOn(res, 'send');
 
-        handleInvalidHttpMethod(['GET'])(req, res);
+        handleInvalidHttpMethod('GET')(req, res);
 
         expect(spy).toHaveBeenCalledTimes(1);
 

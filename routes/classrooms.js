@@ -6,7 +6,7 @@ const handleInvalidHttpMethod = require('../middlewares/handlers/handleInvalidHt
 router.get('/', controllers.getAll);
 router.get('/:number', controllers.getOneByNumber);
 
-router.all('/', handleInvalidHttpMethod(['GET']));
-router.all('/:slug', handleInvalidHttpMethod(['GET']));
+router.all('/', handleInvalidHttpMethod('GET'));
+router.all('/:slug', handleInvalidHttpMethod('GET'));
 
 module.exports = router;

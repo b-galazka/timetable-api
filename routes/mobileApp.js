@@ -16,6 +16,6 @@ router.put('/', controllers.updateMobileAppInfo);
 router.put('/users', controllers.putMobileAppUser);
 
 router.all('/', handleInvalidHttpMethod(['GET', 'PUT']));
-router.all('/users', handleInvalidHttpMethod(['PUT']));
+router.all('/users', handleInvalidHttpMethod('PUT'));
 
 module.exports = router;

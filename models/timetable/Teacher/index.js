@@ -46,6 +46,13 @@ teacherSchema.statics = {
         return this._sortTeachersAlphabetically(teachers);
     },
 
+    async loadFirstOne() {
+
+        const teachers = await this.loadList();
+
+        return teachers[0];
+    },
+
     _sortTeachersAlphabetically(teachers) {
 
         const teachersWithNames = teachers.filter(

@@ -19,7 +19,7 @@ const GraphqlSchema = require('./graphql/schema');
 
 //server configuration file
 const { port, ip, mongoUrl } = require('./config');
-const { NODE_ENV } = process.env;
+const isDev = (process.env.NODE_ENV === 'development');
 
 //start express
 const app = express();
@@ -32,7 +32,7 @@ app.use(catchCorsError);
 
 app.use('/graphql', expressGraphql({
     schema: GraphqlSchema,
-    graphiql: NODE_ENV === 'development'
+    graphiql: isDev
 }));
 
 app.use(express.json());
@@ -50,7 +50,11 @@ app.use(notFound);
 
 //connect with DB
 mongoose.connect(mongoUrl, { useNewUrlParser: true });
-mongoose.Promise = Promise;
+
+if (isDev) {
+
+    mongoose.set('debug', true);
+}
 
 //listen for requests
 app.listen(port, ip, () => {

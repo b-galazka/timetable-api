@@ -11,6 +11,7 @@
   "author": "b-galazka",
   "license": "ISC",
   "dependencies": {
+    "bson": "^3.0.2",
     "cheerio": "^1.0.0-rc.1",
     "cors": "^2.8.4",
     "dotenv": "^5.0.1",

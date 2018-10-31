@@ -4,7 +4,7 @@ module.exports = (validMethods) => {
 
         res.status(405).send({
             message: 'method not allowed',
-            allowedMethods: validMethods.join(', ')
+            allowedMethods: Array.isArray(validMethods) ? validMethods.join(', ') : validMethods
         });
     };
 };

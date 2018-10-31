@@ -6,7 +6,8 @@
   "scripts": {
     "start-dev": "SET NODE_ENV=development&& nodemon index.js",
     "start": "SET NODE_ENV=production&& node index.js",
-    "test": "SET NODE_ENV=test&& jest"
+    "test": "SET NODE_ENV=test&& jest",
+    "test:watch": "SET NODE_ENV=test&& jest --watch"
   },
   "author": "b-galazka",
   "license": "ISC",

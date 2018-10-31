@@ -1,6 +1,7 @@
 const { StringDecoder } = require('string_decoder');
 
 const User = require('../../models/User');
+const handleUnknownError = require('../handlers/handleUnknownError');
 
 const decoder = new StringDecoder('utf-8');
 
@@ -32,7 +33,7 @@ const validateAuthHeader = (authHeader) => {
     }
 };
 
-module.exports = async (req, res, next) => {
+module.exports = handleUnknownError(async (req, res, next) => {
 
     const authHeader = req.header('Authorization');
 
@@ -54,23 +55,15 @@ module.exports = async (req, res, next) => {
         });
     }
 
-    try {
 
-        const user = await User.findByUsernameAndPassword(username, password);
+    const user = await User.findByUsernameAndPassword(username, password);
 
-        if (user) {
+    if (user) {
 
-            next();
-        } else {
-
-            res.status(401).send({
-                message: 'wrong username or password'
-            });
-        }
-    } catch (err) {
-
-        console.error(err);
-
-        res.status(500).send({ message: 'something went wrong' });
+        return next();
     }
-};
+
+    res.status(401).send({
+        message: 'wrong username or password'
+    });
+});

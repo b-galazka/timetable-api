@@ -1,18 +1,11 @@
 const Hour = require('../../models/timetable/Hour');
+const handleUnknownError = require('../../middlewares/handlers/handleUnknownError');
+
+const getAll = handleUnknownError(async (req, res) => {
+
+    res.send(await Hour.loadList());
+});
 
 module.exports = {
-
-    async getAll(req, res) {
-
-        try {
-
-            res.send(await Hour.loadList());
-
-        } catch (err) {
-
-            console.error(err);
-
-            res.status(500).send({ message: 'something went wrong' });
-        }
-    }
+    getAll
 };

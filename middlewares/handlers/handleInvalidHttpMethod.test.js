@@ -1,8 +1,8 @@
 const handleInvalidHttpMethod = require('./handleInvalidHttpMethod');
-const ExpressRequest = require('../mocks/3rdPartyModules/ExpressRequest');
-const ExpressResponse = require('../mocks/3rdPartyModules/ExpressResponse');
+const ExpressRequest = require('../../mocks/3rdPartyModules/ExpressRequest');
+const ExpressResponse = require('../../mocks/3rdPartyModules/ExpressResponse');
 
-describe('catchJsonParsingError middleware', () => {
+describe('handleInvalidHttpMethod middleware', () => {
 
     let req;
     let res;

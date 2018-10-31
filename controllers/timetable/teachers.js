@@ -1,43 +1,28 @@
 const Teacher = require('../../models/timetable/Teacher');
+const handleUnknownError = require('../../middlewares/handlers/handleUnknownError');
+
+const getAll = handleUnknownError(async (req, res) => {
+
+    res.send(await Teacher.loadList());
+});
+
+const getOneBySlug = handleUnknownError(async (req, res) => {
+
+    const { slug } = req.params;
+
+    const teacher = await Teacher.findOne({ slug });
+
+    if (teacher) {
+
+        res.send(teacher);
+
+    } else {
+
+        res.status(404).send({ message: 'not found' });
+    }
+});
 
 module.exports = {
-
-    async getAll(req, res) {
-
-        try {
-
-            res.send(await Teacher.loadList());
-
-        } catch (err) {
-
-            console.error(err);
-
-            res.status(500).send({ message: 'something went wrong' });
-        }
-    },
-
-    async getOneBySlug(req, res) {
-
-        try {
-
-            const { slug } = req.params;
-
-            const teacher = await Teacher.findOne({ slug });
-
-            if (teacher) {
-
-                res.send(teacher);
-
-            } else {
-
-                res.status(404).send({ message: 'not found' });
-            }
-
-        } catch (err) {
-
-            console.error(err);
-
-            res.status(500).send({ message: 'something went wrong' });
-        }
-    }
+    getAll,
+    getOneBySlug
 };

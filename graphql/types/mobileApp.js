@@ -1,4 +1,12 @@
-const { GraphQLObjectType, GraphQLString, GraphQLList, GraphQLBoolean } = require('graphql');
+const {
+    GraphQLObjectType,
+    GraphQLString,
+    GraphQLList,
+    GraphQLBoolean,
+    GraphQLInputObjectType,
+    GraphQLNonNull
+} = require('graphql');
+
 const { GraphQLDateTime } = require('graphql-iso-date');
 const GraphQLObjectId = require('./objectId');
 
@@ -14,6 +22,14 @@ const TimetableType = new GraphQLObjectType({
         _id: { type: GraphQLObjectId },
         type: { type: GraphQLString },
         slug: { type: GraphQLString },
+    })
+});
+
+const InputTimetableType = new GraphQLInputObjectType({
+    name: 'InputMobileAppTimetable',
+    fields: () => ({
+        type: { type: new GraphQLNonNull(GraphQLString) },
+        slug: { type: new GraphQLNonNull(GraphQLString) },
     })
 });
 
@@ -64,5 +80,6 @@ const MobileAppType = new GraphQLObjectType({
 module.exports = {
     MobileAppUserType,
     MobileAppType,
-    UpdateRequestType
+    UpdateRequestType,
+    InputTimetableType
 };

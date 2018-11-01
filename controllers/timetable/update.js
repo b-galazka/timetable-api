@@ -19,28 +19,24 @@ const handleUserTimetableUpdateRequest = catchUnknownError(async (req, res) => {
     const { phoneID } = req.body;
     const scrappedTimetable = await getScrappedTimetable();
     const comparator = new TimetablesComparator(scrappedTimetable.teachers);
+    const areChangesInTimetable = await comparator.areChangesInTimetable();
 
-    if (! await comparator.areChangesInTimetable()) {
+    if (areChangesInTimetable) {
 
-        res.status(403).send({
-            message: 'no changes in timetable detected'
-        });
+        const timetableUpdater = new TimetableUpdater(scrappedTimetable);
 
-        return await UpdateRequest.create({
-            requestorPhoneID: phoneID,
-            timetableUpdated: false
-        });
+        await timetableUpdater.update();
+
+        res.send({ message: 'updated' });
+
+    } else {
+
+        res.status(403).send({ message: 'no changes in timetable detected' });
     }
-
-    const timetableUpdater = new TimetableUpdater(scrappedTimetable);
-
-    await timetableUpdater.update();
-
-    res.send({ message: 'updated' });
 
     await UpdateRequest.create({
         requestorPhoneID: phoneID,
-        timetableUpdated: true
+        timetableUpdated: areChangesInTimetable
     });
 });
 

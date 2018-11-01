@@ -3,9 +3,12 @@ const { GraphQLSchema } = require('graphql');
 const RootQuery = require('./queries');
 const RootMutation = require('./mutations');
 
+// TODO: add validation
+// TODO: fix tests
+// TODO: add GraphQL tests
 // TODO: catch errors
-// TODO: nest mutations
 // TODO: use enmus where it's possible
+// TODO: add timetable update mutations
 module.exports = new GraphQLSchema({
     query: RootQuery,
     mutation: RootMutation

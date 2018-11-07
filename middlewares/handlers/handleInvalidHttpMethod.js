@@ -1,10 +1,7 @@
-module.exports = (validMethods) => {
+module.exports = validMethods => (req, res) => {
 
-    return (req, res) => {
-
-        res.status(405).send({
-            message: 'method not allowed',
-            allowedMethods: Array.isArray(validMethods) ? validMethods.join(', ') : validMethods
-        });
-    };
+    res.status(405).send({
+        message: 'method not allowed',
+        allowedMethods: Array.isArray(validMethods) ? validMethods.join(', ') : validMethods
+    });
 };

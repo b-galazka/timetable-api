@@ -1,19 +1,16 @@
-module.exports = (callback) => {
+module.exports = callback => async (req, res, next) => {
 
-    return async (req, res, next) => {
+    try {
 
-        try {
+        await callback(req, res, next);
 
-            await callback(req, res, next);
+    } catch (err) {
 
-        } catch (err) {
+        console.error(err);
 
-            console.error(err);
+        if (!res.headersSent) {
 
-            if (!res.headersSent) {
-
-                res.status(500).send({ message: 'something went wrong' });
-            }
+            res.status(500).send({ message: 'something went wrong' });
         }
-    };
+    }
 };

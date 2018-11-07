@@ -8,18 +8,13 @@ class TimetablesComparator {
 
         const { _sortingTeachersCallback } = TimetablesComparator;
 
-        this._newTeachersTimetable = newTeachersTimetable.sort(
-            _sortingTeachersCallback
-        );
-
+        this._newTeachersTimetable = newTeachersTimetable.sort(_sortingTeachersCallback);
         this._currentTeachersTimetable = null;
     }
 
     areChangesInTimetable() {
 
         return (async () => {
-
-            const { _sortingTeachersCallback } = TimetablesComparator;
 
             const excludedFields = {
                 _id: false,
@@ -38,25 +33,18 @@ class TimetablesComparator {
 
             const newTimetable = this._newTeachersTimetable;
 
-            return (
-                currentTimetable.length !== newTimetable.length ||
-                !this._compareTimetables()
-            );
+            return (currentTimetable.length !== newTimetable.length || !this._compareTimetables());
         })();
     }
 
     static _sortingTeachersCallback({ slug: slug1 }, { slug: slug2 }) {
 
-        if (slug1 > slug2) {
-
-            return 1;
-        } else if (slug1 === slug2) {
+        if (slug1 === slug2) {
 
             return 0;
-        } else {
-
-            return -1;
         }
+
+        return (slug1 > slug2) ? 1 : -1;
     }
 
     _compareTimetables() {
@@ -116,25 +104,13 @@ class TimetablesComparator {
 
     static _compareTimetableObjectsFields(newObjectField, currentObjectField) {
 
-        const {
-            _compareTimetableObjects,
-            _isNullOrUndefined
-        } = TimetablesComparator;
+        const { _compareTimetableObjects, _isNullOrUndefined } = TimetablesComparator;
 
-        if (
-            _isNullOrUndefined(currentObjectField) ||
-            _.isEqual(currentObjectField, [null])
-        ) {
+        if (_isNullOrUndefined(currentObjectField) || _.isEqual(currentObjectField, [null])) {
 
-            return (
-                _isNullOrUndefined(newObjectField) ||
-                _.isEqual(newObjectField, [null])
-            );
+            return (_isNullOrUndefined(newObjectField) || _.isEqual(newObjectField, [null]));
 
-        } else if (
-            Array.isArray(newObjectField) &&
-            Array.isArray(currentObjectField)
-        ) {
+        } else if (Array.isArray(newObjectField) && Array.isArray(currentObjectField)) {
 
             return (
                 newObjectField.length === currentObjectField.length &&

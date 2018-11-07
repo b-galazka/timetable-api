@@ -34,14 +34,11 @@ class DocumentsDownloader {
         return (async () => {
 
             const html = await HttpConnection.get(this.listUrl);
-            
+
             const $ = cheerio.load(html);
             const urls = [];
 
-            $(this.listSelector).each((index, elem) => {
-                
-                urls.push(elem.attribs.href);
-            });
+            $(this.listSelector).each((index, elem) => urls.push(elem.attribs.href));
 
             return urls;
         })();

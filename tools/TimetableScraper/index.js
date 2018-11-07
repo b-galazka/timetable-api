@@ -24,9 +24,7 @@ class TimetableScraper {
 
         return (async () => {
 
-            const promises = this.documents.map(doc => (
-                this._getScrapingSingleDocumentPromise(doc)
-            ));
+            const promises = this.documents.map(doc => this._getScrapingSingleDocumentPromise(doc));
 
             await Promise.all(promises);
 
@@ -100,14 +98,7 @@ class TimetableScraper {
         });
     }
 
-    _addData({
-        teacherSlug,
-        dayNumber,
-        hourNumber,
-        subject,
-        classroomNumber,
-        schoolClass
-    }) {
+    _addData({ teacherSlug, dayNumber, hourNumber, subject, classroomNumber, schoolClass }) {
 
         const {
             slug: correctTeacherSlug,
@@ -162,19 +153,15 @@ class TimetableScraper {
 
         const { teachers } = this;
         const correctSlug = teachersHashtags[slug] || slug;
-        
+
         let teacher = teachers.find(teacher => teacher.slug === correctSlug);
 
         if (teacher === undefined) {
 
-            const name = (
-                teachersNames[correctSlug] ?
-                teachersNames[correctSlug].trim() :
-                null
-            );
-    
+            const name = teachersNames[correctSlug] ? teachersNames[correctSlug].trim() : null;
+
             teacher = new Teacher(correctSlug, name);
-    
+
             teachers.push(teacher);
         }
 

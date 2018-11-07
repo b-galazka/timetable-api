@@ -12,12 +12,7 @@ class TimetableUpdater {
 
     save() {
 
-        const {
-            teachers,
-            classrooms,
-            schoolClasses,
-            hours
-        } = this.scrappedTimetable;
+        const { teachers, classrooms, schoolClasses, hours } = this.scrappedTimetable;
 
         return Promise.all([
             Teacher.insertMany(teachers),

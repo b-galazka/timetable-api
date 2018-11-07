@@ -15,6 +15,7 @@ const UpdateRequest = require('../../models/mobileApp/UpdateRequest');
 
 const guard = require('../guards');
 const authGuard = require('../guards/authGuard');
+const catchUnknownError = require('../errorsCatchers/catchUnknownError');
 
 const TimetableType = new GraphQLObjectType({
     name: 'MobileAppTimetable',
@@ -67,12 +68,12 @@ const MobileAppType = new GraphQLObjectType({
 
         users: {
             type: new GraphQLList(MobileAppUserType),
-            resolve: guard(authGuard, () => MobileAppUser.find())
+            resolve: catchUnknownError(guard(authGuard, () => MobileAppUser.find()))
         },
 
         updateRequests: {
             type: new GraphQLList(UpdateRequestType),
-            resolve: guard(authGuard, () => UpdateRequest.find())
+            resolve: catchUnknownError(guard(authGuard, () => UpdateRequest.find()))
         }
     })
 });

@@ -6,6 +6,7 @@ const Teacher = require('../../models/timetable/Teacher');
 const Classroom = require('../../models/timetable/Classroom');
 const SchoolClass = require('../../models/timetable/Class');
 const Hour = require('../../models/timetable/Hour');
+const catchUnknownError = require('../errorsCatchers/catchUnknownError');
 
 const LessonType = new GraphQLObjectType({
     name: 'Lesson',
@@ -65,22 +66,22 @@ const TimetableType = new GraphQLObjectType({
 
         teachers: {
             type: new GraphQLList(TeacherType),
-            resolve: () => Teacher.loadList()
+            resolve: catchUnknownError(() => Teacher.loadList())
         },
 
         classrooms: {
             type: new GraphQLList(ClassroomType),
-            resolve: () => Classroom.loadList()
+            resolve: catchUnknownError(() => Classroom.loadList())
         },
 
         classes: {
             type: new GraphQLList(SchoolClassType),
-            resolve: () => SchoolClass.loadList()
+            resolve: catchUnknownError(() => SchoolClass.loadList())
         },
 
         hours: {
             type: new GraphQLList(HourType),
-            resolve: () => Hour.loadList()
+            resolve: catchUnknownError(() => Hour.loadList())
         },
 
         teacher: {
@@ -88,7 +89,7 @@ const TimetableType = new GraphQLObjectType({
             args: {
                 slug: { type: GraphQLString }
             },
-            resolve: (parentValue, args) => {
+            resolve: catchUnknownError((parentValue, args) => {
 
                 const { slug } = args;
 
@@ -98,7 +99,7 @@ const TimetableType = new GraphQLObjectType({
                 }
 
                 return Teacher.findOne({ slug });
-            }
+            })
         },
 
         classroom: {
@@ -106,13 +107,13 @@ const TimetableType = new GraphQLObjectType({
             args: {
                 number: { type: GraphQLString }
             },
-            resolve: (parentValue, args) => {
+            resolve: catchUnknownError((parentValue, args) => {
 
                 const { number } = args;
                 const criteria = (number === undefined) ? {} : { number };
 
                 return Classroom.findOne(criteria, {}, { sort: { number: 1 } });
-            }
+            })
         },
 
         class: {
@@ -120,13 +121,13 @@ const TimetableType = new GraphQLObjectType({
             args: {
                 slug: { type: GraphQLString }
             },
-            resolve: (parentValue, args) => {
+            resolve: catchUnknownError((parentValue, args) => {
 
                 const { slug } = args;
                 const criteria = (slug === undefined) ? {} : { slug };
 
                 return SchoolClass.findOne(criteria, {}, { sort: { slug: 1 } });
-            }
+            })
         }
     }
 });

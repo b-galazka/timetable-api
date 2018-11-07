@@ -3,7 +3,6 @@ const { GraphQLSchema } = require('graphql');
 const RootQuery = require('./queries');
 const RootMutation = require('./mutations');
 
-// TODO: add validation
 // TODO: fix tests
 // TODO: add GraphQL tests
 // TODO: catch errors

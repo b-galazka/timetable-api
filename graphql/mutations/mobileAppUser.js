@@ -2,9 +2,11 @@ const { GraphQLString, GraphQLBoolean, GraphQLNonNull } = require('graphql');
 
 const guard = require('../guards');
 const authGuard = require('../guards/authGuard');
+const validationGuard = require('../guards/validationGuard');
 
 const { MobileAppUserType, InputTimetableType } = require('../types/mobileApp');
 const MobileAppUser = require('../../models/mobileApp/MobileAppUser');
+const mobileAppUserValidationSchema = require('../../validationSchemas/mobileAppUser');
 
 const createOrUpdate = {
     type: MobileAppUserType,
@@ -18,7 +20,10 @@ const createOrUpdate = {
         mostPopularTimetable: { type: InputTimetableType }
     },
 
-    resolve: guard(authGuard, (parentValue, args) => MobileAppUser.createOrUpdate(args))
+    resolve: guard(
+        [authGuard, validationGuard(mobileAppUserValidationSchema)],
+        (parentValue, args) => MobileAppUser.createOrUpdate(args)
+    )
 };
 
 module.exports = {

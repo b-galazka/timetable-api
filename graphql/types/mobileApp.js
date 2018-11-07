@@ -20,7 +20,6 @@ const TimetableType = new GraphQLObjectType({
     name: 'MobileAppTimetable',
     fields: () => ({
         _id: { type: GraphQLObjectId },
-        // TODO: use enum
         type: { type: GraphQLString },
         slug: { type: GraphQLString },
     })
@@ -29,7 +28,6 @@ const TimetableType = new GraphQLObjectType({
 const InputTimetableType = new GraphQLInputObjectType({
     name: 'InputMobileAppTimetable',
     fields: () => ({
-        // TODO: use enum
         type: { type: new GraphQLNonNull(GraphQLString) },
         slug: { type: new GraphQLNonNull(GraphQLString) },
     })

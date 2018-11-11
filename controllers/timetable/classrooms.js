@@ -1,7 +1,7 @@
 const Classroom = require('../../models/timetable/Classroom');
 const catchUnknownError = require('../../middlewares/errorsCatchers/catchUnknownError');
 
-const getAll = catchUnknownError(async (req, res) => {
+exports.getAll = catchUnknownError(async (req, res) => {
 
     const fields = {
         number: true,
@@ -11,7 +11,7 @@ const getAll = catchUnknownError(async (req, res) => {
     res.send(await Classroom.loadList(fields));
 });
 
-const getOneByNumber = catchUnknownError(async (req, res) => {
+exports.getOneByNumber = catchUnknownError(async (req, res) => {
 
     const { number } = req.params;
 
@@ -26,8 +26,3 @@ const getOneByNumber = catchUnknownError(async (req, res) => {
         res.status(404).send({ message: 'not found' });
     }
 });
-
-module.exports = {
-    getAll,
-    getOneByNumber
-};

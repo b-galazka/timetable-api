@@ -1,7 +1,4 @@
-module.exports = {
+exports.getHome = (req, res) => {
 
-    getHome(req, res) {
-
-        res.send({});
-    }
-};
+    res.send({});
+}

@@ -9,7 +9,7 @@ const { MobileAppUserType, InputTimetableType } = require('../types/mobileApp');
 const MobileAppUser = require('../../models/mobileApp/MobileAppUser');
 const mobileAppUserValidationSchema = require('../../validationSchemas/mobileAppUser');
 
-const createOrUpdate = {
+exports.createOrUpdate = {
     type: MobileAppUserType,
 
     args: {
@@ -25,8 +25,4 @@ const createOrUpdate = {
         [authGuard, validationGuard(mobileAppUserValidationSchema)],
         catchUnknownError((parentValue, args) => MobileAppUser.createOrUpdate(args))
     )
-};
-
-module.exports = {
-    createOrUpdate
 };

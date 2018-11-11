@@ -9,7 +9,7 @@ const { MobileAppType } = require('../types/mobileApp');
 const MobileApp = require('../../models/mobileApp/MobileApp');
 const mobileAppValidationSchema = require('../../validationSchemas/mobileApp');
 
-const createOrUpdate = {
+exports.createOrUpdate = {
     type: MobileAppType,
 
     args: {
@@ -23,8 +23,4 @@ const createOrUpdate = {
         [authGuard, validationGuard(mobileAppValidationSchema)],
         catchUnknownError((parentValue, args) => MobileApp.createOrUpdate(args))
     )
-};
-
-module.exports = {
-    createOrUpdate
 };

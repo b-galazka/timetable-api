@@ -1,23 +1,12 @@
 const Joi = require('joi');
 
-const mobileAppUserValidation = require('./mobileAppUserValidation');
+const reqBodyValidation = require('./reqBodyValidation');
 const ExpressRequest = require('../../mocks/3rdPartyModules/ExpressRequest');
 const ExpressResponse = require('../../mocks/3rdPartyModules/ExpressResponse');
-const mobileAppUserSchema = require('../../validationSchemas/mobileAppUser');
 
-jest.mock(
-    '../../validationSchemas/mobileAppUser',
-    () => {
+const validationSchema = Joi.object().keys({ field: Joi.boolean().required() });
 
-        const Joi = require('joi');
-
-        return Joi.object().keys({
-            field: Joi.boolean().required()
-        });
-    }
-);
-
-describe('mobileAppUserValidation middleware', () => {
+describe('timetableUpdateUserRequestValidation middleware', () => {
 
     let req;
     let res;
@@ -28,11 +17,18 @@ describe('mobileAppUserValidation middleware', () => {
         res = new ExpressResponse();
     });
 
+    it('should return a function', () => {
+
+        const returnedValue = reqBodyValidation(validationSchema);
+
+        expect(returnedValue).toBeInstanceOf(Function);
+    });
+
     it('should respond with status 400 if validation error has occured', () => {
 
         const spy = jest.spyOn(res, 'status');
 
-        mobileAppUserValidation(req, res, jest.fn());
+        reqBodyValidation(validationSchema)(req, res, jest.fn());
 
         expect(spy).toHaveBeenCalledTimes(1);
         expect(spy).toHaveBeenCalledWith(400);
@@ -43,10 +39,10 @@ describe('mobileAppUserValidation middleware', () => {
 
     it('should respond with JSON validation error if it has occured', () => {
 
-        const { error } = Joi.validate(req.body, mobileAppUserSchema);
+        const { error } = Joi.validate(req.body, validationSchema);
         const spy = jest.spyOn(res, 'send');
 
-        mobileAppUserValidation(req, res, jest.fn());
+        reqBodyValidation(validationSchema)(req, res, jest.fn());
 
         expect(spy).toHaveBeenCalledTimes(1);
 
@@ -66,7 +62,7 @@ describe('mobileAppUserValidation middleware', () => {
 
         const nextFn = jest.fn();
 
-        mobileAppUserValidation(req, res, nextFn);
+        reqBodyValidation(validationSchema)(req, res, nextFn);
 
         expect(nextFn).toHaveBeenCalled();
     });

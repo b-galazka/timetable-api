@@ -1,7 +1,4 @@
-module.exports = {
+exports.respondWithNotFoundMessage = (req, res) => {
 
-    respondWithNotFoundMessage(req, res) {
-
-        res.status(404).send({ message: 'not found' });
-    }
-};
+    res.status(404).send({ message: 'not found' });
+}

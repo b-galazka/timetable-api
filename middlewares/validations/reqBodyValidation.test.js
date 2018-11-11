@@ -1,23 +1,12 @@
 const Joi = require('joi');
 
-const mobileAppValidation = require('./mobileAppValidation');
+const reqBodyValidation = require('./reqBodyValidation');
 const ExpressRequest = require('../../mocks/3rdPartyModules/ExpressRequest');
 const ExpressResponse = require('../../mocks/3rdPartyModules/ExpressResponse');
-const mobileAppSchema = require('../../validationSchemas/mobileApp');
 
-jest.mock(
-    '../../validationSchemas/mobileApp',
-    () => {
+const validationSchema = Joi.object().keys({ field: Joi.boolean().required() });
 
-        const Joi = require('joi');
-
-        return Joi.object().keys({
-            version: Joi.number().required()
-        });
-    }
-);
-
-describe('mobileAppValidation middleware', () => {
+describe('timetableUpdateUserRequestValidation middleware', () => {
 
     let req;
     let res;
@@ -28,11 +17,18 @@ describe('mobileAppValidation middleware', () => {
         res = new ExpressResponse();
     });
 
+    it('should return a function', () => {
+
+        const returnedValue = reqBodyValidation(validationSchema);
+
+        expect(returnedValue).toBeInstanceOf(Function);
+    });
+
     it('should respond with status 400 if validation error has occured', () => {
 
         const spy = jest.spyOn(res, 'status');
 
-        mobileAppValidation(req, res, jest.fn());
+        reqBodyValidation(validationSchema)(req, res, jest.fn());
 
         expect(spy).toHaveBeenCalledTimes(1);
         expect(spy).toHaveBeenCalledWith(400);
@@ -43,10 +39,10 @@ describe('mobileAppValidation middleware', () => {
 
     it('should respond with JSON validation error if it has occured', () => {
 
-        const { error } = Joi.validate(req.body, mobileAppSchema);
+        const { error } = Joi.validate(req.body, validationSchema);
         const spy = jest.spyOn(res, 'send');
 
-        mobileAppValidation(req, res, jest.fn());
+        reqBodyValidation(validationSchema)(req, res, jest.fn());
 
         expect(spy).toHaveBeenCalledTimes(1);
 
@@ -61,12 +57,12 @@ describe('mobileAppValidation middleware', () => {
     it('should call next if provided req.body is valid', () => {
 
         const req = new ExpressRequest({
-            body: { version: 1.1 }
+            body: { field: true }
         });
 
         const nextFn = jest.fn();
 
-        mobileAppValidation(req, res, nextFn);
+        reqBodyValidation(validationSchema)(req, res, nextFn);
 
         expect(nextFn).toHaveBeenCalled();
     });

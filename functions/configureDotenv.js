@@ -1,5 +1,6 @@
 const dotenv = require('dotenv');
 
+// TODO: add tests
 module.exports = () => {
 
     const { NODE_ENV } = process.env;

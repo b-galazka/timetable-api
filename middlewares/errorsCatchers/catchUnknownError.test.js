@@ -14,6 +14,20 @@ describe('catchUnknownError middleware', () => {
         res = new ExpressResponse();
     });
 
+    it('should return a function', () => {
+
+        const returnedValue = catchUnknownError(() => {});
+
+        expect(returnedValue).toBeInstanceOf(Function);
+    });
+
+    it('should return an async function', () => {
+
+        const func = catchUnknownError(() => { });
+
+        expect(func()).toBeInstanceOf(Promise);
+    });
+
     describe('error has been thrown', () => {
 
         beforeEach(() => {

@@ -4,15 +4,6 @@ const timetableUpdateRequestSchema = require('../../validationSchemas/timetableU
 
 module.exports = (req, res, next) => {
 
-    const { dev } = req.body;
-
-    if (dev === true) {
-
-        return res.status(403).send({
-            message: 'timetable has not been updated, because of dev mode'
-        });
-    }
-
     const { error } = Joi.validate(req.body, timetableUpdateRequestSchema);
 
     if (error) {

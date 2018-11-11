@@ -13,6 +13,13 @@ describe('handleInvalidHttpMethod middleware', () => {
         res = new ExpressResponse();
     });
 
+    it('should return a function', () => {
+
+        const returnedValue = handleInvalidHttpMethod([]);
+
+        expect(returnedValue).toBeInstanceOf(Function);
+    });
+
     it('should respond with status 405', () => {
 
         const spy = jest.spyOn(res, 'status');

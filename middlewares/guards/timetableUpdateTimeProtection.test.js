@@ -129,45 +129,6 @@ describe('timetableUpdateTimeProtection middleware', () => {
         spy.mockRestore();
     });
 
-    it('should not respond with status 500 ' +
-        'if UpdateRequest.create has thrown an exception ', async () => {
-
-        expect.assertions(2);
-
-        UpdateRequest.create = () => Promise.reject(new Error());
-
-        const spy = jest.spyOn(res, 'status');
-
-        await timetableUpdateTimeProtection(req, res, jest.fn());
-
-        expect(spy).toHaveBeenCalledTimes(1);
-        expect(spy).not.toHaveBeenCalledWith(500);
-
-        spy.mockReset();
-        spy.mockRestore();
-    });
-
-    it('should not respond with "something went wrong" JSON message ' +
-        'if UpdateRequest.canBeProcessed has thrown an exception', async () => {
-
-        expect.assertions(2);
-
-        UpdateRequest.create = () => Promise.reject(new Error());
-
-        const spy = jest.spyOn(res, 'send');
-
-        await timetableUpdateTimeProtection(req, res, jest.fn());
-
-        expect(spy).toHaveBeenCalledTimes(1);
-
-        expect(spy).not.toHaveBeenCalledWith({
-            message: 'something went wrong'
-        });
-
-        spy.mockReset();
-        spy.mockRestore();
-    });
-
     afterAll(() => {
 
         UpdateRequest.canBeProcessed = originalCanBeProcessedMethod;

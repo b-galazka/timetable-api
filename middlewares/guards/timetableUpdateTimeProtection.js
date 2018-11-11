@@ -8,14 +8,14 @@ module.exports = catchUnknownError(async (req, res, next) => {
         return next();
     }
 
-    res.status(403).send({
-        message: 'your request cannot be processed, because of time limit'
-    });
-
     const { phoneID } = req.body;
 
     await UpdateRequest.create({
         requestorPhoneID: phoneID,
         timetableUpdated: false
+    });
+
+    res.status(403).send({
+        message: 'your request cannot be processed, because of time limit'
     });
 });

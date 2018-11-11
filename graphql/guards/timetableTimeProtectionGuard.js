@@ -1,32 +1,21 @@
 const UpdateRequest = require('../../models/mobileApp/UpdateRequest');
+const ErrorResponse = require('../errors/ErrorResponse');
 
-module.exports = async (parentValue, args) => {
+const catchUnknownError = require('../errorsCatchers/catchUnknownError');
+
+module.exports = catchUnknownError(async (parentValue, args) => {
+
+    if (await UpdateRequest.canBeProcessed()) {
+
+        return;
+    }
 
     const { phoneID } = args;
 
-    let canTimetableBeUpdated;
+    await UpdateRequest.create({
+        requestorPhoneID: phoneID,
+        timetableUpdated: false
+    });
 
-    try {
-
-        canTimetableBeUpdated = await UpdateRequest.canBeProcessed();
-
-        if (!canTimetableBeUpdated) {
-
-            await UpdateRequest.create({
-                requestorPhoneID: phoneID,
-                timetableUpdated: false
-            });
-        }
-
-    } catch (err) {
-
-        console.error(err);
-
-        throw new Error('something went wrong');
-    }
-
-    if (!canTimetableBeUpdated) {
-
-        throw new Error('your request cannot be processed, because of time limit');
-    }
-};
+    throw new ErrorResponse('your request cannot be processed, because of time limit', 403);
+});

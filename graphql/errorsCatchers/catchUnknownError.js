@@ -1,3 +1,5 @@
+const ErrorResponse = require('../errors/ErrorResponse');
+
 module.exports = resolve => async (...params) => {
 
     try {
@@ -6,8 +8,13 @@ module.exports = resolve => async (...params) => {
 
     } catch (err) {
 
+        if (err instanceof ErrorResponse) {
+
+            throw err;
+        }
+
         console.error(err);
 
-        throw new Error('something went wrong');
+        throw new ErrorResponse('something went wrong', 500);
     }
 };

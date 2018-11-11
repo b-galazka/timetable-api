@@ -16,6 +16,7 @@ const setCorsHeaders = require('./middlewares/guards/setCorsHeaders');
 const catchCorsError = require('./middlewares/errorsCatchers/catchCorsError');
 
 const GraphqlSchema = require('./graphql/schema');
+const formatGraphqlError = require('./graphql/errors/formatError');
 
 //server configuration file
 const { port, ip, mongoUrl } = require('./config');
@@ -32,7 +33,8 @@ app.use(catchCorsError);
 
 app.use('/graphql', expressGraphql({
     schema: GraphqlSchema,
-    graphiql: isDev
+    graphiql: isDev,
+    formatError: formatGraphqlError
 }));
 
 app.use(express.json());

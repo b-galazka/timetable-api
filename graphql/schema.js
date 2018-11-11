@@ -5,7 +5,6 @@ const RootMutation = require('./mutations');
 
 // TODO: fix tests
 // TODO: add GraphQL tests
-// TODO: add timetable update mutations
 module.exports = new GraphQLSchema({
     query: RootQuery,
     mutation: RootMutation

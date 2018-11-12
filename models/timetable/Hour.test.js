@@ -29,7 +29,7 @@ describe('Hour.loadList', () => {
                 return Promise.resolve(findDbResponse);
             }
 
-            console.error('Hourd.find called with invalid params');
+            return Promise.resolve('Hourd.find called with invalid params');
         };
     });
 
@@ -55,7 +55,7 @@ describe('Hour.loadList', () => {
             { start: '0:30', end: '1:15' },
             { start: '1:32', end: '2:19' },
             { start: '3:56', end: '4:00' },
-            { start: '4:02', end: '5:17' } 
+            { start: '4:02', end: '5:17' }
         ]);
 
         findDbResponse = [

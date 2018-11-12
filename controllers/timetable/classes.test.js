@@ -116,7 +116,7 @@ describe('classes.getOneBySlug controller', () => {
                 return Promise.resolve((criteria.slug === 'XYZ') ? responseValue : null);
             }
 
-            console.error('Class.findOne called with invalid params');
+            return Promise.resolve('Class.findOne called with invalid params');
         };
 
         req = new ExpressRequest();

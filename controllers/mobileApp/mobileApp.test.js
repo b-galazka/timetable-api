@@ -32,7 +32,7 @@ describe('mobileApp.getMobileAppInfo controller', () => {
                 return Promise.resolve(responseValue);
             }
 
-            console.error('MobileApp.findOne called with invalid params');
+            return Promise.resolve('MobileApp.findOne called with invalid params');
         };
 
         req = new ExpressRequest();

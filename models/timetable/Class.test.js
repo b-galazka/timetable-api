@@ -4,7 +4,8 @@ const SchoolClass = require('./Class');
 
 describe('Class.loadList', () => {
 
-    let findDbResponse;
+    let findDbResponse = 'database response';
+    let expectedFields = {};
 
     const originalFindMethod = SchoolClass.find;
 
@@ -13,7 +14,7 @@ describe('Class.loadList', () => {
         SchoolClass.find = (criteria, fields, options) => {
 
             const areCriteriaValid = _.isEqual(criteria, {});
-            const areFieldsValid = _.isEqual(fields, { slug: true, _id: true });
+            const areFieldsValid = _.isEqual(fields, expectedFields);
             const areOptionsValid = _.isEqual(options, { sort: { slug: 1 } });
 
             if (areCriteriaValid && areFieldsValid && areOptionsValid) {
@@ -21,7 +22,7 @@ describe('Class.loadList', () => {
                 return Promise.resolve(findDbResponse);
             }
 
-            console.error('Class.find called with invalid params');
+            return Promise.resolve('Class.find called with invalid params');
         };
     });
 
@@ -43,8 +44,23 @@ describe('Class.loadList', () => {
         expect(await SchoolClass.loadList()).toBe('another database response');
     });
 
+    it('should resolve a promise with Class.find (called with custom fields) output', async () => {
+
+        expect.assertions(2);
+
+        expectedFields = { field1: true, field2: true };
+
+        expect(await SchoolClass.loadList(expectedFields)).toBe('database response');
+
+        expectedFields = { field5: true, field3: true };
+
+        expect(await SchoolClass.loadList(expectedFields)).toBe('database response');
+    });
+
     afterEach(() => {
 
         SchoolClass.find = originalFindMethod;
+        findDbResponse = 'database response';
+        expectedFields = {};
     });
 });

@@ -15,7 +15,7 @@ const findOneMethodMock = (criteria, fields, options) => {
         return Promise.resolve(findOneDbResponse);
     }
 
-    console.error('UpdateRequest.findOne called with invalid params');
+    return Promise.resolve('UpdateRequest.findOne called with invalid params');
 };
 
 let findOneDbResponse;

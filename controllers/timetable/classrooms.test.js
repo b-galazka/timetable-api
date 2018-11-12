@@ -116,7 +116,7 @@ describe('classrooms.getOneBySlug controller', () => {
                 return Promise.resolve((criteria.number === '30') ? responseValue : null);
             }
 
-            console.error('Classroom.findOne called with invalid params');
+            return Promise.resolve('Classroom.findOne called with invalid params');
         };
 
         req = new ExpressRequest();

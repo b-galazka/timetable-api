@@ -4,7 +4,8 @@ const Teacher = require('./');
 
 describe('Teacher.loadList', () => {
 
-    let findDbResponse;
+    let findDbResponse = [];
+    let expectedFields = {};
 
     const originalFindMethod = Teacher.find;
 
@@ -13,7 +14,7 @@ describe('Teacher.loadList', () => {
         Teacher.find = (criteria, fields, options) => {
 
             const areCriteriaValid = _.isEqual(criteria, {});
-            const areFieldsValid = _.isEqual(fields, { slug: true, name: true, _id: true });
+            const areFieldsValid = _.isEqual(fields, expectedFields);
             const areOptionsValid = options === undefined || _.isEqual(options, {});
 
             if (areCriteriaValid && areFieldsValid && areOptionsValid) {
@@ -21,15 +22,26 @@ describe('Teacher.loadList', () => {
                 return Promise.resolve(findDbResponse);
             }
 
-            console.error('Teacher.find called with invalid params');
+            return Promise.resolve('Teacher.find called with invalid params');
         };
     });
 
     it('should return a promise', () => {
 
-        findDbResponse = [];
-
         expect(Teacher.loadList()).toBeInstanceOf(Promise);
+    });
+
+    it('should resolve a promise with teachers with provided custom fields', async () => {
+
+        expect.assertions(2);
+
+        expectedFields = { field1: true, field2: true};
+
+        expect(await Teacher.loadList(expectedFields)).toEqual([]);
+
+        expectedFields = { xyz: true };
+
+        expect(await Teacher.loadList(expectedFields)).toEqual([]);
     });
 
     it('should resolve a promise with teachers sorted alphabetically by lastname', async () => {
@@ -47,7 +59,7 @@ describe('Teacher.loadList', () => {
             { name: 'A. A' },
             { name: 'G. Ą' },
             { name: 'B. C' },
-            { name: 'A. Ć' }  
+            { name: 'A. Ć' }
         ]);
     });
 
@@ -100,5 +112,7 @@ describe('Teacher.loadList', () => {
     afterEach(() => {
 
         Teacher.find = originalFindMethod;
+        findDbResponse = [];
+        expectedFields = {};
     });
 });

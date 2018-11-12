@@ -35,7 +35,7 @@ describe('User.findByUsernameAndPassword', () => {
                 return Promise.resolve(findOneDbResponse);
             }
 
-            console.error('User.findOne called with invalid params');
+            return Promise.resolve('User.findOne called with invalid params');
         };
     });
 

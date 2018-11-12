@@ -219,6 +219,10 @@ Schema of a request body:
 &nbsp;&nbsp;&nbsp;&nbsp;phoneID: string  
 }  
 
+## POST /graphql
+
+TODO: add description  
+
 # How to use:
 
 1. Run `npm install` command.

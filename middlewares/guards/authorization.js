@@ -19,7 +19,6 @@ module.exports = catchUnknownError(async (req, res, next) => {
 
     const { username, password } = decodeCredentials(authHeader);
 
-
     const user = await User.findByUsernameAndPassword(username, password);
 
     if (user) {

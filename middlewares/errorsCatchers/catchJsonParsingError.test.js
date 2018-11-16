@@ -10,6 +10,7 @@ describe('catchJsonParsingError middleware', () => {
     let req;
     let res;
     let err;
+    let spy;
 
     beforeEach(() => {
 
@@ -20,40 +21,40 @@ describe('catchJsonParsingError middleware', () => {
 
     it('should log an error', () => {
 
-        const spy = jest.spyOn(logger, 'error');
+        spy = jest.spyOn(logger, 'error');
 
         catchJsonParsingError(err, req, res, jest.fn());
 
         expect(spy).toHaveBeenCalledTimes(1);
         expect(spy).toHaveBeenCalledWith(err);
-
-        spy.mockReset();
-        spy.mockRestore();
     });
 
     it('should respond with status 400', () => {
 
-        const spy = jest.spyOn(res, 'status');
+        spy = jest.spyOn(res, 'status');
 
         catchJsonParsingError(err, req, res, jest.fn());
 
         expect(spy).toHaveBeenCalledTimes(1);
         expect(spy).toHaveBeenCalledWith(400);
-
-        spy.mockReset();
-        spy.mockRestore();
     });
 
     it('should respond with "invalid JSON format" JSON message', () => {
 
-        const spy = jest.spyOn(res, 'send');
+        spy = jest.spyOn(res, 'send');
 
         catchJsonParsingError(err, req, res, jest.fn());
 
         expect(spy).toHaveBeenCalledTimes(1);
         expect(spy).toHaveBeenCalledWith({ message: 'invalid JSON format' });
+    });
 
-        spy.mockReset();
-        spy.mockRestore();
+    afterEach(() => {
+
+        if (spy) {
+
+            spy.mockReset();
+            spy.mockRestore();
+        }
     });
 });

@@ -8,6 +8,7 @@ describe('hours.getAll controller', () => {
     let req;
     let res;
     let responseValue;
+    let spy;
 
     const originalLoadListMethod = Hour.loadList;
 
@@ -24,8 +25,8 @@ describe('hours.getAll controller', () => {
         expect.assertions(4);
 
         let res = new ExpressResponse();
-        let spy = jest.spyOn(res, 'send');
 
+        spy = jest.spyOn(res, 'send');
         responseValue = 'hours list';
 
         await getAll(req, res);
@@ -44,9 +45,6 @@ describe('hours.getAll controller', () => {
 
         expect(spy).toHaveBeenCalledTimes(1);
         expect(spy).toHaveBeenCalledWith(responseValue);
-
-        spy.mockReset();
-        spy.mockRestore();
     });
 
     it('should call next(err) if error has occured during data loading', async () => {
@@ -66,5 +64,11 @@ describe('hours.getAll controller', () => {
     afterEach(() => {
 
         Hour.loadList = originalLoadListMethod;
+
+        if (spy) {
+
+            spy.mockReset();
+            spy.mockRestore();
+        }
     });
 });

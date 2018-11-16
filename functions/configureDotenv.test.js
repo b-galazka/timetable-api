@@ -52,7 +52,10 @@ describe('configureDotenv', () => {
 
         process.env.NODE_ENV = NODE_ENV;
 
-        spy.mockReset();
-        spy.mockRestore();
+        if (spy) {
+
+            spy.mockReset();
+            spy.mockRestore();
+        }
     });
 });

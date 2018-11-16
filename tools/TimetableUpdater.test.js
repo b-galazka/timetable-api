@@ -11,6 +11,8 @@ jest.mock('../models/timetable/Hour', () => require('../mocks/3rdPartyModules/mo
 
 describe('TimetableUpdater.drop', () => {
 
+    let spy;
+
     it('should return a promise', () => {
 
         expect(TimetableUpdater.drop()).toBeInstanceOf(Promise);
@@ -20,56 +22,44 @@ describe('TimetableUpdater.drop', () => {
 
         expect.assertions(1);
 
-        const spy = jest.spyOn(Teacher.collection, 'drop');
+        spy = jest.spyOn(Teacher.collection, 'drop');
 
         await TimetableUpdater.drop();
 
         expect(spy).toHaveBeenCalled();
-
-        spy.mockReset();
-        spy.mockRestore();
     });
 
     it('should drop school classes collection', async () => {
 
         expect.assertions(1);
 
-        const spy = jest.spyOn(SchoolClass.collection, 'drop');
+        spy = jest.spyOn(SchoolClass.collection, 'drop');
 
         await TimetableUpdater.drop();
 
         expect(spy).toHaveBeenCalled();
-
-        spy.mockReset();
-        spy.mockRestore();
     });
 
     it('should drop classrooms collection', async () => {
 
         expect.assertions(1);
 
-        const spy = jest.spyOn(Classroom.collection, 'drop');
+        spy = jest.spyOn(Classroom.collection, 'drop');
 
         await TimetableUpdater.drop();
 
         expect(spy).toHaveBeenCalled();
-
-        spy.mockReset();
-        spy.mockRestore();
     });
 
     it('should drop hours collection', async () => {
 
         expect.assertions(1);
 
-        const spy = jest.spyOn(Hour.collection, 'drop');
+        spy = jest.spyOn(Hour.collection, 'drop');
 
         await TimetableUpdater.drop();
 
         expect(spy).toHaveBeenCalled();
-
-        spy.mockReset();
-        spy.mockRestore();
     });
 
     it('should resolve a promise when all collections are dropped', async () => {
@@ -88,11 +78,21 @@ describe('TimetableUpdater.drop', () => {
         expect(SchoolClass.collection.data).toBeNull();
         expect(Hour.collection.data).toBeNull();
     });
+
+    afterEach(() => {
+
+        if (spy) {
+
+            spy.mockReset();
+            spy.mockRestore();
+        }
+    });
 });
 
 describe('TimetableUpdater.prototype.save', () => {
 
     let timetableUpdater;
+    let spy;
 
     beforeEach(() => {
 
@@ -113,56 +113,44 @@ describe('TimetableUpdater.prototype.save', () => {
 
         expect.assertions(1);
 
-        const spy = jest.spyOn(Teacher, 'insertMany');
+        spy = jest.spyOn(Teacher, 'insertMany');
 
         await timetableUpdater.save();
 
         expect(spy).toHaveBeenCalledWith(['teachers']);
-
-        spy.mockReset();
-        spy.mockRestore();
     });
 
     it('should save school classes', async () => {
 
         expect.assertions(1);
 
-        const spy = jest.spyOn(SchoolClass, 'insertMany');
+        spy = jest.spyOn(SchoolClass, 'insertMany');
 
         await timetableUpdater.save();
 
         expect(spy).toHaveBeenCalledWith(['school classes']);
-
-        spy.mockReset();
-        spy.mockRestore();
     });
 
     it('should save classrooms', async () => {
 
         expect.assertions(1);
 
-        const spy = jest.spyOn(Classroom, 'insertMany');
+        spy = jest.spyOn(Classroom, 'insertMany');
 
         await timetableUpdater.save();
 
         expect(spy).toHaveBeenCalledWith(['classrooms']);
-
-        spy.mockReset();
-        spy.mockRestore();
     });
 
     it('should save hours', async () => {
 
         expect.assertions(1);
 
-        const spy = jest.spyOn(Hour, 'insertMany');
+        spy = jest.spyOn(Hour, 'insertMany');
 
         await timetableUpdater.save(['hours']);
 
         expect(spy).toHaveBeenCalledWith(['hours']);
-
-        spy.mockReset();
-        spy.mockRestore();
     });
 
     it('should resolve a promise when all data is saved', async () => {
@@ -180,6 +168,15 @@ describe('TimetableUpdater.prototype.save', () => {
         expect(Classroom.collection.data).toEqual(['data', 'classrooms']);
         expect(SchoolClass.collection.data).toEqual(['data', 'school classes']);
         expect(Hour.collection.data).toEqual(['data', 'hours']);
+    });
+
+    afterEach(() => {
+
+        if (spy) {
+
+            spy.mockReset();
+            spy.mockRestore();
+        }
     });
 });
 

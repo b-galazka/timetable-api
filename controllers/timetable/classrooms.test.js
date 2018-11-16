@@ -10,6 +10,7 @@ describe('classrooms.getAll controller', () => {
     let req;
     let res;
     let responseValue;
+    let spy;
 
     const originalLoadListMethod = Classroom.loadList;
 
@@ -26,8 +27,8 @@ describe('classrooms.getAll controller', () => {
         expect.assertions(4);
 
         let res = new ExpressResponse();
-        let spy = jest.spyOn(res, 'send');
 
+        spy = jest.spyOn(res, 'send');
         responseValue = 'classrooms list';
 
         await getAll(req, res);
@@ -46,9 +47,6 @@ describe('classrooms.getAll controller', () => {
 
         expect(spy).toHaveBeenCalledTimes(1);
         expect(spy).toHaveBeenCalledWith(responseValue);
-
-        spy.mockReset();
-        spy.mockRestore();
     });
 
     it('should call next(err) if error has occured during data loading', async () => {
@@ -68,6 +66,12 @@ describe('classrooms.getAll controller', () => {
     afterEach(() => {
 
         Classroom.loadList = originalLoadListMethod;
+
+        if (spy) {
+
+            spy.mockReset();
+            spy.mockRestore();
+        }
     });
 });
 
@@ -76,6 +80,7 @@ describe('classrooms.getOneBySlug controller', () => {
     let req;
     let res;
     let responseValue;
+    let spy;
 
     const originalFindOneMethod = Classroom.findOne
 
@@ -107,8 +112,7 @@ describe('classrooms.getOneBySlug controller', () => {
             params: { number: '30' }
         });
 
-        let spy = jest.spyOn(res, 'send');
-
+        spy = jest.spyOn(res, 'send');
         responseValue = 'particural classroom object';
 
         await getOneByNumber(req, res);
@@ -124,16 +128,12 @@ describe('classrooms.getOneBySlug controller', () => {
         });
 
         spy = jest.spyOn(res, 'send');
-
         responseValue = 'another classroom object';
 
         await getOneByNumber(req, res);
 
         expect(spy).toHaveBeenCalledTimes(1);
         expect(spy).toHaveBeenCalledWith(responseValue);
-
-        spy.mockReset();
-        spy.mockRestore();
     });
 
     it('should respond with status 404 ' +
@@ -145,14 +145,11 @@ describe('classrooms.getOneBySlug controller', () => {
             params: { number: 'number' }
         });
 
-        const spy = jest.spyOn(res, 'status');
+        spy = jest.spyOn(res, 'status');
 
         await getOneByNumber(req, res);
 
         expect(spy).toHaveBeenCalledWith(404);
-
-        spy.mockReset();
-        spy.mockRestore();
     });
 
     it('should respond with "not found" JSON message ' +
@@ -164,18 +161,12 @@ describe('classrooms.getOneBySlug controller', () => {
             params: { number: 'number' }
         });
 
-        const spy = jest.spyOn(res, 'send');
+        spy = jest.spyOn(res, 'send');
 
         await getOneByNumber(req, res);
 
         expect(spy).toHaveBeenCalledTimes(1);
-
-        expect(spy).toHaveBeenCalledWith({
-            message: 'not found'
-        });
-
-        spy.mockReset();
-        spy.mockRestore();
+        expect(spy).toHaveBeenCalledWith({ message: 'not found' });
     });
 
     it('should call next(err) if error has occured during data loading', async () => {
@@ -195,5 +186,11 @@ describe('classrooms.getOneBySlug controller', () => {
     afterEach(() => {
 
         Classroom.findOne = originalFindOneMethod;
+
+        if (spy) {
+
+            spy.mockReset();
+            spy.mockRestore();
+        }
     });
 });

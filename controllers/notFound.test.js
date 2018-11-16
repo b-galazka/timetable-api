@@ -6,6 +6,7 @@ describe('notFound.respondWithNotFoundMessage controller', () => {
 
     let req;
     let res;
+    let spy;
 
     beforeEach(() => {
 
@@ -17,31 +18,31 @@ describe('notFound.respondWithNotFoundMessage controller', () => {
 
         expect.assertions(1);
 
-        const spy = jest.spyOn(res, 'status');
+        spy = jest.spyOn(res, 'status');
 
         respondWithNotFoundMessage(req, res);
 
         expect(spy).toHaveBeenCalledWith(404);
-
-        spy.mockReset();
-        spy.mockRestore();
     });
 
     it('should respond with "not found" JSON message ', () => {
 
         expect.assertions(2);
 
-        const spy = jest.spyOn(res, 'send');
+        spy = jest.spyOn(res, 'send');
 
         respondWithNotFoundMessage(req, res);
 
         expect(spy).toHaveBeenCalledTimes(1);
+        expect(spy).toHaveBeenCalledWith({ message: 'not found' });
+    });
 
-        expect(spy).toHaveBeenCalledWith({
-            message: 'not found'
-        });
+    afterEach(() => {
 
-        spy.mockReset();
-        spy.mockRestore();
+        if (spy) {
+
+            spy.mockReset();
+            spy.mockRestore();
+        }
     });
 });

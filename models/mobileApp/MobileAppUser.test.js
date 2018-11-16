@@ -6,6 +6,8 @@ describe('MobileAppUser.createOrUpdate', () => {
     const originalCreateMethod = MobileAppUser.create;
     const DateCopy = Date;
 
+    let spy;
+
     beforeEach(() => {
 
         MobileAppUser.findOne = () => Promise.resolve(null);
@@ -39,15 +41,12 @@ describe('MobileAppUser.createOrUpdate', () => {
 
         expect.assertions(2);
 
-        const spy = jest.spyOn(MobileAppUser, 'create');
+        spy = jest.spyOn(MobileAppUser, 'create');
 
         await MobileAppUser.createOrUpdate({ phoneID: 'X' });
 
         expect(spy).toHaveBeenCalledTimes(1);
         expect(spy).toHaveBeenCalledWith({ phoneID: 'X' });
-
-        spy.mockReset();
-        spy.mockRestore();
     });
 
     it('should resolve a promise with created user', async () => {
@@ -64,7 +63,7 @@ describe('MobileAppUser.createOrUpdate', () => {
         expect.assertions(1);
 
         const save = function () {
-            
+
             expect(this).toEqual({
                 phoneID: 1,
                 b: 20,
@@ -106,5 +105,11 @@ describe('MobileAppUser.createOrUpdate', () => {
         MobileAppUser.findOne = originalFindOneMethod;
         MobileAppUser.create = originalCreateMethod;
         Date = DateCopy;
+
+        if (spy) {
+
+            spy.mockReset();
+            spy.mockRestore();
+        }
     });
 });

@@ -5,6 +5,8 @@ describe('MobileApp.createOrUpdate', () => {
     const originalFindOneMethod = MobileApp.findOne;
     const originalCreateMethod = MobileApp.create;
 
+    let spy;
+
     beforeEach(() => {
 
         MobileApp.findOne = () => Promise.resolve(null);
@@ -20,15 +22,12 @@ describe('MobileApp.createOrUpdate', () => {
 
         expect.assertions(2);
 
-        const spy = jest.spyOn(MobileApp, 'create');
+        spy = jest.spyOn(MobileApp, 'create');
 
         await MobileApp.createOrUpdate({ version: '1.0' });
 
         expect(spy).toHaveBeenCalledTimes(1);
         expect(spy).toHaveBeenCalledWith({ version: '1.0' });
-
-        spy.mockReset();
-        spy.mockRestore();
     });
 
     it('should resolve a promise with created app', async () => {
@@ -74,5 +73,11 @@ describe('MobileApp.createOrUpdate', () => {
 
         MobileApp.findOne = originalFindOneMethod;
         MobileApp.create = originalCreateMethod;
+
+        if (spy) {
+
+            spy.mockReset();
+            spy.mockRestore();
+        }
     });
 });

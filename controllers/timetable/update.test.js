@@ -20,6 +20,7 @@ describe('update.updateTimetable controller', () => {
 
     let req;
     let res;
+    let spy;
 
     const originalUpdateMethod = TimetableUpdater.prototype.update;
 
@@ -33,29 +34,23 @@ describe('update.updateTimetable controller', () => {
 
         expect.assertions(1);
 
-        const spy = jest.spyOn(TimetableUpdater.prototype, 'update');
+        spy = jest.spyOn(TimetableUpdater.prototype, 'update');
 
         await updateTimetable(req, res);
 
         expect(spy).toHaveBeenCalled();
-
-        spy.mockReset();
-        spy.mockRestore();
     });
 
     it('should respond with "updated" JSON message', async () => {
 
         expect.assertions(2);
 
-        const spy = jest.spyOn(res, 'send');
+        spy = jest.spyOn(res, 'send');
 
         await updateTimetable(req, res);
 
         expect(spy).toHaveBeenCalledTimes(1);
         expect(spy).toHaveBeenCalledWith({ message: 'updated' });
-
-        spy.mockReset();
-        spy.mockRestore();
     });
 
     it('should call next(err) if error has occured during updating timetable', async () => {
@@ -75,6 +70,12 @@ describe('update.updateTimetable controller', () => {
     afterEach(() => {
 
         TimetableUpdater.prototype.update = originalUpdateMethod;
+
+        if (spy) {
+
+            spy.mockReset();
+            spy.mockRestore();
+        }
     });
 });
 
@@ -82,6 +83,7 @@ describe('update.handleUserTimetableUpdateRequest controller', () => {
 
     let req;
     let res;
+    let spy;
 
     const originalUpdateMethod = TimetableUpdater.prototype.update;
     const originalCreateMethod = UpdateRequest.create;
@@ -102,14 +104,11 @@ describe('update.handleUserTimetableUpdateRequest controller', () => {
 
         expect.assertions(1);
 
-        const spy = jest.spyOn(TimetableUpdater.prototype, 'update');
+        spy = jest.spyOn(TimetableUpdater.prototype, 'update');
 
         await handleUserTimetableUpdateRequest(req, res);
 
         expect(spy).toHaveBeenCalled();
-
-        spy.mockReset();
-        spy.mockRestore();
     });
 
     it('should respond with "updated" JSON message ' +
@@ -117,15 +116,12 @@ describe('update.handleUserTimetableUpdateRequest controller', () => {
 
         expect.assertions(2);
 
-        const spy = jest.spyOn(res, 'send');
+        spy = jest.spyOn(res, 'send');
 
         await handleUserTimetableUpdateRequest(req, res);
 
         expect(spy).toHaveBeenCalledTimes(1);
         expect(spy).toHaveBeenCalledWith({ message: 'updated' });
-
-        spy.mockReset();
-        spy.mockRestore();
     });
 
     it('should create UpdateRequest record if timetable has been updated', async () => {
@@ -136,7 +132,7 @@ describe('update.handleUserTimetableUpdateRequest controller', () => {
             body: { phoneID: 'XYZ' }
         });
 
-        const spy = jest.spyOn(UpdateRequest, 'create');
+        spy = jest.spyOn(UpdateRequest, 'create');
 
         await handleUserTimetableUpdateRequest(req, res);
 
@@ -146,45 +142,32 @@ describe('update.handleUserTimetableUpdateRequest controller', () => {
             requestorPhoneID: 'XYZ',
             timetableUpdated: true
         });
-
-        spy.mockReset();
-        spy.mockRestore();
     });
 
     it('should not update timetable if it is up to date', async () => {
 
         expect.assertions(1);
 
-        TimetablesComparator.prototype.areChangesInTimetable = () => (
-            Promise.resolve(false)
-        );
+        TimetablesComparator.prototype.areChangesInTimetable = () => Promise.resolve(false);
 
-        const spy = jest.spyOn(TimetableUpdater.prototype, 'update');
+        spy = jest.spyOn(TimetableUpdater.prototype, 'update');
 
         await handleUserTimetableUpdateRequest(req, res);
 
         expect(spy).not.toHaveBeenCalled();
-
-        spy.mockReset();
-        spy.mockRestore();
     });
 
     it('should respond with status 403 if timetable is up to date', async () => {
 
         expect.assertions(1);
 
-        TimetablesComparator.prototype.areChangesInTimetable = () => (
-            Promise.resolve(false)
-        );
+        TimetablesComparator.prototype.areChangesInTimetable = () => Promise.resolve(false);
 
-        const spy = jest.spyOn(res, 'status');
+        spy = jest.spyOn(res, 'status');
 
         await handleUserTimetableUpdateRequest(req, res);
 
         expect(spy).toHaveBeenCalledWith(403);
-
-        spy.mockReset();
-        spy.mockRestore();
     });
 
     it('should respond with "no changes in timetable detected" JSON message ' +
@@ -192,50 +175,32 @@ describe('update.handleUserTimetableUpdateRequest controller', () => {
 
         expect.assertions(2);
 
-        TimetablesComparator.prototype.areChangesInTimetable = () => (
-            Promise.resolve(false)
-        );
+        TimetablesComparator.prototype.areChangesInTimetable = () => Promise.resolve(false);
 
-        const spy = jest.spyOn(res, 'send');
+        spy = jest.spyOn(res, 'send');
 
         await handleUserTimetableUpdateRequest(req, res);
 
         expect(spy).toHaveBeenCalledTimes(1);
-
-        expect(spy).toHaveBeenCalledWith({
-            message: 'no changes in timetable detected'
-        });
-
-        spy.mockReset();
-        spy.mockRestore();
+        expect(spy).toHaveBeenCalledWith({ message: 'no changes in timetable detected' });
     });
 
-    it('should create UpdateRequest record ' +
-        'if timetable has not been updated', async () => {
+    it('should create UpdateRequest record if timetable has not been updated', async () => {
 
         expect.assertions(2);
 
-        TimetablesComparator.prototype.areChangesInTimetable = () => (
-            Promise.resolve(false)
-        );
+        TimetablesComparator.prototype.areChangesInTimetable = () => Promise.resolve(false);
 
         const req = new ExpressRequest({
             body: { phoneID: 'XYZ' }
         });
 
-        const spy = jest.spyOn(UpdateRequest, 'create');
+        spy = jest.spyOn(UpdateRequest, 'create');
 
         await handleUserTimetableUpdateRequest(req, res);
 
         expect(spy).toHaveBeenCalledTimes(1);
-
-        expect(spy).toHaveBeenCalledWith({
-            requestorPhoneID: 'XYZ',
-            timetableUpdated: false
-        });
-
-        spy.mockReset();
-        spy.mockRestore();
+        expect(spy).toHaveBeenCalledWith({ requestorPhoneID: 'XYZ', timetableUpdated: false });
     });
 
     it('should call next(err) if unknown error has occured', async () => {
@@ -256,9 +221,12 @@ describe('update.handleUserTimetableUpdateRequest controller', () => {
 
         TimetableUpdater.prototype.update = originalUpdateMethod;
         UpdateRequest.create = originalCreateMethod;
+        TimetablesComparator.prototype.areChangesInTimetable = originalAreChangesInTimetableMethod;
 
-        TimetablesComparator.prototype.areChangesInTimetable = (
-            originalAreChangesInTimetableMethod
-        );
+        if (spy) {
+
+            spy.mockReset();
+            spy.mockRestore();
+        }
     });
 });

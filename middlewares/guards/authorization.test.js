@@ -16,6 +16,7 @@ describe('authorization middleware', () => {
 
     let req;
     let res;
+    let spy;
 
     const originalFindByUsernameAndPasswordMethod = User.findByUsernameAndPassword;
 
@@ -34,36 +35,28 @@ describe('authorization middleware', () => {
         res = new ExpressResponse();
     });
 
-    it('should respond with status 403 ' +
-        'if authorization header has not been provided', () => {
+    it('should respond with status 403 if authorization header has not been provided', () => {
 
-        const spy = jest.spyOn(res, 'status');
+        spy = jest.spyOn(res, 'status');
 
         authorization(req, res, jest.fn());
 
         expect(spy).toHaveBeenCalledTimes(1);
         expect(spy).toHaveBeenCalledWith(403);
-
-        spy.mockReset();
-        spy.mockRestore();
     });
 
-    it('should respond with status 403 ' +
-        'if invalid authorization header has been provided', () => {
+    it('should respond with status 403 if invalid authorization header has been provided', () => {
 
         const req = new ExpressRequest({
             headers: { Authorization: 'lorem ipsum' }
         });
 
-        const spy = jest.spyOn(res, 'status');
+        spy = jest.spyOn(res, 'status');
 
         authorization(req, res, jest.fn());
 
         expect(spy).toHaveBeenCalledTimes(1);
         expect(spy).toHaveBeenCalledWith(403);
-
-        spy.mockReset();
-        spy.mockRestore();
     });
 
     it('should respond with JSON validation error if it has occured', async () => {
@@ -73,16 +66,13 @@ describe('authorization middleware', () => {
         });
 
         const { error } = Joi.validate(req.header('Authorization'), authHeaderValidationSchema);
-        const spy = jest.spyOn(res, 'send');
+
+        spy = jest.spyOn(res, 'send');
 
         await authorization(req, res, jest.fn());
 
         expect(spy).toHaveBeenCalledTimes(1);
-
         expect(spy).toHaveBeenCalledWith({ message: error.message });
-
-        spy.mockReset();
-        spy.mockRestore();
     });
 
     it('should call next if user exists', async () => {
@@ -108,15 +98,12 @@ describe('authorization middleware', () => {
             headers: { Authorization: `Basic ${invalidCredentials}` }
         });
 
-        const spy = jest.spyOn(res, 'status');
+        spy = jest.spyOn(res, 'status');
 
         await authorization(req, res, jest.fn());
 
         expect(spy).toHaveBeenCalledTimes(1);
         expect(spy).toHaveBeenCalledWith(401);
-
-        spy.mockReset();
-        spy.mockRestore();
     });
 
     it('should respond with "wrong username or password" JSON message ' +
@@ -128,18 +115,12 @@ describe('authorization middleware', () => {
             headers: { Authorization: `Basic ${invalidCredentials}` }
         });
 
-        const spy = jest.spyOn(res, 'send');
+        spy = jest.spyOn(res, 'send');
 
         await authorization(req, res, jest.fn());
 
         expect(spy).toHaveBeenCalledTimes(1);
-
-        expect(spy).toHaveBeenCalledWith({
-            message: 'wrong username or password'
-        });
-
-        spy.mockReset();
-        spy.mockRestore();
+        expect(spy).toHaveBeenCalledWith({ message: 'wrong username or password' });
     });
 
     it('should call next(err) if unknown error has occured', async () => {
@@ -163,5 +144,11 @@ describe('authorization middleware', () => {
     afterEach(() => {
 
         User.findByUsernameAndPassword = originalFindByUsernameAndPasswordMethod;
+
+        if (spy) {
+
+            spy.mockReset();
+            spy.mockRestore();
+        }
     });
 });

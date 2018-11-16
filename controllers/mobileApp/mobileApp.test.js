@@ -16,6 +16,7 @@ describe('mobileApp.getMobileAppInfo controller', () => {
     let req;
     let res;
     let responseValue;
+    let spy;
 
     const originalFindOneMethod = MobileApp.findOne;
 
@@ -44,8 +45,8 @@ describe('mobileApp.getMobileAppInfo controller', () => {
         expect.assertions(4);
 
         let res = new ExpressResponse();
-        let spy = jest.spyOn(res, 'send');
 
+        spy = jest.spyOn(res, 'send');
         responseValue = 'mobile app info';
 
         await getMobileAppInfo(req, res);
@@ -64,9 +65,6 @@ describe('mobileApp.getMobileAppInfo controller', () => {
 
         expect(spy).toHaveBeenCalledTimes(1);
         expect(spy).toHaveBeenCalledWith(responseValue);
-
-        spy.mockReset();
-        spy.mockRestore();
     });
 
     it('should respond with plain object ' +
@@ -76,15 +74,12 @@ describe('mobileApp.getMobileAppInfo controller', () => {
 
         MobileApp.findOne = () => Promise.resolve(null);
 
-        const spy = jest.spyOn(res, 'send');
+        spy = jest.spyOn(res, 'send');
 
         await getMobileAppInfo(req, res);
 
         expect(spy).toHaveBeenCalledTimes(1);
         expect(spy).toHaveBeenCalledWith({});
-
-        spy.mockReset();
-        spy.mockRestore();
     });
 
     it('should call next(err) if error has occured during data loading', async () => {
@@ -104,6 +99,12 @@ describe('mobileApp.getMobileAppInfo controller', () => {
     afterEach(() => {
 
         MobileApp.findOne = originalFindOneMethod;
+
+        if (spy) {
+
+            spy.mockReset();
+            spy.mockRestore();
+        }
     });
 });
 
@@ -112,6 +113,7 @@ describe('mobileApp.updateMobileAppInfo controller', () => {
     let req;
     let res;
     let responseValue;
+    let spy;
 
     const originalCreateOrUpdateMethod = MobileApp.createOrUpdate;
 
@@ -129,14 +131,12 @@ describe('mobileApp.updateMobileAppInfo controller', () => {
 
         const reqBody = { a: 10, b: 20, c: 30 };
         const req = new ExpressRequest({ body: reqBody });
-        const spy = jest.spyOn(MobileApp, 'createOrUpdate');
+
+        spy = jest.spyOn(MobileApp, 'createOrUpdate');
 
         await updateMobileAppInfo(req, res);
 
         expect(spy).toHaveBeenCalledWith(reqBody);
-
-        spy.mockReset();
-        spy.mockRestore();
     });
 
     it('should respond with created or updated record', async () => {
@@ -144,8 +144,8 @@ describe('mobileApp.updateMobileAppInfo controller', () => {
         expect.assertions(4);
 
         let res = new ExpressResponse();
-        let spy = jest.spyOn(res, 'send');
 
+        spy = jest.spyOn(res, 'send');
         responseValue = 'created record';
 
         await updateMobileAppInfo(req, res);
@@ -164,9 +164,6 @@ describe('mobileApp.updateMobileAppInfo controller', () => {
 
         expect(spy).toHaveBeenCalledTimes(1);
         expect(spy).toHaveBeenCalledWith(responseValue);
-
-        spy.mockReset();
-        spy.mockRestore();
     });
 
     it('should call next(err) if error has occured during creating or updating record', async () => {
@@ -186,6 +183,12 @@ describe('mobileApp.updateMobileAppInfo controller', () => {
     afterEach(() => {
 
         MobileApp.createOrUpdate = originalCreateOrUpdateMethod;
+
+        if (spy) {
+
+            spy.mockReset();
+            spy.mockRestore();
+        }
     });
 });
 
@@ -194,6 +197,7 @@ describe('mobileApp.putMobileAppUser controller', () => {
     let req;
     let res;
     let responseValue;
+    let spy;
 
     const originalCreateOrUpdateMethod = MobileAppUser.createOrUpdate;
 
@@ -211,14 +215,12 @@ describe('mobileApp.putMobileAppUser controller', () => {
 
         const reqBody = { a: 10, b: 20, c: 30 };
         const req = new ExpressRequest({ body: reqBody });
-        const spy = jest.spyOn(MobileAppUser, 'createOrUpdate');
+
+        spy = jest.spyOn(MobileAppUser, 'createOrUpdate');
 
         await putMobileAppUser(req, res);
 
         expect(spy).toHaveBeenCalledWith(reqBody);
-
-        spy.mockReset();
-        spy.mockRestore();
     });
 
     it('should respond with created or updated record', async () => {
@@ -226,8 +228,8 @@ describe('mobileApp.putMobileAppUser controller', () => {
         expect.assertions(4);
 
         let res = new ExpressResponse();
-        let spy = jest.spyOn(res, 'send');
 
+        spy = jest.spyOn(res, 'send');
         responseValue = 'created record';
 
         await putMobileAppUser(req, res);
@@ -246,9 +248,6 @@ describe('mobileApp.putMobileAppUser controller', () => {
 
         expect(spy).toHaveBeenCalledTimes(1);
         expect(spy).toHaveBeenCalledWith(responseValue);
-
-        spy.mockReset();
-        spy.mockRestore();
     });
 
     it('should call next(err) if error has occured during creating or updating record', async () => {
@@ -268,5 +267,11 @@ describe('mobileApp.putMobileAppUser controller', () => {
     afterEach(() => {
 
         MobileAppUser.createOrUpdate = originalCreateOrUpdateMethod;
+
+        if (spy) {
+
+            spy.mockReset();
+            spy.mockRestore();
+        }
     });
 });

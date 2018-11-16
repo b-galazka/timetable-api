@@ -10,6 +10,7 @@ describe('timetableUpdateTimeProtection middleware', () => {
 
     let req;
     let res;
+    let spy;
 
     beforeEach(() => {
 
@@ -37,15 +38,12 @@ describe('timetableUpdateTimeProtection middleware', () => {
 
         expect.assertions(2);
 
-        const spy = jest.spyOn(res, 'status');
+        spy = jest.spyOn(res, 'status');
 
         await timetableUpdateTimeProtection(req, res, jest.fn());
 
         expect(spy).toHaveBeenCalledTimes(1);
         expect(spy).toHaveBeenCalledWith(403);
-
-        spy.mockReset();
-        spy.mockRestore();
     });
 
     it('should respond with "your request cannot be processed, because of time limit" ' +
@@ -53,7 +51,7 @@ describe('timetableUpdateTimeProtection middleware', () => {
 
         expect.assertions(2);
 
-        const spy = jest.spyOn(res, 'send');
+        spy = jest.spyOn(res, 'send');
 
         await timetableUpdateTimeProtection(req, res, jest.fn());
 
@@ -62,9 +60,6 @@ describe('timetableUpdateTimeProtection middleware', () => {
         expect(spy).toHaveBeenCalledWith({
             message: 'your request cannot be processed, because of time limit'
         });
-
-        spy.mockReset();
-        spy.mockRestore();
     });
 
     it('should create a record in DB if request cannot be processed', async () => {
@@ -75,19 +70,12 @@ describe('timetableUpdateTimeProtection middleware', () => {
             body: { phoneID: 'XYZ' }
         });
 
-        const spy = jest.spyOn(UpdateRequest, 'create');
+        spy = jest.spyOn(UpdateRequest, 'create');
 
         await timetableUpdateTimeProtection(req, res, jest.fn());
 
         expect(spy).toHaveBeenCalledTimes(1);
-
-        expect(spy).toHaveBeenCalledWith({
-            requestorPhoneID: 'XYZ',
-            timetableUpdated: false
-        });
-
-        spy.mockReset();
-        spy.mockRestore();
+        expect(spy).toHaveBeenCalledWith({ requestorPhoneID: 'XYZ', timetableUpdated: false });
     });
 
     it('should call next(err) if UpdateRequest.canBeProcessed has thrown an exception ', async () => {
@@ -108,5 +96,11 @@ describe('timetableUpdateTimeProtection middleware', () => {
 
         UpdateRequest.canBeProcessed = originalCanBeProcessedMethod;
         UpdateRequest.create = originalCreateMethod;
+
+        if (spy) {
+
+            spy.mockReset();
+            spy.mockRestore();
+        }
     });
 });

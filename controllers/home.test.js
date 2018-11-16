@@ -6,6 +6,7 @@ describe('notFound.respondWithNotFoundMessage controller', () => {
 
     let req;
     let res;
+    let spy;
 
     beforeEach(() => {
 
@@ -17,14 +18,20 @@ describe('notFound.respondWithNotFoundMessage controller', () => {
 
         expect.assertions(2);
 
-        const spy = jest.spyOn(res, 'send');
+        spy = jest.spyOn(res, 'send');
 
         getHome(req, res);
 
         expect(spy).toHaveBeenCalledTimes(1);
         expect(spy).toHaveBeenCalledWith({});
+    });
 
-        spy.mockReset();
-        spy.mockRestore();
+    afterEach(() => {
+
+        if (spy) {
+
+            spy.mockReset();
+            spy.mockRestore();
+        }
     });
 });

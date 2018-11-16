@@ -1,28 +1,36 @@
 const Class = require('../../models/timetable/Class');
-const catchUnknownError = require('../../middlewares/errorsCatchers/catchUnknownError');
 
-exports.getAll = catchUnknownError(async (req, res) => {
+exports.getAll = async (req, res, next) => {
 
-    const fields = {
-        slug: true,
-        _id: true
-    };
+    try {
 
-    res.send(await Class.loadList(fields));
-});
+        const fields = { slug: true, _id: true };
 
-exports.getOneBySlug = catchUnknownError(async (req, res) => {
+        res.send(await Class.loadList(fields));
 
-    const { slug } = req.params;
+    } catch (err) {
 
-    const schoolClass = await Class.findOne({ slug });
+        next(err);
+    }
+};
 
-    if (schoolClass) {
+exports.getOneBySlug = async (req, res, next) => {
 
-        res.send(schoolClass);
+    try {
 
-    } else {
+        const { slug } = req.params;
+
+        const schoolClass = await Class.findOne({ slug });
+
+        if (schoolClass) {
+
+            return res.send(schoolClass);
+        }
 
         res.status(404).send({ message: 'not found' });
+
+    } catch (err) {
+
+        next(err);
     }
-});
+};

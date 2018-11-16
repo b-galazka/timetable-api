@@ -142,50 +142,22 @@ describe('authorization middleware', () => {
         spy.mockRestore();
     });
 
-    it('should respond with status 500 if unknown error has occured', async () => {
+    it('should call next(err) if unknown error has occured', async () => {
 
-        expect.assertions(2);
+        expect.assertions(1);
 
-        User.findByUsernameAndPassword = () => Promise.reject(new Error());
-
-        const req = new ExpressRequest({
-            headers: { Authorization: `Basic ${validCredentials}` }
-        });
-
-        const spy = jest.spyOn(res, 'status');
-
-        await authorization(req, res, jest.fn());
-
-        expect(spy).toHaveBeenCalledTimes(1);
-        expect(spy).toHaveBeenCalledWith(500);
-
-        spy.mockReset();
-        spy.mockRestore();
-    });
-
-    it('should respond with "something went wrong" JSON message ' +
-        'if unknown error has occured', async () => {
-
-        expect.assertions(2);
-
-        User.findByUsernameAndPassword = () => Promise.reject(new Error());
+        const err = new Error('error message');
+        const nextFn = jest.fn();
 
         const req = new ExpressRequest({
             headers: { Authorization: `Basic ${validCredentials}` }
         });
 
-        const spy = jest.spyOn(res, 'send');
+        User.findByUsernameAndPassword = () => Promise.reject(err);
 
-        await authorization(req, res, jest.fn());
+        await authorization(req, res, nextFn);
 
-        expect(spy).toHaveBeenCalledTimes(1);
-
-        expect(spy).toHaveBeenCalledWith({
-            message: 'something went wrong'
-        });
-
-        spy.mockReset();
-        spy.mockRestore();
+        expect(nextFn).toHaveBeenCalledWith(err);
     });
 
     afterEach(() => {

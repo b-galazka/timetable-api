@@ -51,42 +51,18 @@ describe('teachers.getAll controller', () => {
         spy.mockRestore();
     });
 
-    it('should respond with status 500 ' +
-        'if error has occured during data loading', async () => {
+    it('should call next(err) if error has occured during data loading', async () => {
 
         expect.assertions(1);
 
-        Teacher.loadList = () => Promise.reject(new Error());
+        const err = new Error('error message');
+        const nextFn = jest.fn();
 
-        const spy = jest.spyOn(res, 'status');
+        Teacher.loadList = () => Promise.reject(err);
 
-        await getAll(req, res);
+        await getAll(req, res, nextFn);
 
-        expect(spy).toHaveBeenCalledWith(500);
-
-        spy.mockReset();
-        spy.mockRestore();
-    });
-
-    it('should respond with "something went wrong" JSON message ' +
-        'if error has occured during data loading', async () => {
-
-        expect.assertions(2);
-
-        Teacher.loadList = () => Promise.reject(new Error());
-
-        const spy = jest.spyOn(res, 'send');
-
-        await getAll(req, res);
-
-        expect(spy).toHaveBeenCalledTimes(1);
-
-        expect(spy).toHaveBeenCalledWith({
-            message: 'something went wrong'
-        });
-
-        spy.mockReset();
-        spy.mockRestore();
+        expect(nextFn).toHaveBeenCalledWith(err);
     });
 
     afterEach(() => {
@@ -202,42 +178,18 @@ describe('teachers.getOneBySlug controller', () => {
         spy.mockRestore();
     });
 
-    it('should respond with status 500 ' +
-        'if error has occured during data loading', async () => {
+    it('should call next(err) if error has occured during data loading', async () => {
 
         expect.assertions(1);
 
-        Teacher.findOne = () => Promise.reject(new Error());
+        const err = new Error('error message');
+        const nextFn = jest.fn();
 
-        const spy = jest.spyOn(res, 'status');
+        Teacher.findOne = () => Promise.reject(err);
 
-        await getOneBySlug(req, res);
+        await getOneBySlug(req, res, nextFn);
 
-        expect(spy).toHaveBeenCalledWith(500);
-
-        spy.mockReset();
-        spy.mockRestore();
-    });
-
-    it('should respond with "something went wrong" JSON message ' +
-        'if error has occured during data loading', async () => {
-
-        expect.assertions(2);
-
-        Teacher.findOne = () => Promise.reject(new Error());
-
-        const spy = jest.spyOn(res, 'send');
-
-        await getOneBySlug(req, res);
-
-        expect(spy).toHaveBeenCalledTimes(1);
-
-        expect(spy).toHaveBeenCalledWith({
-            message: 'something went wrong'
-        });
-
-        spy.mockReset();
-        spy.mockRestore();
+        expect(nextFn).toHaveBeenCalledWith(err);
     });
 
     afterEach(() => {

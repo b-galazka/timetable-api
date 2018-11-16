@@ -1,24 +1,44 @@
 const MobileApp = require('../../models/mobileApp/MobileApp');
 const MobileAppUser = require('../../models/mobileApp/MobileAppUser');
-const catchUnknownError = require('../../middlewares/errorsCatchers/catchUnknownError');
 
-exports.getMobileAppInfo = catchUnknownError(async (req, res) => {
+exports.getMobileAppInfo = async (req, res, next) => {
 
-    const mobileApp = await MobileApp.findOne();
+    try {
 
-    res.send(mobileApp || {});
-});
+        const mobileApp = await MobileApp.findOne();
 
-exports.updateMobileAppInfo = catchUnknownError(async (req, res) => {
+        res.send(mobileApp || {});
 
-    const mobileApp = await MobileApp.createOrUpdate(req.body);
+    } catch(err) {
 
-    res.send(mobileApp);
-});
+        next(err);
+    }
+};
 
-exports.putMobileAppUser = catchUnknownError(async (req, res) => {
+exports.updateMobileAppInfo = async (req, res, next) => {
 
-    const user = await MobileAppUser.createOrUpdate(req.body);
+    try {
 
-    res.send(user);
-});
+        const mobileApp = await MobileApp.createOrUpdate(req.body);
+
+        res.send(mobileApp);
+
+    } catch(err) {
+
+        next(err);
+    }
+};
+
+exports.putMobileAppUser = async (req, res, next) => {
+
+    try {
+
+        const user = await MobileAppUser.createOrUpdate(req.body);
+
+        res.send(user);
+
+    } catch(err) {
+
+        next(err);
+    }
+};

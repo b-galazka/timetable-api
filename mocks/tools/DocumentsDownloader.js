@@ -1,7 +1,4 @@
-const {
-    documentsDownloaderUrls,
-    documentsDownloaderListSelector
-} = require('../../config');
+const { documentsDownloaderUrls, documentsDownloaderListSelector } = require('../../config');
 
 class DocumentsDownloader {
 
@@ -23,7 +20,7 @@ class DocumentsDownloader {
             return Promise.resolve([ 'document1', 'document2' ]);
         }
 
-        console.error('Invalid DocumentsDownloader config has been provided');
+        return Promise.reject('Invalid DocumentsDownloader config has been provided');
     }
 }
 

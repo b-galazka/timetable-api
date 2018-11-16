@@ -26,9 +26,7 @@ class TimetableScraper {
 
         if (!areDocumentsValid || !areSelectorsValid) {
 
-            console.error('Invalid TimetableScraper config has been provided');
-
-            return;
+            return Promise.reject('Invalid TimetableScraper config has been provided');
         }
 
         this.teachers = [{}];

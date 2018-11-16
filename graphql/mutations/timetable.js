@@ -3,6 +3,7 @@ const { GraphQLString, GraphQLNonNull } = require('graphql');
 const { TimetableType } = require('../types/timetable');
 const ErrorResponse = require('../errors/ErrorResponse');
 
+const logger = require('../../functions/logger');
 const guard = require('../guards');
 const authGuard = require('../guards/authGuard');
 const validationGuard = require('../guards/validationGuard');
@@ -56,7 +57,7 @@ exports.requestTimetableUpdate = {
                     requestorPhoneID: phoneID,
                     timetableUpdated: areChangesInTimetable
                 })
-                .catch((err) => console.error(err));
+                .catch((err) => logger.error(err));
 
             if (!areChangesInTimetable) {
 

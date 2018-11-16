@@ -1,7 +1,13 @@
 const Hour = require('../../models/timetable/Hour');
-const catchUnknownError = require('../../middlewares/errorsCatchers/catchUnknownError');
 
-exports.getAll = catchUnknownError(async (req, res) => {
+exports.getAll = async (req, res, next) => {
 
-    res.send(await Hour.loadList());
-});
+    try {
+
+        res.send(await Hour.loadList());
+
+    } catch (err) {
+
+        next(err);
+    }
+};

@@ -58,42 +58,18 @@ describe('update.updateTimetable controller', () => {
         spy.mockRestore();
     });
 
-    it('should respond with status 500 ' +
-        'if error has occured during updating timetable', async () => {
+    it('should call next(err) if error has occured during updating timetable', async () => {
 
         expect.assertions(1);
 
-        TimetableUpdater.prototype.update = () => Promise.reject(new Error());
+        const err = new Error('error message');
+        const nextFn = jest.fn();
 
-        const spy = jest.spyOn(res, 'status');
+        TimetableUpdater.prototype.update = () => Promise.reject(err);
 
-        await updateTimetable(req, res);
+        await updateTimetable(req, res, nextFn);
 
-        expect(spy).toHaveBeenCalledWith(500);
-
-        spy.mockReset();
-        spy.mockRestore();
-    });
-
-    it('should respond with "something went wrong" JSON message ' +
-        'if error has occured during updating timetable', async () => {
-
-        expect.assertions(2);
-
-        TimetableUpdater.prototype.update = () => Promise.reject(new Error());
-
-        const spy = jest.spyOn(res, 'send');
-
-        await updateTimetable(req, res);
-
-        expect(spy).toHaveBeenCalledTimes(1);
-
-        expect(spy).toHaveBeenCalledWith({
-            message: 'something went wrong'
-        });
-
-        spy.mockReset();
-        spy.mockRestore();
+        expect(nextFn).toHaveBeenCalledWith(err);
     });
 
     afterEach(() => {
@@ -262,79 +238,18 @@ describe('update.handleUserTimetableUpdateRequest controller', () => {
         spy.mockRestore();
     });
 
-    it('should respond with status 500 if unknown error has occured', async () => {
+    it('should call next(err) if unknown error has occured', async () => {
 
         expect.assertions(1);
 
-        TimetableUpdater.prototype.update = () => Promise.reject(new Error());
+        const err = new Error('error message');
+        const nextFn = jest.fn();
 
-        const spy = jest.spyOn(res, 'status');
+        TimetableUpdater.prototype.update = () => Promise.reject(err);
 
-        await handleUserTimetableUpdateRequest(req, res);
+        await handleUserTimetableUpdateRequest(req, res, nextFn);
 
-        expect(spy).toHaveBeenCalledWith(500);
-
-        spy.mockReset();
-        spy.mockRestore();
-    });
-
-    it('should respond with "something went wrong" JSON message ' +
-        'if unknown error has occured', async () => {
-
-        expect.assertions(2);
-
-        TimetableUpdater.prototype.update = () => Promise.reject(new Error());
-
-        const spy = jest.spyOn(res, 'send');
-
-        await handleUserTimetableUpdateRequest(req, res);
-
-        expect(spy).toHaveBeenCalledTimes(1);
-
-        expect(spy).toHaveBeenCalledWith({
-            message: 'something went wrong'
-        });
-
-        spy.mockReset();
-        spy.mockRestore();
-    });
-
-    it('should not respond with status 500 ' +
-        'if UpdateRequest has thrown an error', async () => {
-
-        expect.assertions(1);
-
-        UpdateRequest.create = () => Promise.reject(new Error());
-
-        const spy = jest.spyOn(res, 'status');
-
-        await handleUserTimetableUpdateRequest(req, res);
-
-        expect(spy).not.toHaveBeenCalledWith(500);
-
-        spy.mockReset();
-        spy.mockRestore();
-    });
-
-    it('should not respond with "something went wrong" JSON message ' +
-        'if UpdateRequest has thrown an error', async () => {
-
-        expect.assertions(2);
-
-        UpdateRequest.create = () => Promise.reject(new Error());
-
-        const spy = jest.spyOn(res, 'send');
-
-        await handleUserTimetableUpdateRequest(req, res);
-
-        expect(spy).toHaveBeenCalledTimes(1);
-
-        expect(spy).not.toHaveBeenCalledWith({
-            message: 'something went wrong'
-        });
-
-        spy.mockReset();
-        spy.mockRestore();
+        expect(nextFn).toHaveBeenCalledWith(err);
     });
 
     afterEach(() => {

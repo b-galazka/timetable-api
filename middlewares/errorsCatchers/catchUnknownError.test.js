@@ -1,168 +1,87 @@
 const catchUnknownError = require('./catchUnknownError');
 const ExpressRequest = require('../../mocks/3rdPartyModules/ExpressRequest');
 const ExpressResponse = require('../../mocks/3rdPartyModules/ExpressResponse');
+const logger = require('../../functions/logger');
+
+jest.mock('../../functions/logger', () => require('../../mocks/functions/logger'));
 
 describe('catchUnknownError middleware', () => {
 
     let req;
     let res;
-    let callback;
+    let err;
 
     beforeEach(() => {
 
         req = new ExpressRequest();
         res = new ExpressResponse();
+        err = new Error('error message');
     });
 
-    it('should return a function', () => {
+    it('should log an error', () => {
 
-        const returnedValue = catchUnknownError(() => {});
+        const spy = jest.spyOn(logger, 'error');
 
-        expect(returnedValue).toBeInstanceOf(Function);
+        catchUnknownError(err, req, res, jest.fn());
+
+        expect(spy).toHaveBeenCalledTimes(1);
+        expect(spy).toHaveBeenCalledWith(err);
+
+        spy.mockReset();
+        spy.mockRestore();
     });
 
-    it('should return an async function', () => {
+    it('should respond with status 500', () => {
 
-        const func = catchUnknownError(() => { });
+        const spy = jest.spyOn(res, 'status');
 
-        expect(func()).toBeInstanceOf(Promise);
+        catchUnknownError(err, req, res, jest.fn());
+
+        expect(spy).toHaveBeenCalledTimes(1);
+        expect(spy).toHaveBeenCalledWith(500);
+
+        spy.mockReset();
+        spy.mockRestore();
     });
 
-    describe('error has been thrown', () => {
+    it('should respond with message "something went wrong"', () => {
 
-        beforeEach(() => {
+        const spy = jest.spyOn(res, 'send');
 
-            callback = catchUnknownError(() => {
+        catchUnknownError(err, req, res, jest.fn());
 
-                throw new Error();
-            });
-        });
+        expect(spy).toHaveBeenCalledTimes(1);
+        expect(spy).toHaveBeenCalledWith({ message: 'something went wrong' });
 
-        it('should log error to console', () => {
-
-            const spy = jest.spyOn(console, 'error');
-
-            callback(req, res);
-
-            expect(spy).toHaveBeenCalledTimes(1);
-            expect(spy).toHaveBeenCalledWith(new Error());
-
-            spy.mockReset();
-            spy.mockRestore();
-        });
-
-        it('should respond with status 500', () => {
-
-            const spy = jest.spyOn(res, 'status');
-
-            callback(req, res);
-
-            expect(spy).toHaveBeenCalledTimes(1);
-            expect(spy).toHaveBeenCalledWith(500);
-
-            spy.mockReset();
-            spy.mockRestore();
-        });
-
-        it('should respond with message "something went wrong"', () => {
-
-            const spy = jest.spyOn(res, 'send');
-
-            callback(req, res);
-
-            expect(spy).toHaveBeenCalledTimes(1);
-            expect(spy).toHaveBeenCalledWith({ message: 'something went wrong' });
-
-            spy.mockReset();
-            spy.mockRestore();
-        });
-
-        it('should not set status if response has been sent', () => {
-
-            const callback = catchUnknownError((req, res) => {
-
-                res.send();
-            });
-
-            const spy = jest.spyOn(res, 'status');
-
-            callback(req, res);
-
-            expect(spy).toHaveBeenCalledTimes(0);
-
-            spy.mockReset();
-            spy.mockRestore();
-        });
-
-        it('should not try to send second response', () => {
-
-            const callback = catchUnknownError((req, res) => {
-
-                res.send();
-            });
-
-            const spy = jest.spyOn(res, 'send');
-
-            callback(req, res);
-
-            expect(spy).toHaveBeenCalledTimes(1);
-
-            spy.mockReset();
-            spy.mockRestore();
-        });
-
-        it('should work with async callback', async () => {
-
-            const callback = catchUnknownError((req, res) => Promise.reject(new Error()));
-
-            const sendSpy = jest.spyOn(res, 'send');
-            const statusSpy = jest.spyOn(res, 'status');
-
-            await callback(req, res);
-
-            expect(statusSpy).toHaveBeenCalledTimes(1);
-            expect(statusSpy).toHaveBeenCalledWith(500);
-
-            expect(sendSpy).toHaveBeenCalledTimes(1);
-            expect(sendSpy).toHaveBeenCalledWith({ message: 'something went wrong' });
-
-            sendSpy.mockReset();
-            sendSpy.mockRestore();
-
-            statusSpy.mockReset();
-            statusSpy.mockRestore();
-        });
+        spy.mockReset();
+        spy.mockRestore();
     });
 
-    describe('error has not been thrown', () => {
+    it('should not set status if response has been sent', () => {
 
-        beforeEach(() => {
+        const spy = jest.spyOn(res, 'status');
 
-            callback = catchUnknownError(() => { });
-        });
+        res.headersSent = true;
 
-        it('should not set status', () => {
+        catchUnknownError(err, req, res, jest.fn());
 
-            const spy = jest.spyOn(res, 'status');
+        expect(spy).toHaveBeenCalledTimes(0);
 
-            callback(req, res);
+        spy.mockReset();
+        spy.mockRestore();
+    });
 
-            expect(spy).toHaveBeenCalledTimes(0);
+    it('should not try to send second response', () => {
 
-            spy.mockReset();
-            spy.mockRestore();
-        });
+        const spy = jest.spyOn(res, 'send');
 
-        it('should not send response', () => {
+        res.headerSent = true;
 
-            const spy = jest.spyOn(res, 'send');
+        catchUnknownError(err, req, res, jest.fn());
 
-            callback(req, res);
+        expect(spy).toHaveBeenCalledTimes(1);
 
-            expect(spy).toHaveBeenCalledTimes(0);
-
-            spy.mockReset();
-            spy.mockRestore();
-        });
+        spy.mockReset();
+        spy.mockRestore();
     });
 });

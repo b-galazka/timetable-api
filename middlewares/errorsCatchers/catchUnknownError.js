@@ -1,16 +1,11 @@
-module.exports = callback => async (req, res, next) => {
+const logger = require('../../functions/logger');
 
-    try {
+module.exports = (error, req, res, next) => {
 
-        await callback(req, res, next);
+    logger.error(error);
 
-    } catch (err) {
+    if (!res.headersSent) {
 
-        console.error(err);
-
-        if (!res.headersSent) {
-
-            res.status(500).send({ message: 'something went wrong' });
-        }
+        res.status(500).send({ message: 'something went wrong' });
     }
 };

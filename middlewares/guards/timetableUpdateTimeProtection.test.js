@@ -90,43 +90,18 @@ describe('timetableUpdateTimeProtection middleware', () => {
         spy.mockRestore();
     });
 
-    it('should respond with status 500 ' +
-        'if UpdateRequest.canBeProcessed has thrown an exception ', async () => {
+    it('should call next(err) if UpdateRequest.canBeProcessed has thrown an exception ', async () => {
 
-        expect.assertions(2);
+        expect.assertions(1);
 
-        UpdateRequest.canBeProcessed = () => Promise.reject(new Error());
+        const err = new Error('error message');
+        const nextFn = jest.fn();
 
-        const spy = jest.spyOn(res, 'status');
+        UpdateRequest.canBeProcessed = () => Promise.reject(err);
 
-        await timetableUpdateTimeProtection(req, res, jest.fn());
+        await timetableUpdateTimeProtection(req, res, nextFn);
 
-        expect(spy).toHaveBeenCalledTimes(1);
-        expect(spy).toHaveBeenCalledWith(500);
-
-        spy.mockReset();
-        spy.mockRestore();
-    });
-
-    it('should respond with "something went wrong" JSON message ' +
-        'if UpdateRequest.canBeProcessed has thrown an exception', async () => {
-
-        expect.assertions(2);
-
-        UpdateRequest.canBeProcessed = () => Promise.reject(new Error());
-
-        const spy = jest.spyOn(res, 'send');
-
-        await timetableUpdateTimeProtection(req, res, jest.fn());
-
-        expect(spy).toHaveBeenCalledTimes(1);
-
-        expect(spy).toHaveBeenCalledWith({
-            message: 'something went wrong'
-        });
-
-        spy.mockReset();
-        spy.mockRestore();
+        expect(nextFn).toHaveBeenCalledWith(err);
     });
 
     afterAll(() => {

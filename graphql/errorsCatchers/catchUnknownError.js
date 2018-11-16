@@ -1,3 +1,4 @@
+const logger = require('../../functions/logger');
 const ErrorResponse = require('../errors/ErrorResponse');
 
 module.exports = resolve => async (...params) => {
@@ -13,7 +14,7 @@ module.exports = resolve => async (...params) => {
             throw err;
         }
 
-        console.error(err);
+        logger.error(err);
 
         throw new ErrorResponse('something went wrong', 500);
     }

@@ -7,7 +7,6 @@ const {
 const TimetableScraper = require('../tools/TimetableScraper');
 const DocumentsDownloader = require('../tools/DocumentsDownloader');
 
-// TODO: add tests
 module.exports = async () => {
 
     const downloader = new DocumentsDownloader({

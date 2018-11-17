@@ -1,6 +1,5 @@
 const { StringDecoder } = require('string_decoder');
 
-// TODO: add tests
 module.exports = (authHeader) => {
 
     const decoder = new StringDecoder('utf-8');

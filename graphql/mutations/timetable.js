@@ -3,7 +3,7 @@ const { GraphQLString, GraphQLNonNull } = require('graphql');
 const { TimetableType } = require('../types/timetable');
 const ErrorResponse = require('../errors/ErrorResponse');
 
-const logger = require('../../functions/logger');
+const logger = require('../../utils/logger');
 const guard = require('../guards');
 const authGuard = require('../guards/authGuard');
 const validationGuard = require('../guards/validationGuard');

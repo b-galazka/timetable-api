@@ -1,7 +1,7 @@
 const express = require('express');
 const mongoose = require('mongoose');
 const expressGraphql = require('express-graphql');
-const logger = require('./functions/logger');
+const logger = require('./utils/logger');
 
 const homeRoutes = require('./routes/home');
 const updatingRoutes = require('./routes/update');

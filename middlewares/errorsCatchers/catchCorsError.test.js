@@ -1,9 +1,9 @@
 const catchCorsError = require('./catchCorsError');
 const ExpressRequest = require('../../mocks/3rdPartyModules/ExpressRequest');
 const ExpressResponse = require('../../mocks/3rdPartyModules/ExpressResponse');
-const logger = require('../../functions/logger');
+const logger = require('../../utils/logger');
 
-jest.mock('../../functions/logger', () => require('../../mocks/functions/logger'));
+jest.mock('../../utils/logger', () => require('../../mocks/utils/logger'));
 
 describe('catchCorsError middleware', () => {
 

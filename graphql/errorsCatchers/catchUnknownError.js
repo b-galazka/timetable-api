@@ -1,4 +1,4 @@
-const logger = require('../../functions/logger');
+const logger = require('../../utils/logger');
 const ErrorResponse = require('../errors/ErrorResponse');
 
 module.exports = resolve => async (...params) => {

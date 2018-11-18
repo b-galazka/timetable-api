@@ -1,0 +1,4 @@
+**/*.test.js
+**/test.js
+mocks/**/*
+node_modules/*

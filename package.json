@@ -7,7 +7,8 @@
     "start-dev": "SET NODE_ENV=development&& nodemon index.js",
     "start": "SET NODE_ENV=production&& node index.js",
     "test": "SET NODE_ENV=test&& jest",
-    "test:watch": "SET NODE_ENV=test&& jest --watch"
+    "test:watch": "SET NODE_ENV=test&& jest --watch",
+    "eslint": "eslint **/*.js"
   },
   "author": "b-galazka",
   "license": "ISC",
@@ -25,6 +26,7 @@
     "mongoose": "^5.3.6"
   },
   "devDependencies": {
+    "eslint": "^5.9.0",
     "jest": "^22.4.4"
   }
 }

@@ -1,7 +1,7 @@
 const mongoose = require('mongoose');
 
 const hourSchema = new mongoose.Schema(
-    
+
     {
         start: {
             type: String,

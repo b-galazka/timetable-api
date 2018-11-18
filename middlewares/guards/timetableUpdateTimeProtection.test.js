@@ -78,7 +78,8 @@ describe('timetableUpdateTimeProtection middleware', () => {
         expect(spy).toHaveBeenCalledWith({ requestorPhoneID: 'XYZ', timetableUpdated: false });
     });
 
-    it('should call next(err) if UpdateRequest.canBeProcessed has thrown an exception ', async () => {
+    it('should call next(err) if UpdateRequest.canBeProcessed ' +
+        'has thrown an exception ', async () => {
 
         expect.assertions(1);
 

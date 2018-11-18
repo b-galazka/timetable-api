@@ -27,7 +27,7 @@ module.exports = {
         list: 'http://80-sochaczew.pl/dla_uczniow/plan/lista.html'
     },
 
-    documentsDownloaderListSelector: "ul a",
+    documentsDownloaderListSelector: 'ul a',
 
     userUpdateRequestTimeLimit: 3600000
 };

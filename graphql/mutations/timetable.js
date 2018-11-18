@@ -57,7 +57,7 @@ exports.requestTimetableUpdate = {
                     requestorPhoneID: phoneID,
                     timetableUpdated: areChangesInTimetable
                 })
-                .catch((err) => logger.error(err));
+                .catch(err => logger.error(err));
 
             if (!areChangesInTimetable) {
 

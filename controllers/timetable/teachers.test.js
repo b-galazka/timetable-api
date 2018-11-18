@@ -82,7 +82,7 @@ describe('teachers.getOneBySlug controller', () => {
     let responseValue;
     let spy;
 
-    const originalFindOneMethod = Teacher.findOne
+    const originalFindOneMethod = Teacher.findOne;
 
     beforeEach(() => {
 

@@ -3,26 +3,26 @@ const Teacher = require('./Teacher');
 describe('Teacher constructor', () => {
 
     it('should trim slug', () => {
-        
+
         const teacher = new Teacher(' slug ');
-        
+
         expect(teacher.slug).toBe('slug');
     });
 
     it('should assign `null` to teacher.name by default', () => {
-    
+
         const teacher = new Teacher('');
-    
+
         expect(teacher.name).toBeNull();
     });
 
     it('should trim teacher.name', () => {
-        
+
         const teacher = new Teacher('', '  name ');
-        
+
         expect(teacher.name).toBe('name');
     });
-}); 
+});
 
 describe('Teacher.prototype.addLesson', () => {
 

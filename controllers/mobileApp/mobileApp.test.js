@@ -166,7 +166,8 @@ describe('mobileApp.updateMobileAppInfo controller', () => {
         expect(spy).toHaveBeenCalledWith(responseValue);
     });
 
-    it('should call next(err) if error has occured during creating or updating record', async () => {
+    it('should call next(err) if error has occured during ' +
+        'creating or updating record', async () => {
 
         expect.assertions(1);
 
@@ -250,7 +251,8 @@ describe('mobileApp.putMobileAppUser controller', () => {
         expect(spy).toHaveBeenCalledWith(responseValue);
     });
 
-    it('should call next(err) if error has occured during creating or updating record', async () => {
+    it('should call next(err) if error has occured during ' +
+        'creating or updating record', async () => {
 
         expect.assertions(1);
 

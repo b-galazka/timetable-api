@@ -46,7 +46,7 @@ describe('MobileApp.createOrUpdate', () => {
         const save = function () {
 
             expect(this).toEqual({ a: 1, b: 20, c: 30, save });
-        }
+        };
 
         const existingApp = { a: 1, b: 2, c: 3, save };
 
@@ -59,7 +59,7 @@ describe('MobileApp.createOrUpdate', () => {
 
         expect.assertions(1);
 
-        const save = function () { return this; };
+        const save = function save() { return this; };
         const existingApp = { a: 1, b: 2, c: 3, save };
 
         MobileApp.findOne = () => Promise.resolve(existingApp);

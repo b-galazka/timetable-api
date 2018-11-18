@@ -19,11 +19,9 @@ class TimetableUpdater {
         if (isScrappedTimtableValid) {
 
             return Promise.resolve();
-
-        } else {
-
-            return Promise.reject('Invalid scrapped timetable provided');
         }
+
+        return Promise.reject(new Error('Invalid scrapped timetable provided'));
     }
 }
 

@@ -16,7 +16,7 @@ describe('getScrappedTimetable()', () => {
 
         const output = await getScrappedTimetable();
 
-        const expectedOutput =  {
+        const expectedOutput = {
             teachers: [{}],
             classrooms: [{}],
             schoolClasses: [{}],

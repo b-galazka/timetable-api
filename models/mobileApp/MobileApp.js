@@ -1,7 +1,7 @@
 const mongoose = require('mongoose');
 
 const mobileAppSchema = new mongoose.Schema(
-    
+
     {
         version: {
             default: '1.0',
@@ -39,13 +39,11 @@ mobileAppSchema.statics = {
         if (!existingApp) {
 
             return this.create(data);
-
-        } else {
-
-            const updatedApp = Object.assign(existingApp, data);
-
-            return updatedApp.save();
         }
+
+        const updatedApp = Object.assign(existingApp, data);
+
+        return updatedApp.save();
     }
 };
 

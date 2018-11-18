@@ -1,5 +1,5 @@
 module.exports = [
-    
+
     `<p>3ET</p>
     <table>
         <th>
@@ -29,7 +29,7 @@ module.exports = [
         <tr>
             <td>1</td>
             <td class="h">1:00-2:00</td>
-            
+
             <td class="l">
                 <span class="s">PE</span>
                 <span class="t">AB</span>

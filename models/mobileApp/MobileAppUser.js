@@ -55,15 +55,13 @@ mobileAppUserSchema.statics = {
         if (!existingUser) {
 
             return this.create(data);
-
-        } else {
-
-            const updatedUser = Object.assign(existingUser, data);
-
-            updatedUser.lastSeen = new Date();
-
-            return updatedUser.save();
         }
+
+        const updatedUser = Object.assign(existingUser, data);
+
+        updatedUser.lastSeen = new Date();
+
+        return updatedUser.save();
     }
 };
 

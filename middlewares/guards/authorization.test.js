@@ -62,7 +62,7 @@ describe('authorization middleware', () => {
     it('should respond with JSON validation error if it has occured', async () => {
 
         const req = new ExpressRequest({
-            headers: { Authorization: `invalid value` }
+            headers: { Authorization: 'invalid value' }
         });
 
         const { error } = Joi.validate(req.header('Authorization'), authHeaderValidationSchema);

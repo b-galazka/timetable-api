@@ -20,7 +20,7 @@ module.exports = [
         <tr>
             <td>2</td>
             <td class="h">2:00-3:00</td>
-            
+
             <td class="l">
                 <span class="s">PE</span>
                 <span class="t">BC</span>
@@ -39,7 +39,7 @@ module.exports = [
         <tr>
             <td>1</td>
             <td class="h">1:00-2:00</td>
-            
+
             <td class="l">
                 <span class="s">PE</span>
                 <span class="t">#J2</span>

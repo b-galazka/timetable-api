@@ -28,7 +28,7 @@ describe('TimetablesComparator.prototype.areChangesInTimetable', () => {
 
             if (!areCriteriaValid || !areFieldsValid || !areOptionsValid) {
 
-                return Promise.reject('Teacher.find called with invalid params');
+                return Promise.reject(new Error('Teacher.find called with invalid params'));
             }
 
             const response = dbRecords.map((obj, index) => (

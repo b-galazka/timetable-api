@@ -11,10 +11,18 @@ jest.mock('../../config', () => ({
     scraperSelectors: { a: 'selector1', b: 'selector2' }
 }));
 
-jest.mock('../../tools/DocumentsDownloader', () => require('../../mocks/tools/DocumentsDownloader'));
+jest.mock(
+    '../../tools/DocumentsDownloader',
+    () => require('../../mocks/tools/DocumentsDownloader')
+);
+
 jest.mock('../../tools/TimetableScraper', () => require('../../mocks/tools/TimetableScraper'));
 jest.mock('../../tools/TimetableUpdater', () => require('../../mocks/tools/TimetableUpdater'));
-jest.mock('../../tools/TimetablesComparator', () => require('../../mocks/tools/TimetablesComparator'));
+
+jest.mock(
+    '../../tools/TimetablesComparator',
+    () => require('../../mocks/tools/TimetablesComparator')
+);
 
 describe('update.updateTimetable controller', () => {
 

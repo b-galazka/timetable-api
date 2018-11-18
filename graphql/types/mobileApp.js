@@ -22,7 +22,7 @@ const TimetableType = new GraphQLObjectType({
     fields: () => ({
         _id: { type: GraphQLObjectId },
         type: { type: GraphQLString },
-        slug: { type: GraphQLString },
+        slug: { type: GraphQLString }
     })
 });
 
@@ -30,7 +30,7 @@ const InputTimetableType = new GraphQLInputObjectType({
     name: 'InputMobileAppTimetable',
     fields: () => ({
         type: { type: new GraphQLNonNull(GraphQLString) },
-        slug: { type: new GraphQLNonNull(GraphQLString) },
+        slug: { type: new GraphQLNonNull(GraphQLString) }
     })
 });
 

@@ -13,7 +13,7 @@ describe('decodeCredentials()', () => {
         {
             base64: invalidCredentials,
             expectedOutput: { username: 'invalid_username', password: 'invalid_password' }
-        },
+        }
     ];
 
     it('should return decoded credentials', () => {

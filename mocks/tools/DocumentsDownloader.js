@@ -20,7 +20,7 @@ class DocumentsDownloader {
             return Promise.resolve([ 'document1', 'document2' ]);
         }
 
-        return Promise.reject('Invalid DocumentsDownloader config has been provided');
+        return Promise.reject(new Error('Invalid DocumentsDownloader config has been provided'));
     }
 }
 

@@ -20,7 +20,7 @@ exports.getOneByNumber = async (req, res, next) => {
 
         const { number } = req.params;
 
-        const classroom = await Classroom.findOne({ number })
+        const classroom = await Classroom.findOne({ number });
 
         if (classroom) {
 

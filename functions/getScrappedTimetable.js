@@ -21,5 +21,5 @@ module.exports = async () => {
         selectors: scraperSelectors
     });
 
-    return await timetableScraper.scrap();
+    return timetableScraper.scrap();
 };

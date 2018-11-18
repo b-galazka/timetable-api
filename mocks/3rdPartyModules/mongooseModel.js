@@ -1,5 +1,5 @@
 module.exports = () => ({
-        
+
     insertMany(data) {
 
         return new Promise((resolve, reject) => {
@@ -10,7 +10,7 @@ module.exports = () => ({
 
                 if (!Array.isArray(data)) {
 
-                    return reject();
+                    return reject(new Error());
                 }
 
                 if (!Array.isArray(collection.data)) {

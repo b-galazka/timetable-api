@@ -1,15 +1,18 @@
 const Joi = require('joi');
 
-module.exports = Joi.object().keys({
+module.exports = Joi.object()
+    .keys({
 
-    phoneModel: Joi.string(),
-    phoneID: Joi.string(),
-    appVersion: Joi.string(),
-    osVersion: Joi.string(),
+        phoneModel: Joi.string(),
+        phoneID: Joi.string(),
+        appVersion: Joi.string(),
+        osVersion: Joi.string(),
 
-    mostPopularTimetable: Joi.object().keys({
-        type: Joi.string().valid('teacher', 'class', 'classroom'),
-        slug: Joi.string()
-    }).requiredKeys('type', 'slug')
-
-}).requiredKeys('phoneModel', 'phoneID');
+        mostPopularTimetable: Joi.object()
+            .keys({
+                type: Joi.string().valid('teacher', 'class', 'classroom'),
+                slug: Joi.string()
+            })
+            .requiredKeys('type', 'slug')
+    })
+    .requiredKeys('phoneModel', 'phoneID');

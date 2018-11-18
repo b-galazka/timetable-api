@@ -1,3 +1,5 @@
+/* eslint-disable */
+
 // backup of https://github.com/isayme/graphql-scalar-objectid
 
 const { GraphQLScalarType } = require('graphql')

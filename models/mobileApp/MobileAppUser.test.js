@@ -16,7 +16,7 @@ describe('MobileAppUser.createOrUpdate', () => {
         Date = function () {
 
             return { date: 10 };
-        }
+        };
     });
 
     it('should return a promise', () => {
@@ -71,7 +71,7 @@ describe('MobileAppUser.createOrUpdate', () => {
                 lastSeen: { date: 10 },
                 save
             });
-        }
+        };
 
         const existingUser = { phoneID: 1, b: 2, c: 3, lastSeen: { date: 1 }, save };
 

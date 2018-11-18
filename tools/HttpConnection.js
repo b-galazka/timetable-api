@@ -14,7 +14,9 @@ class HttpConnection {
 
                 if (statusCode >= 400) {
 
-                    return reject({ method: 'GET', url, statusCode });
+                    const err = new Error(`method: GET, URL: ${url}, status code: ${statusCode}`);
+
+                    return reject(err);
                 }
 
                 res.on('data', (chunk) => { data += chunk; });
@@ -22,7 +24,7 @@ class HttpConnection {
             });
 
             request.on('error', err => reject(err));
-        })
+        });
     }
 }
 

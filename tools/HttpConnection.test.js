@@ -36,7 +36,7 @@ describe('HttpConnection.get', () => {
 
     it('should reject a promise if res.statusCode >= 400', async () => {
 
-        expect.assertions(1);
+        expect.assertions(2);
 
         const url = 'status error';
 
@@ -46,7 +46,8 @@ describe('HttpConnection.get', () => {
 
         } catch (err) {
 
-            expect(err).toEqual({ method: 'GET', statusCode: 400, url });
+            expect(err).toBeInstanceOf(Error);
+            expect(err.message).toBe(`method: GET, URL: ${url}, status code: 400`);
         }
     });
 });

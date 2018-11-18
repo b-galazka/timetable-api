@@ -35,7 +35,7 @@ describe('Teacher.loadList', () => {
 
         expect.assertions(2);
 
-        expectedFields = { field1: true, field2: true};
+        expectedFields = { field1: true, field2: true };
 
         expect(await Teacher.loadList(expectedFields)).toEqual([]);
 
@@ -52,7 +52,7 @@ describe('Teacher.loadList', () => {
             { name: 'A. Ć' },
             { name: 'G. Ą' },
             { name: 'B. C' },
-            { name: 'A. A' },
+            { name: 'A. A' }
         ];
 
         expect(await Teacher.loadList()).toEqual([
@@ -71,7 +71,7 @@ describe('Teacher.loadList', () => {
             { name: null, slug: 'BG' },
             { name: null, slug: '#J2' },
             { name: null, slug: '#J1' },
-            { name: null, slug: 'AB' },
+            { name: null, slug: 'AB' }
         ];
 
         expect(await Teacher.loadList()).toEqual([
@@ -94,7 +94,7 @@ describe('Teacher.loadList', () => {
             { name: null, slug: '#J1' },
             { name: 'A. A' },
             { name: null, slug: 'BG' },
-            { name: null, slug: 'AB' },
+            { name: null, slug: 'AB' }
         ];
 
         expect(await Teacher.loadList()).toEqual([

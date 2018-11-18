@@ -4,6 +4,8 @@ const UpdateRequest = require('./UpdateRequest');
 
 const originalFindOneMethod = UpdateRequest.findOne;
 
+let findOneDbResponse;
+
 const findOneMethodMock = (criteria, fields, options) => {
 
     const areCriteriaValid = _.isEqual(criteria, {});
@@ -17,8 +19,6 @@ const findOneMethodMock = (criteria, fields, options) => {
 
     return Promise.resolve('UpdateRequest.findOne called with invalid params');
 };
-
-let findOneDbResponse;
 
 describe('UpdateRequest.loadNewest', () => {
 
@@ -35,16 +35,16 @@ describe('UpdateRequest.loadNewest', () => {
     it('should resolve a promise with ' +
         'UpdateRequest.findOne (called with proper params) output', async () => {
 
-            expect.assertions(2);
+        expect.assertions(2);
 
-            findOneDbResponse = 'database response';
+        findOneDbResponse = 'database response';
 
-            expect(await UpdateRequest.loadNewest()).toBe('database response');
+        expect(await UpdateRequest.loadNewest()).toBe('database response');
 
-            findOneDbResponse = 'another database response';
+        findOneDbResponse = 'another database response';
 
-            expect(await UpdateRequest.loadNewest()).toBe('another database response');
-        });
+        expect(await UpdateRequest.loadNewest()).toBe('another database response');
+    });
 
     afterEach(() => {
 

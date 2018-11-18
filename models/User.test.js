@@ -7,7 +7,7 @@ const { hashSecret } = require('../config');
 const username = 'username';
 const password = 'password';
 
-const hash = str => crypto
+const hash = () => crypto
     .createHmac('sha256', hashSecret)
     .update(password)
     .digest('hex');

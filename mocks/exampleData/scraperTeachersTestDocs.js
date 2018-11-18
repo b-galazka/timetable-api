@@ -20,7 +20,7 @@ module.exports = [
         <tr>
             <td>2</td>
             <td class="h">2:00-3:00</td>
-            
+
             <td class="l">
                 <span class="s">PE</span>
                 <span class="t">#J2</span>
@@ -30,7 +30,7 @@ module.exports = [
         <tr>
             <td>3</td>
             <td class="h">3:00-4:00</td>
-            
+
             <td class="l">
                 <span class="s">PE</span>
                 <span class="t">#J3</span>
@@ -40,7 +40,7 @@ module.exports = [
         <tr>
             <td>4</td>
             <td class="h">4:00-5:00</td>
-            
+
             <td class="l">
                 <span class="s">PE</span>
                 <span class="t">DE</span>
@@ -59,7 +59,7 @@ module.exports = [
         <tr>
             <td>1</td>
             <td class="h">1:00-2:00</td>
-            
+
             <td class="l">
                 <span class="s">PE</span>
                 <span class="t">AB</span>
@@ -79,7 +79,7 @@ module.exports = [
         <tr>
             <td>3</td>
             <td class="h">3:00-4:00</td>
-            
+
             <td class="l">
                 <span class="s">PE</span>
                 <span class="t">DE</span>
@@ -89,7 +89,7 @@ module.exports = [
         <tr>
             <td>4</td>
             <td class="h">4:00-5:00</td>
-            
+
             <td class="l">
                 <span class="s">PE</span>
                 <span class="t">#J3</span>

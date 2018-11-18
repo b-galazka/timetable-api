@@ -20,14 +20,14 @@ const catchUnknownError = require('./middlewares/errorsCatchers/catchUnknownErro
 const GraphqlSchema = require('./graphql/schema');
 const formatGraphqlError = require('./graphql/errors/formatError');
 
-//server configuration file
+// server configuration file
 const { port, ip, mongoUrl } = require('./config');
 const isDev = (process.env.NODE_ENV === 'development');
 
-//start express
+// start express
 const app = express();
 
-//configure express
+// configure express
 app.disable('x-powered-by');
 
 app.use(setCorsHeaders);
@@ -42,7 +42,7 @@ app.use('/graphql', expressGraphql({
 app.use(express.json());
 app.use(catchJsonParsingError);
 
-//routes
+// routes
 app.use(homeRoutes);
 app.use('/', updatingRoutes);
 app.use('/teachers', teachersRoutes);
@@ -54,7 +54,7 @@ app.use(notFound);
 
 app.use(catchUnknownError);
 
-//connect with DB
+// connect with DB
 mongoose.connect(mongoUrl, { useNewUrlParser: true });
 
 if (isDev) {
@@ -62,7 +62,7 @@ if (isDev) {
     mongoose.set('debug', true);
 }
 
-//listen for requests
+// listen for requests
 app.listen(port, ip, () => {
 
     logger.log(`app is listening for requests at ${ip}:${port}`);

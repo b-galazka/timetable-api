@@ -133,7 +133,8 @@ module.exports = {
             "after"
         ],
         "quote-props": [
-            "error", "as-needed"
+            "error",
+            "as-needed"
         ],
         "semi-spacing": [
             "error",

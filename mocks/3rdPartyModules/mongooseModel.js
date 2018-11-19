@@ -1,4 +1,27 @@
-module.exports = () => ({
+class MongoCollection {
+
+    constructor() {
+
+        this.data = null;
+    }
+
+    drop(callback) {
+
+        setImmediate(() => {
+
+            this.data = null;
+
+            callback();
+        });
+    }
+}
+
+class MongooseModel {
+
+    constructor() {
+
+        this.collection = new MongoCollection();
+    }
 
     insertMany(data) {
 
@@ -23,20 +46,7 @@ module.exports = () => ({
                 resolve(data);
             });
         });
-    },
-
-    collection: {
-
-        data: null,
-
-        drop(callback) {
-
-            setImmediate(() => {
-
-                this.data = null;
-
-                callback();
-            });
-        }
     }
-});
+}
+
+module.exports = () => new MongooseModel();

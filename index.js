@@ -1,3 +1,13 @@
+const isDev = (process.env.NODE_ENV === 'development');
+const isProd = (process.env.NODE_ENV === 'production');
+
+const sourceMaps = require('source-map-support');
+
+if (isProd) {
+
+    sourceMaps.install();
+}
+
 const express = require('express');
 const mongoose = require('mongoose');
 const expressGraphql = require('express-graphql');
@@ -22,7 +32,6 @@ const formatGraphqlError = require('./graphql/errors/formatError');
 
 // server configuration file
 const { port, ip, mongoUrl } = require('./config');
-const isDev = (process.env.NODE_ENV === 'development');
 
 // start express
 const app = express();

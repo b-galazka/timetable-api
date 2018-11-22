@@ -6,6 +6,7 @@
   "scripts": {
     "start-dev": "SET NODE_ENV=development&& nodemon index.js",
     "start": "SET NODE_ENV=production&& node index.js",
+    "build": "SET NODE_ENV=production&& webpack -p",
     "test": "SET NODE_ENV=test&& jest",
     "test:watch": "SET NODE_ENV=test&& jest --watch",
     "eslint": "eslint **/*.js"
@@ -27,6 +28,8 @@
   },
   "devDependencies": {
     "eslint": "^5.9.0",
-    "jest": "^22.4.4"
+    "jest": "^22.4.4",
+    "webpack": "^4.26.0",
+    "webpack-cli": "^3.1.2"
   }
 }

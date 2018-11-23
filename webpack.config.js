@@ -1,4 +1,7 @@
 const path = require('path');
+const TerserPlugin = require('terser-webpack-plugin');
+const nodeExternals = require('webpack-node-externals');
+const CopyWebpackPlugin = require('copy-webpack-plugin');
 
 module.exports = {
 
@@ -16,5 +19,19 @@ module.exports = {
 
     devtool: 'source-map',
     context: __dirname,
-    target: 'node'
+    target: 'node',
+    externals: [nodeExternals()],
+
+    optimization: {
+        minimizer: [
+            new TerserPlugin({
+                terserOptions: { mangle: false },
+                sourceMap: true
+            })
+        ]
+    },
+
+    plugins: [
+        new CopyWebpackPlugin(['package.json'], { to: './build' })
+    ]
 };

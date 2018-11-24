@@ -1,5 +1,5 @@
 const Joi = require('joi');
-const validationGuard = require('./validationGuard');
+const validationGuard = require('./validation');
 const ErrorResponse = require('../errors/ErrorResponse');
 
 describe('GraphQL validation guard', () => {

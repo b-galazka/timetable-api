@@ -1,4 +1,3 @@
 **/*.test.js
-**/test.js
 build/*
 node_modules/*

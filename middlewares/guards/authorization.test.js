@@ -6,6 +6,7 @@ const ExpressResponse = require('../../mocks/3rdPartyModules/ExpressResponse');
 const User = require('../../models/User');
 const authHeaderValidationSchema = require('../../validationSchemas/authHeader');
 const { validCredentials, invalidCredentials } = require('../../mocks/exampleData/base64strings');
+const { findByUsernameAndPassword } = require('../../mocks/models/methods/User');
 
 jest.mock(
     '../../functions/decodeCredentials',
@@ -22,15 +23,7 @@ describe('authorization middleware', () => {
 
     beforeEach(() => {
 
-        User.findByUsernameAndPassword = (username, password) => {
-
-            return Promise.resolve(
-                (username === 'valid_username' && password === 'valid_password') ?
-                    { username: 'valid_username' } :
-                    null
-            );
-        };
-
+        User.findByUsernameAndPassword = findByUsernameAndPassword;
         req = new ExpressRequest();
         res = new ExpressResponse();
     });

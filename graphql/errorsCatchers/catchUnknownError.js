@@ -1,11 +1,11 @@
 const logger = require('../../utils/logger');
 const ErrorResponse = require('../errors/ErrorResponse');
 
-module.exports = resolve => async (...params) => {
+module.exports = resolve => async (parentValue, args, context) => {
 
     try {
 
-        return await resolve(...params);
+        return await resolve(parentValue, args, context);
 
     } catch (err) {
 

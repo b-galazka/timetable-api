@@ -1,7 +1,9 @@
-const { GraphQLObjectType, GraphQLString, GraphQLList } = require('graphql');
+const { GraphQLObjectType, GraphQLString, GraphQLList, GraphQLBoolean } = require('graphql');
 const { GraphQLDateTime } = require('graphql-iso-date');
 const GraphQLObjectId = require('./objectId');
 
+const guard = require('../guards');
+const authGuard = require('../guards/authorization');
 const resolvers = require('../queries/resolvers/timetable');
 
 const LessonType = new GraphQLObjectType({
@@ -56,6 +58,16 @@ const HourType = new GraphQLObjectType({
     })
 });
 
+const TimetableUpdateRequestType = new GraphQLObjectType({
+    name: 'TimetableUpdateRequestType',
+    fields: () => ({
+        _id: { type: GraphQLObjectId },
+        requestorPhoneID: { type: GraphQLString },
+        timetableUpdated: { type: GraphQLBoolean },
+        dateTime: { type: GraphQLDateTime }
+    })
+});
+
 const TimetableType = new GraphQLObjectType({
     name: 'Timetable',
     fields: {
@@ -102,6 +114,11 @@ const TimetableType = new GraphQLObjectType({
                 slug: { type: GraphQLString }
             },
             resolve: resolvers.findSingleSchoolClass
+        },
+
+        updateRequests: {
+            type: new GraphQLList(TimetableUpdateRequestType),
+            resolve: guard(authGuard, resolvers.findTimetableUpdateRequests)
         }
     }
 });
@@ -110,5 +127,6 @@ module.exports = {
     TeacherType,
     ClassroomType,
     SchoolClassType,
-    TimetableType
+    TimetableType,
+    TimetableUpdateRequestType
 };

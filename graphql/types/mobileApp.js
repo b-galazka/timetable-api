@@ -2,7 +2,6 @@ const {
     GraphQLObjectType,
     GraphQLString,
     GraphQLList,
-    GraphQLBoolean,
     GraphQLInputObjectType,
     GraphQLNonNull
 } = require('graphql');
@@ -31,16 +30,6 @@ const InputTimetableType = new GraphQLInputObjectType({
     })
 });
 
-const TimetableUpdateRequestType = new GraphQLObjectType({
-    name: 'TimetableUpdateRequestType',
-    fields: () => ({
-        _id: { type: GraphQLObjectId },
-        requestorPhoneID: { type: GraphQLString },
-        timetableUpdated: { type: GraphQLBoolean },
-        dateTime: { type: GraphQLDateTime }
-    })
-});
-
 const MobileAppUserType = new GraphQLObjectType({
     name: 'MobileAppUser',
     fields: () => ({
@@ -66,11 +55,6 @@ const MobileAppType = new GraphQLObjectType({
         users: {
             type: new GraphQLList(MobileAppUserType),
             resolve: guard(authGuard, resolvers.findMobileAppUsers)
-        },
-
-        timetableUpdateRequests: {
-            type: new GraphQLList(TimetableUpdateRequestType),
-            resolve: guard(authGuard, resolvers.findTimetableUpdateRequests)
         }
     })
 });
@@ -78,6 +62,5 @@ const MobileAppType = new GraphQLObjectType({
 module.exports = {
     MobileAppUserType,
     MobileAppType,
-    TimetableUpdateRequestType,
     InputTimetableType
 };

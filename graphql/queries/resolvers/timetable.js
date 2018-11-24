@@ -3,6 +3,7 @@ const Teacher = require('../../../models/timetable/Teacher');
 const Classroom = require('../../../models/timetable/Classroom');
 const SchoolClass = require('../../../models/timetable/Class');
 const Hour = require('../../../models/timetable/Hour');
+const UpdateRequest = require('../../../models/mobileApp/UpdateRequest');
 
 // has to return empy object to allow to fetch nested data
 exports.findTimetable = () => ({});
@@ -11,6 +12,7 @@ exports.findTeachers = catchUnknownError(() => Teacher.loadList());
 exports.findClassrooms = catchUnknownError(() => Classroom.loadList());
 exports.findSchoolClasses = catchUnknownError(() => SchoolClass.loadList());
 exports.findHours = catchUnknownError(() => Hour.loadList());
+exports.findUpdateRequests = catchUnknownError(() => UpdateRequest.find());
 
 exports.findSingleTeacher = catchUnknownError((parentValue, args) => {
 

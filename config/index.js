@@ -1,4 +1,6 @@
-const configureEnv = require('./functions/configureDotenv');
+const configureEnv = require('../functions/configureDotenv');
+const teachersHashtags = require('./teachersHashtags');
+const teachersNames = require('./teachersNames');
 
 configureEnv();
 
@@ -29,5 +31,8 @@ module.exports = {
 
     documentsDownloaderListSelector: 'ul a',
 
-    userUpdateRequestTimeLimit: 3600000
+    userUpdateRequestTimeLimit: 3600000,
+
+    teachersHashtags,
+    teachersNames
 };

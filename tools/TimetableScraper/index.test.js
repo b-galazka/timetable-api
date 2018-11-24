@@ -16,8 +16,8 @@ const selectors = {
     hour: 'td.h'
 };
 
-jest.mock('./teachersHashtags', () => ({ '#J1': 'AB', '#J2': 'BC', '#J3': 'CD' }));
-jest.mock('./teachersNames', () => ({ BC: 'BC Lastname' }));
+jest.mock('../../config/teachersHashtags', () => ({ '#J1': 'AB', '#J2': 'BC', '#J3': 'CD' }));
+jest.mock('../../config/teachersNames', () => ({ BC: 'BC Lastname' }));
 
 describe('TimetableScraper.prototype.getScrappedTimetable', () => {
 

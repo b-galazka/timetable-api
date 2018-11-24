@@ -1,8 +1,6 @@
 const cheerio = require('cheerio');
 
-const teachersNames = require('./teachersNames.json');
-const teachersHashtags = require('./teachersHashtags.json');
-
+const { teachersNames, teachersHashtags } = require('../../config');
 const Teacher = require('./timetableObjects/Teacher');
 const Classroom = require('./timetableObjects/Classroom');
 const SchoolClass = require('./timetableObjects/SchoolClass');

@@ -9,7 +9,7 @@
     "build": "cross-env NODE_ENV=production webpack -p",
     "test": "cross-env NODE_ENV=test jest",
     "test:watch": "cross-env NODE_ENV=test jest --watch",
-    "eslint": "eslint **/*.js"
+    "lint": "eslint **/*.js"
   },
   "author": "b-galazka",
   "license": "ISC",
@@ -29,12 +29,13 @@
   },
   "devDependencies": {
     "copy-webpack-plugin": "^4.6.0",
+    "cross-env": "^5.2.0",
     "eslint": "^5.9.0",
+    "eslint-plugin-import": "^2.14.0",
     "jest": "^22.4.4",
     "terser-webpack-plugin": "^1.1.0",
     "webpack": "^4.26.0",
     "webpack-cli": "^3.1.2",
-    "webpack-node-externals": "^1.7.2",
-    "cross-env": "^5.2.0"
+    "webpack-node-externals": "^1.7.2"
   }
 }

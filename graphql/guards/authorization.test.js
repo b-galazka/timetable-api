@@ -1,4 +1,4 @@
-const Joi = require('Joi');
+const Joi = require('joi');
 const authorization = require('./authorization');
 const ErrorResponse = require('../errors/ErrorResponse');
 const User = require('../../models/User');

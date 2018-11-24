@@ -3,10 +3,9 @@ const { GraphQLString, GraphQLList } = require('graphql');
 const guard = require('../guards');
 const authGuard = require('../guards/authorization');
 const validationGuard = require('../guards/validation');
-const catchUnknownError = require('../errorsCatchers/catchUnknownError');
+const resolvers = require('./resolvers/mobileApp');
 
 const { MobileAppType } = require('../types/mobileApp');
-const MobileApp = require('../../models/mobileApp/MobileApp');
 const mobileAppValidationSchema = require('../../validationSchemas/mobileApp');
 
 exports.createOrUpdate = {
@@ -21,6 +20,6 @@ exports.createOrUpdate = {
 
     resolve: guard(
         [authGuard, validationGuard(mobileAppValidationSchema)],
-        catchUnknownError((parentValue, args) => MobileApp.createOrUpdate(args))
+        resolvers.createOrUpdate
     )
 };

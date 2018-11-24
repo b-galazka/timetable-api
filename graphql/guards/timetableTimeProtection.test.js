@@ -1,6 +1,6 @@
 const timeProtectionGuard = require('./timetableTimeProtection');
 const ErrorResponse = require('../errors/ErrorResponse');
-const UpdateRequest = require('../../models/mobileApp/UpdateRequest');
+const UpdateRequest = require('../../models/timetable/UpdateRequest');
 
 jest.mock('../../utils/logger', () => require('../../mocks/utils/logger'));
 

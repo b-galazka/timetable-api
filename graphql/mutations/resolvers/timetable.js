@@ -4,7 +4,7 @@ const logger = require('../../../utils/logger');
 const getScrappedTimetable = require('../../../functions/getScrappedTimetable');
 const TimetableUpdater = require('../../../tools/TimetableUpdater');
 const TimetablesComparator = require('../../../tools/TimetablesComparator');
-const UpdateRequest = require('../../../models/mobileApp/UpdateRequest');
+const UpdateRequest = require('../../../models/timetable/UpdateRequest');
 
 exports.updateTimetable = catchUnknownError(async () => {
 

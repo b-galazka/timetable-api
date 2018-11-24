@@ -3,7 +3,7 @@ const ExpressRequest = require('../../mocks/3rdPartyModules/ExpressRequest');
 const ExpressResponse = require('../../mocks/3rdPartyModules/ExpressResponse');
 const TimetableUpdater = require('../../tools/TimetableUpdater');
 const TimetablesComparator = require('../../tools/TimetablesComparator');
-const UpdateRequest = require('../../models/mobileApp/UpdateRequest');
+const UpdateRequest = require('../../models/timetable/UpdateRequest');
 
 jest.mock('../../config', () => ({
     documentsDownloaderUrls: { base: 'base url', list: 'list url' },

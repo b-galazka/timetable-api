@@ -1,4 +1,4 @@
-const UpdateRequest = require('../../models/mobileApp/UpdateRequest');
+const UpdateRequest = require('../../models/timetable/UpdateRequest');
 
 module.exports = async (req, res, next) => {
 

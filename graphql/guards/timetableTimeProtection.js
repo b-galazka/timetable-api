@@ -1,4 +1,4 @@
-const UpdateRequest = require('../../models/mobileApp/UpdateRequest');
+const UpdateRequest = require('../../models/timetable/UpdateRequest');
 const ErrorResponse = require('../errors/ErrorResponse');
 
 const catchUnknownError = require('../errorsCatchers/catchUnknownError');

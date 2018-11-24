@@ -3,7 +3,7 @@ const Teacher = require('../../../models/timetable/Teacher');
 const Classroom = require('../../../models/timetable/Classroom');
 const SchoolClass = require('../../../models/timetable/Class');
 const Hour = require('../../../models/timetable/Hour');
-const UpdateRequest = require('../../../models/mobileApp/UpdateRequest');
+const UpdateRequest = require('../../../models/timetable/UpdateRequest');
 
 // has to return empy object to allow to fetch nested data
 exports.findTimetable = () => ({});

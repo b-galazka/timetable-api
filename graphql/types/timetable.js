@@ -2,11 +2,7 @@ const { GraphQLObjectType, GraphQLString, GraphQLList } = require('graphql');
 const { GraphQLDateTime } = require('graphql-iso-date');
 const GraphQLObjectId = require('./objectId');
 
-const Teacher = require('../../models/timetable/Teacher');
-const Classroom = require('../../models/timetable/Classroom');
-const SchoolClass = require('../../models/timetable/Class');
-const Hour = require('../../models/timetable/Hour');
-const catchUnknownError = require('../errorsCatchers/catchUnknownError');
+const resolvers = require('../queries/resolvers/timetable');
 
 const LessonType = new GraphQLObjectType({
     name: 'Lesson',
@@ -66,22 +62,22 @@ const TimetableType = new GraphQLObjectType({
 
         teachers: {
             type: new GraphQLList(TeacherType),
-            resolve: catchUnknownError(() => Teacher.loadList())
+            resolve: resolvers.findTeachers
         },
 
         classrooms: {
             type: new GraphQLList(ClassroomType),
-            resolve: catchUnknownError(() => Classroom.loadList())
+            resolve: resolvers.findClassrooms
         },
 
         classes: {
             type: new GraphQLList(SchoolClassType),
-            resolve: catchUnknownError(() => SchoolClass.loadList())
+            resolve: resolvers.findSchoolClasses
         },
 
         hours: {
             type: new GraphQLList(HourType),
-            resolve: catchUnknownError(() => Hour.loadList())
+            resolve: resolvers.findHours
         },
 
         teacher: {
@@ -89,17 +85,7 @@ const TimetableType = new GraphQLObjectType({
             args: {
                 slug: { type: GraphQLString }
             },
-            resolve: catchUnknownError((parentValue, args) => {
-
-                const { slug } = args;
-
-                if (slug === undefined) {
-
-                    return Teacher.loadFirstOne();
-                }
-
-                return Teacher.findOne({ slug });
-            })
+            resolve: resolvers.findSingleTeacher
         },
 
         classroom: {
@@ -107,13 +93,7 @@ const TimetableType = new GraphQLObjectType({
             args: {
                 number: { type: GraphQLString }
             },
-            resolve: catchUnknownError((parentValue, args) => {
-
-                const { number } = args;
-                const criteria = (number === undefined) ? {} : { number };
-
-                return Classroom.findOne(criteria, {}, { sort: { number: 1 } });
-            })
+            resolve: resolvers.findSingleClassroom
         },
 
         class: {
@@ -121,13 +101,7 @@ const TimetableType = new GraphQLObjectType({
             args: {
                 slug: { type: GraphQLString }
             },
-            resolve: catchUnknownError((parentValue, args) => {
-
-                const { slug } = args;
-                const criteria = (slug === undefined) ? {} : { slug };
-
-                return SchoolClass.findOne(criteria, {}, { sort: { slug: 1 } });
-            })
+            resolve: resolvers.findSingleSchoolClass
         }
     }
 });

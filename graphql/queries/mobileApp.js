@@ -1,8 +1,7 @@
 const { MobileAppType } = require('../types/mobileApp');
-const MobileApp = require('../../models/mobileApp/MobileApp');
-const catchUnknownError = require('../errorsCatchers/catchUnknownError');
+const resolvers = require('./resolvers/mobileApp');
 
 module.exports = {
     type: MobileAppType,
-    resolve: catchUnknownError(() => MobileApp.findOne())
+    resolve: resolvers.findMobileApp
 };

@@ -10,12 +10,9 @@ const {
 const { GraphQLDateTime } = require('graphql-iso-date');
 const GraphQLObjectId = require('./objectId');
 
-const MobileAppUser = require('../../models/mobileApp/MobileAppUser');
-const UpdateRequest = require('../../models/mobileApp/UpdateRequest');
-
 const guard = require('../guards');
 const authGuard = require('../guards/authorization');
-const catchUnknownError = require('../errorsCatchers/catchUnknownError');
+const resolvers = require('../queries/resolvers/mobileApp');
 
 const TimetableType = new GraphQLObjectType({
     name: 'MobileAppTimetable',
@@ -34,8 +31,8 @@ const InputTimetableType = new GraphQLInputObjectType({
     })
 });
 
-const UpdateRequestType = new GraphQLObjectType({
-    name: 'UpdateRequestType',
+const TimetableUpdateRequestType = new GraphQLObjectType({
+    name: 'TimetableUpdateRequestType',
     fields: () => ({
         _id: { type: GraphQLObjectId },
         requestorPhoneID: { type: GraphQLString },
@@ -68,12 +65,12 @@ const MobileAppType = new GraphQLObjectType({
 
         users: {
             type: new GraphQLList(MobileAppUserType),
-            resolve: catchUnknownError(guard(authGuard, () => MobileAppUser.find()))
+            resolve: guard(authGuard, resolvers.findMobileAppUsers)
         },
 
-        updateRequests: {
-            type: new GraphQLList(UpdateRequestType),
-            resolve: catchUnknownError(guard(authGuard, () => UpdateRequest.find()))
+        timetableUpdateRequests: {
+            type: new GraphQLList(TimetableUpdateRequestType),
+            resolve: guard(authGuard, resolvers.findTimetableUpdateRequests)
         }
     })
 });
@@ -81,6 +78,6 @@ const MobileAppType = new GraphQLObjectType({
 module.exports = {
     MobileAppUserType,
     MobileAppType,
-    UpdateRequestType,
+    TimetableUpdateRequestType,
     InputTimetableType
 };

@@ -5,9 +5,9 @@ const ErrorResponse = require('../errors/ErrorResponse');
 
 const logger = require('../../utils/logger');
 const guard = require('../guards');
-const authGuard = require('../guards/authGuard');
-const validationGuard = require('../guards/validationGuard');
-const timeProtectionGuard = require('../guards/timetableTimeProtectionGuard');
+const authGuard = require('../guards/authorization');
+const validationGuard = require('../guards/validation');
+const timeProtectionGuard = require('../guards/timetableTimeProtection');
 
 const catchUnknownError = require('../errorsCatchers/catchUnknownError');
 const getScrappedTimetable = require('../../functions/getScrappedTimetable');

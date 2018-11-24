@@ -14,7 +14,7 @@ const MobileAppUser = require('../../models/mobileApp/MobileAppUser');
 const UpdateRequest = require('../../models/mobileApp/UpdateRequest');
 
 const guard = require('../guards');
-const authGuard = require('../guards/authGuard');
+const authGuard = require('../guards/authorization');
 const catchUnknownError = require('../errorsCatchers/catchUnknownError');
 
 const TimetableType = new GraphQLObjectType({

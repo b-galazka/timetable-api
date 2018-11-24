@@ -1,8 +1,8 @@
 const { GraphQLString, GraphQLBoolean, GraphQLNonNull } = require('graphql');
 
 const guard = require('../guards');
-const authGuard = require('../guards/authGuard');
-const validationGuard = require('../guards/validationGuard');
+const authGuard = require('../guards/authorization');
+const validationGuard = require('../guards/validation');
 const catchUnknownError = require('../errorsCatchers/catchUnknownError');
 
 const { MobileAppUserType, InputTimetableType } = require('../types/mobileApp');

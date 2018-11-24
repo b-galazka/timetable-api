@@ -205,7 +205,7 @@ Schema of a request body (only phoneID and phoneModel fields are required):
 Generates a new timetable and saves it to the database. Responds with `updated` message.  
 Authorization header is required.
 
-## PUT /request-update
+## PUT /timetable/request-update
 
 This route allows applications users to update out-of-date timetable.  
 Checks if there are any changes in the timetable. If they are, generates new timetable and saves it to the database. It also saves requestor phone ID, request datetime and information if timetable has been updated.  

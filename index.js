@@ -14,7 +14,7 @@ const expressGraphql = require('express-graphql');
 const logger = require('./utils/logger');
 
 const homeRoutes = require('./routes/home');
-const updatingRoutes = require('./routes/update');
+const timetableRoutes = require('./routes/timetable');
 const teachersRoutes = require('./routes/teachers');
 const classesRoutes = require('./routes/classes');
 const classroomsRoutes = require('./routes/classrooms');
@@ -53,7 +53,7 @@ app.use(catchJsonParsingError);
 
 // routes
 app.use(homeRoutes);
-app.use('/', updatingRoutes);
+app.use('/timetable', timetableRoutes);
 app.use('/teachers', teachersRoutes);
 app.use('/classes', classesRoutes);
 app.use('/classrooms', classroomsRoutes);

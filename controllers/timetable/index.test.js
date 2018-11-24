@@ -1,4 +1,4 @@
-const { updateTimetable, handleUserTimetableUpdateRequest } = require('./update');
+const { updateTimetable, handleUserTimetableUpdateRequest } = require('./');
 const ExpressRequest = require('../../mocks/3rdPartyModules/ExpressRequest');
 const ExpressResponse = require('../../mocks/3rdPartyModules/ExpressResponse');
 const TimetableUpdater = require('../../tools/TimetableUpdater');

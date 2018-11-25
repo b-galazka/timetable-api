@@ -1,4 +1,4 @@
-const { isEqual } = require('lodash');
+const isEqual = require('lodash/isEqual');
 
 const { getAll, getOneBySlug } = require('./classes');
 const ExpressRequest = require('../../mocks/3rdPartyModules/ExpressRequest');

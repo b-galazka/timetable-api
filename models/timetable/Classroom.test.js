@@ -1,4 +1,4 @@
-const { isEqual } = require('lodash');
+const isEqual = require('lodash/isEqual');
 
 const Classroom = require('./Classroom');
 

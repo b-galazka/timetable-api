@@ -1,5 +1,5 @@
 const crypto = require('crypto');
-const { isEqual } = require('lodash');
+const isEqual = require('lodash/isEqual');
 
 const User = require('./User');
 const { hashSecret } = require('../config');

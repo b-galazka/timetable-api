@@ -1,4 +1,5 @@
-const { isEqual, range } = require('lodash');
+const isEqual = require('lodash/isEqual');
+const range = require('lodash/range');
 
 const Teacher = require('../models/timetable/Teacher');
 

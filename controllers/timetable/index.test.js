@@ -5,19 +5,12 @@ const TimetableUpdater = require('../../tools/TimetableUpdater');
 const TimetablesComparator = require('../../tools/TimetablesComparator');
 const UpdateRequest = require('../../models/timetable/UpdateRequest');
 
-jest.mock('../../config', () => ({
-    documentsDownloaderUrls: { base: 'base url', list: 'list url' },
-    documentsDownloaderListSelector: 'list selector',
-    scraperSelectors: { a: 'selector1', b: 'selector2' }
-}));
+jest.mock('../../tools/TimetableUpdater', () => require('../../mocks/tools/TimetableUpdater'));
 
 jest.mock(
-    '../../tools/DocumentsDownloader',
-    () => require('../../mocks/tools/DocumentsDownloader')
+    '../../functions/getScrappedTimetable',
+    () => require('../../mocks/functions/getScrappedTimetable')
 );
-
-jest.mock('../../tools/TimetableScraper', () => require('../../mocks/tools/TimetableScraper'));
-jest.mock('../../tools/TimetableUpdater', () => require('../../mocks/tools/TimetableUpdater'));
 
 jest.mock(
     '../../tools/TimetablesComparator',
@@ -46,7 +39,7 @@ describe('update.updateTimetable controller', () => {
 
         await updateTimetable(req, res);
 
-        expect(spy).toHaveBeenCalled();
+        expect(spy).toHaveBeenCalledTimes(1);
     });
 
     it('should respond with "updated" JSON message', async () => {

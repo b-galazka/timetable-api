@@ -1,4 +1,4 @@
-const _ = require('lodash');
+const { isEqual } = require('lodash');
 
 const Hour = require('./Hour');
 
@@ -12,16 +12,16 @@ describe('Hour.loadList', () => {
 
         Hour.find = (criteria, fields, options) => {
 
-            const areCriteriaValid = criteria === undefined || _.isEqual(criteria, {});
+            const areCriteriaValid = criteria === undefined || isEqual(criteria, {});
 
             const areFieldsValid = (
                 fields === undefined ||
-                _.isEqual(fields, { number: true, _id: true })
+                isEqual(fields, { number: true, _id: true })
             );
 
             const areOptionsValid = (
                 options === undefined ||
-                _.isEqual(options, { sort: { number: 1 } })
+                isEqual(options, { sort: { number: 1 } })
             );
 
             if (areCriteriaValid && areFieldsValid && areOptionsValid) {

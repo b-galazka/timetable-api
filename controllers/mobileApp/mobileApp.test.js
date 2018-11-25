@@ -1,4 +1,4 @@
-const _ = require('lodash');
+const { isEqual } = require('lodash');
 
 const {
     getMobileAppInfo,
@@ -24,9 +24,9 @@ describe('mobileApp.getMobileAppInfo controller', () => {
 
         MobileApp.findOne = (criteria, fields, options) => {
 
-            const areCriteriaValid = criteria === undefined || _.isEqual(criteria, {});
-            const areFieldsValid = fields === undefined || _.isEqual(fields, {});
-            const areOptionsValid = options === undefined || _.isEqual(options, {});
+            const areCriteriaValid = criteria === undefined || isEqual(criteria, {});
+            const areFieldsValid = fields === undefined || isEqual(fields, {});
+            const areOptionsValid = options === undefined || isEqual(options, {});
 
             if (areCriteriaValid && areFieldsValid && areOptionsValid) {
 

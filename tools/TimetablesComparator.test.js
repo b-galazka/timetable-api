@@ -1,4 +1,4 @@
-const _ = require('lodash');
+const { isEqual } = require('lodash');
 
 const TimetablesComparator = require('./TimetablesComparator');
 const Teacher = require('../models/timetable/Teacher');
@@ -13,16 +13,16 @@ describe('TimetablesComparator.prototype.areChangesInTimetable', () => {
 
         Teacher.find = (critieria, fields, options) => {
 
-            const areCriteriaValid = _.isEqual(critieria, {});
+            const areCriteriaValid = isEqual(critieria, {});
 
-            const areFieldsValid = _.isEqual(fields, {
+            const areFieldsValid = isEqual(fields, {
                 _id: false,
                 update: false,
                 'timetable._id': false,
                 type: false
             });
 
-            const areOptionsValid = _.isEqual(options, {
+            const areOptionsValid = isEqual(options, {
                 sort: { slug: 1 }
             });
 

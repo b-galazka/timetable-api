@@ -1,4 +1,4 @@
-const _ = require('lodash');
+const { isEqual, range } = require('lodash');
 
 const Teacher = require('../models/timetable/Teacher');
 
@@ -106,9 +106,9 @@ class TimetablesComparator {
 
         const { _compareTimetableObjects, _isNullOrUndefined } = TimetablesComparator;
 
-        if (_isNullOrUndefined(currentObjectField) || _.isEqual(currentObjectField, [null])) {
+        if (_isNullOrUndefined(currentObjectField) || isEqual(currentObjectField, [null])) {
 
-            return (_isNullOrUndefined(newObjectField) || _.isEqual(newObjectField, [null]));
+            return (_isNullOrUndefined(newObjectField) || isEqual(newObjectField, [null]));
 
         } else if (Array.isArray(newObjectField) && Array.isArray(currentObjectField)) {
 
@@ -118,7 +118,7 @@ class TimetablesComparator {
             );
         }
 
-        return _.isEqual(newObjectField, currentObjectField);
+        return isEqual(newObjectField, currentObjectField);
     }
 
     static _isNullOrUndefined(value) {
@@ -130,11 +130,11 @@ class TimetablesComparator {
 
         const objectsKeys = objects.map(obj => (
             Array.isArray(obj) ?
-                _.range(obj.length - 1) :
+                range(obj.length - 1) :
                 Object.keys(obj).sort()
         ));
 
-        return _.isEqual(...objectsKeys);
+        return isEqual(...objectsKeys);
     }
 }
 

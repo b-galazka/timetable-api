@@ -1,4 +1,4 @@
-const _ = require('lodash');
+const { isEqual } = require('lodash');
 
 const UpdateRequest = require('./UpdateRequest');
 
@@ -8,9 +8,9 @@ let findOneDbResponse;
 
 const findOneMethodMock = (criteria, fields, options) => {
 
-    const areCriteriaValid = _.isEqual(criteria, {});
-    const areFieldsValid = _.isEqual(fields, { dateTime: true });
-    const areOptionsValid = _.isEqual(options, { sort: { _id: -1 } });
+    const areCriteriaValid = isEqual(criteria, {});
+    const areFieldsValid = isEqual(fields, { dateTime: true });
+    const areOptionsValid = isEqual(options, { sort: { _id: -1 } });
 
     if (areCriteriaValid && areFieldsValid && areOptionsValid) {
 

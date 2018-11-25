@@ -1,4 +1,4 @@
-const _ = require('lodash');
+const { isEqual } = require('lodash');
 
 const { scraperSelectors } = require('../../config');
 
@@ -17,12 +17,12 @@ class TimetableScraper {
 
     scrap() {
 
-        const areDocumentsValid = _.isEqual(
+        const areDocumentsValid = isEqual(
             this.documents,
             ['document1', 'document2']
         );
 
-        const areSelectorsValid = _.isEqual(this.selectors, scraperSelectors);
+        const areSelectorsValid = isEqual(this.selectors, scraperSelectors);
 
         if (!areDocumentsValid || !areSelectorsValid) {
 

@@ -1,4 +1,4 @@
-const _ = require('lodash');
+const { isEqual } = require('lodash');
 
 const Teacher = require('./');
 
@@ -13,9 +13,9 @@ describe('Teacher.loadList', () => {
 
         Teacher.find = (criteria, fields, options) => {
 
-            const areCriteriaValid = _.isEqual(criteria, {});
-            const areFieldsValid = _.isEqual(fields, expectedFields);
-            const areOptionsValid = options === undefined || _.isEqual(options, {});
+            const areCriteriaValid = isEqual(criteria, {});
+            const areFieldsValid = isEqual(fields, expectedFields);
+            const areOptionsValid = options === undefined || isEqual(options, {});
 
             if (areCriteriaValid && areFieldsValid && areOptionsValid) {
 

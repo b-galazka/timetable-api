@@ -1,4 +1,4 @@
-const _ = require('lodash');
+const { isEqual } = require('lodash');
 
 class TimetablesComparator {
 
@@ -9,7 +9,7 @@ class TimetablesComparator {
 
     areChangesInTimetable() {
 
-        if (_.isEqual(this._newTeachersTimetable, [{}])) {
+        if (isEqual(this._newTeachersTimetable, [{}])) {
 
             return Promise.resolve(true);
         }

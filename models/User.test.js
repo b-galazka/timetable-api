@@ -1,5 +1,5 @@
 const crypto = require('crypto');
-const _ = require('lodash');
+const { isEqual } = require('lodash');
 
 const User = require('./User');
 const { hashSecret } = require('../config');
@@ -22,13 +22,13 @@ describe('User.findByUsernameAndPassword', () => {
 
         User.findOne = (criteria, fields, options) => {
 
-            const areCriteriaValid = _.isEqual(criteria, {
+            const areCriteriaValid = isEqual(criteria, {
                 username: new RegExp(`^${username.trim()}$`, 'i'),
                 password: hash(password)
             });
 
-            const areFieldsValid = fields === undefined || _.isEqual(fields, {});
-            const areOptionsValid = options === undefined || _.isEqual(options, {});
+            const areFieldsValid = fields === undefined || isEqual(fields, {});
+            const areOptionsValid = options === undefined || isEqual(options, {});
 
             if (areCriteriaValid && areFieldsValid && areOptionsValid) {
 

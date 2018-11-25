@@ -1,4 +1,4 @@
-const _ = require('lodash');
+const { isEqual } = require('lodash');
 
 class TimetableUpdater {
 
@@ -9,7 +9,7 @@ class TimetableUpdater {
 
     update() {
 
-        const isScrappedTimtableValid = _.isEqual(this.scrappedTimetable, {
+        const isScrappedTimtableValid = isEqual(this.scrappedTimetable, {
             teachers: [{}],
             classrooms: [{}],
             schoolClasses: [{}],

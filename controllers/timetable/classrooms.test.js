@@ -1,4 +1,4 @@
-const _ = require('lodash');
+const { isEqual } = require('lodash');
 
 const { getAll, getOneByNumber } = require('./classrooms');
 const ExpressRequest = require('../../mocks/3rdPartyModules/ExpressRequest');
@@ -88,9 +88,9 @@ describe('classrooms.getOneBySlug controller', () => {
 
         Classroom.findOne = (criteria, fields, options) => {
 
-            const areCriteriaValid = _.isEqual(Object.keys(criteria), ['number']);
-            const areFieldsValid = fields === undefined || _.isEqual(fields, {});
-            const areOptionsValid = options === undefined || _.isEqual(options, {});
+            const areCriteriaValid = isEqual(Object.keys(criteria), ['number']);
+            const areFieldsValid = fields === undefined || isEqual(fields, {});
+            const areOptionsValid = options === undefined || isEqual(options, {});
 
             if (areCriteriaValid && areFieldsValid && areOptionsValid) {
 

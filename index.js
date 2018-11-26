@@ -13,15 +13,7 @@ const mongoose = require('mongoose');
 const expressGraphql = require('express-graphql');
 const logger = require('./utils/logger');
 
-const homeRoutes = require('./routes/home');
-const timetableRoutes = require('./routes/timetable');
-const teachersRoutes = require('./routes/teachers');
-const classesRoutes = require('./routes/classes');
-const classroomsRoutes = require('./routes/classrooms');
-const hoursRoutes = require('./routes/hours');
-const mobileApp = require('./routes/mobileApp');
-const notFound = require('./routes/notFound');
-
+const routes = require('./routes');
 const catchJsonParsingError = require('./middlewares/errorsCatchers/catchJsonParsingError');
 const setCorsHeaders = require('./middlewares/guards/setCorsHeaders');
 const catchCorsError = require('./middlewares/errorsCatchers/catchCorsError');
@@ -50,20 +42,10 @@ app.use('/graphql', expressGraphql({
 
 app.use(express.json());
 app.use(catchJsonParsingError);
-
-// routes
-app.use(homeRoutes);
-app.use('/timetable', timetableRoutes);
-app.use('/teachers', teachersRoutes);
-app.use('/classes', classesRoutes);
-app.use('/classrooms', classroomsRoutes);
-app.use('/hours', hoursRoutes);
-app.use('/mobile-app', mobileApp);
-app.use(notFound);
-
+app.use(routes);
 app.use(catchUnknownError);
 
-// connect with DB
+// connect to DB
 mongoose.connect(mongoUrl, { useNewUrlParser: true });
 
 if (isDev) {

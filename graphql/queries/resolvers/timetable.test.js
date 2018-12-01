@@ -12,7 +12,8 @@ const {
     findClassrooms,
     findSchoolClasses,
     findHours,
-    findUpdateRequests
+    findUpdateRequests,
+    findSingleTeacher
 } = require('./timetable');
 
 jest.mock('../../../utils/logger', () => require('../../../mocks/utils/logger'));
@@ -304,4 +305,114 @@ describe('GraphQL timetable.findUpdateRequests query resolver', () => {
     });
 });
 
-// TODO: add rest of query resolvers' tests
+describe('GraphQL timetable.findSingleTeacher query resolver', () => {
+
+    let dbResponse;
+
+    describe('slug not provided', () => {
+
+        const originalLoadFirstOneMethod = Teacher.loadFirstone;
+
+        beforeEach(() => {
+
+            Teacher.loadFirstOne = () => Promise.resolve(dbResponse);
+        });
+
+        it('should return found record', async () => {
+
+            expect.assertions(2);
+
+            const values = [{ a: 10 }, { b: 20 }];
+
+            for (const value of values) {
+
+                dbResponse = value;
+
+                const result = await findSingleTeacher({}, {});
+
+                expect(result).toBe(value);
+            }
+        });
+
+        it('should throw valid ErrorResponse if error has occured during', async () => {
+
+            expect.assertions(1);
+
+            Teacher.loadFirstOne = () => Promise.reject(new Error('error message'));
+
+            try {
+
+                await findSingleTeacher({}, {});
+
+            } catch (err) {
+
+                expect(err).toEqual(new ErrorResponse('something went wrong', 500));
+            }
+        });
+
+        afterEach(() => {
+
+            Teacher.loadFirstOne = originalLoadFirstOneMethod;
+        });
+    });
+
+    describe('slug provided', () => {
+
+        const originalFindOneMethod = Teacher.findOne;
+        const slug = 'XYZ';
+
+        beforeEach(() => {
+
+            Teacher.findOne = (criteria, fields, options) => {
+
+                const areCriteriaValid = isEqual(criteria, { slug });
+                const areFieldsValid = fields === undefined || isEqual(fields, {});
+                const areOptionsValid = options === undefined || isEqual(options, {});
+
+                if (areCriteriaValid && areFieldsValid && areOptionsValid) {
+
+                    return Promise.resolve(dbResponse);
+                }
+
+                return Promise.resolve('Teacher.findOne called with invalid params');
+            };
+        });
+
+        it('should return found record', async () => {
+
+            expect.assertions(2);
+
+            const values = [{ a: 10 }, { b: 20 }];
+
+            for (const value of values) {
+
+                dbResponse = value;
+
+                const result = await findSingleTeacher({}, { slug });
+
+                expect(result).toBe(value);
+            }
+        });
+
+        it('should throw valid ErrorResponse if error has occured during', async () => {
+
+            expect.assertions(1);
+
+            Teacher.findOne = () => Promise.reject(new Error('error message'));
+
+            try {
+
+                await findSingleTeacher({}, { slug });
+
+            } catch (err) {
+
+                expect(err).toEqual(new ErrorResponse('something went wrong', 500));
+            }
+        });
+
+        afterEach(() => {
+
+            Teacher.findOne = originalFindOneMethod;
+        });
+    });
+});

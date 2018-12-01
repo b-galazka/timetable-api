@@ -58,7 +58,7 @@ exports.getLastUpdate = async (req, res, next) => {
 
     try {
 
-        const lastUpdate = await Update.findOne();
+        const lastUpdate = await Update.findOne({}, { _id: false });
 
         if (lastUpdate) {
 

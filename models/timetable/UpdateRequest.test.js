@@ -52,6 +52,7 @@ describe('UpdateRequest.loadNewest', () => {
     });
 });
 
+// TODO: update tests
 describe('UpdateRequest.canBeProcessed', () => {
 
     beforeEach(() => {

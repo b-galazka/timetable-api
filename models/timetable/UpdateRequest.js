@@ -1,6 +1,7 @@
 const mongoose = require('mongoose');
 
 const { userUpdateRequestTimeLimit } = require('../../config');
+const Update = require('./Update');
 
 const updateRequestSchema = new mongoose.Schema(
 
@@ -34,17 +35,31 @@ updateRequestSchema.statics = {
 
     async canBeProcessed(minimalTimePeriod = userUpdateRequestTimeLimit) {
 
-        const lastUpdateRequest = await this.loadNewest();
+        const lastUpdate = await Update.findOne();
 
-        if (!lastUpdateRequest) {
+        if (!lastUpdate) {
 
             return true;
+
+        } else if (!this._isDateTimeOldEnough(lastUpdate.dateTime, minimalTimePeriod)) {
+
+            return false;
         }
 
-        const lastUpdateRequestTime = new Date(lastUpdateRequest.dateTime).getTime();
+        const lastUpdateRequest = await this.loadNewest();
+
+        return (
+            !lastUpdateRequest ||
+            this._isDateTimeOldEnough(lastUpdateRequest.dateTime, minimalTimePeriod)
+        );
+    },
+
+    _isDateTimeOldEnough(dateTime, diffFromNow) {
+
+        const dateTimeInMs = new Date(dateTime).getTime();
         const currentTime = Date.now();
 
-        return (currentTime - lastUpdateRequestTime > minimalTimePeriod);
+        return (currentTime - dateTimeInMs > diffFromNow);
     }
 };
 

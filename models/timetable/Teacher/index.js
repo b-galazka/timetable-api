@@ -17,11 +17,6 @@ const teacherSchema = new mongoose.Schema(
             trim: true
         },
 
-        type: {
-            type: String,
-            default: 'teacher'
-        },
-
         update: {
             type: Date,
             default: Date.now

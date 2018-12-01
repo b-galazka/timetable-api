@@ -11,11 +11,6 @@ const classroomSchema = new mongoose.Schema(
             trim: true
         },
 
-        type: {
-            type: String,
-            default: 'classroom'
-        },
-
         update: {
             type: Date,
             default: Date.now

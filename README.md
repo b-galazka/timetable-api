@@ -32,7 +32,6 @@ Schema of a response:
 {  
 &nbsp;&nbsp;&nbsp;&nbsp;slug: string,  
 &nbsp;&nbsp;&nbsp;&nbsp;_id: string,  
-&nbsp;&nbsp;&nbsp;&nbsp;type: "class",  
 &nbsp;&nbsp;&nbsp;&nbsp;update: datetime ISO string,  
 
 &nbsp;&nbsp;&nbsp;&nbsp;timetable: [  
@@ -74,7 +73,6 @@ Schema of a response:
 {  
 &nbsp;&nbsp;&nbsp;&nbsp;slug: string,  
 &nbsp;&nbsp;&nbsp;&nbsp;_id: string,  
-&nbsp;&nbsp;&nbsp;&nbsp;type: "classroom",  
 &nbsp;&nbsp;&nbsp;&nbsp;update: datetime ISO string,  
 
 &nbsp;&nbsp;&nbsp;&nbsp;timetable: [  
@@ -120,7 +118,6 @@ Schema of a response:
 &nbsp;&nbsp;&nbsp;&nbsp;slug: string,  
 &nbsp;&nbsp;&nbsp;&nbsp;name: string or null,  
 &nbsp;&nbsp;&nbsp;&nbsp;_id: string,  
-&nbsp;&nbsp;&nbsp;&nbsp;type: "teacher",  
 &nbsp;&nbsp;&nbsp;&nbsp;update: datetime ISO string,  
 
 &nbsp;&nbsp;&nbsp;&nbsp;timetable: [  

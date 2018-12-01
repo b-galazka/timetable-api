@@ -11,11 +11,6 @@ const classSchema = new mongoose.Schema(
             trim: true
         },
 
-        type: {
-            type: String,
-            default: 'class'
-        },
-
         update: {
             type: Date,
             default: Date.now

@@ -13,7 +13,8 @@ const {
     findSchoolClasses,
     findHours,
     findUpdateRequests,
-    findSingleTeacher
+    findSingleTeacher,
+    findSingleClassroom
 } = require('./timetable');
 
 jest.mock('../../../utils/logger', () => require('../../../mocks/utils/logger'));
@@ -47,7 +48,7 @@ describe('GraphQL timetable.findTeachers query resolver', () => {
         };
     });
 
-    it('should return found record', async () => {
+    it('should return found records', async () => {
 
         expect.assertions(2);
 
@@ -104,7 +105,7 @@ describe('GraphQL timetable.findClassrooms query resolver', () => {
         };
     });
 
-    it('should return found record', async () => {
+    it('should return found records', async () => {
 
         expect.assertions(2);
 
@@ -161,7 +162,7 @@ describe('GraphQL timetable.findSchoolClasses query resolver', () => {
         };
     });
 
-    it('should return found record', async () => {
+    it('should return found records', async () => {
 
         expect.assertions(2);
 
@@ -210,7 +211,7 @@ describe('GraphQL timetable.findHours query resolver', () => {
         Hour.loadList = () => Promise.resolve(dbResponse);
     });
 
-    it('should return found record', async () => {
+    it('should return found records', async () => {
 
         expect.assertions(2);
 
@@ -267,7 +268,7 @@ describe('GraphQL timetable.findUpdateRequests query resolver', () => {
         };
     });
 
-    it('should return found record', async () => {
+    it('should return found records', async () => {
 
         expect.assertions(2);
 
@@ -413,6 +414,130 @@ describe('GraphQL timetable.findSingleTeacher query resolver', () => {
         afterEach(() => {
 
             Teacher.findOne = originalFindOneMethod;
+        });
+    });
+});
+
+describe('GraphQL timetable.findSingleClassroom query resolver', () => {
+
+    let dbResponse;
+
+    describe('number not provided', () => {
+
+        const originalFindOneMethod = Classroom.findOne;
+
+        beforeEach(() => {
+
+            Classroom.findOne = (criteria, fields, options) => {
+
+                const areCriteriaValid = isEqual(criteria, {});
+                const areFieldsValid = isEqual(fields, {});
+                const areOptionsValid = isEqual(options, { sort: { number: 1 } });
+
+                if (areCriteriaValid && areFieldsValid && areOptionsValid) {
+
+                    return Promise.resolve(dbResponse);
+                }
+
+                return Promise.resolve('Classroom.findOne called with invalid params');
+            };
+        });
+
+        it('should return found record', async () => {
+
+            expect.assertions(2);
+
+            const values = [{ a: 10 }, { b: 20 }];
+
+            for (const value of values) {
+
+                dbResponse = value;
+
+                const result = await findSingleClassroom({}, {});
+
+                expect(result).toBe(value);
+            }
+        });
+
+        it('should throw valid ErrorResponse if error has occured during', async () => {
+
+            expect.assertions(1);
+
+            Classroom.findOne = () => Promise.reject(new Error('error message'));
+
+            try {
+
+                await findSingleClassroom({}, {});
+
+            } catch (err) {
+
+                expect(err).toEqual(new ErrorResponse('something went wrong', 500));
+            }
+        });
+
+        afterEach(() => {
+
+            Classroom.findOne = originalFindOneMethod;
+        });
+    });
+
+    describe('number provided', () => {
+
+        const originalFindOneMethod = Classroom.findOne;
+        const number = '300';
+
+        beforeEach(() => {
+
+            Classroom.findOne = (criteria, fields, options) => {
+
+                const areCriteriaValid = isEqual(criteria, { number });
+                const areFieldsValid = isEqual(fields, {});
+                const areOptionsValid = isEqual(options, { sort: { number: 1 } });
+
+                if (areCriteriaValid && areFieldsValid && areOptionsValid) {
+
+                    return Promise.resolve(dbResponse);
+                }
+
+                return Promise.resolve('Classroom.findOne called with invalid params');
+            };
+        });
+
+        it('should return found record', async () => {
+
+            expect.assertions(2);
+
+            const values = [{ a: 10 }, { b: 20 }];
+
+            for (const value of values) {
+
+                dbResponse = value;
+
+                const result = await findSingleClassroom({}, { number });
+
+                expect(result).toBe(value);
+            }
+        });
+
+        it('should throw valid ErrorResponse if error has occured during', async () => {
+
+            expect.assertions(1);
+
+            Classroom.findOne = () => Promise.reject(new Error('error message'));
+
+            try {
+
+                await findSingleClassroom({}, { number });
+
+            } catch (err) {
+
+                expect(err).toEqual(new ErrorResponse('something went wrong', 500));
+            }
+        });
+
+        afterEach(() => {
+
+            Classroom.findOne = originalFindOneMethod;
         });
     });
 });

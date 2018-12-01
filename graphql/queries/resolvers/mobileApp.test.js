@@ -90,7 +90,7 @@ describe('GraphQL mobileApp.findMobileAppUsers query resolver', () => {
         };
     });
 
-    it('should return found record', async () => {
+    it('should return found records', async () => {
 
         expect.assertions(2);
 

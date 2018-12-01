@@ -16,7 +16,15 @@ describe('classrooms.getAll controller', () => {
 
     beforeEach(() => {
 
-        Classroom.loadList = () => Promise.resolve(responseValue);
+        Classroom.loadList = (fields = {}) => {
+
+            if (!isEqual(fields, { number: true, _id: true })) {
+
+                return Promise.resolve('Classroom.loadList called with invalid params');
+            }
+
+            return Promise.resolve(responseValue);
+        };
 
         req = new ExpressRequest();
         res = new ExpressResponse();

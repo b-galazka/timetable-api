@@ -231,3 +231,5 @@ describe('update.handleUserTimetableUpdateRequest controller', () => {
         }
     });
 });
+
+// TODO: add controllers.getLastUpdate tests

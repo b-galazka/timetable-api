@@ -14,8 +14,10 @@ router.put('/request-update', timeProtection);
 
 router.put('/', controllers.updateTimetable);
 router.put('/request-update', controllers.handleUserTimetableUpdateRequest);
+router.get('/last-update', controllers.getLastUpdate);
 
 router.all('/', handleInvalidHttpMethod('PUT'));
 router.all('/request-update', handleInvalidHttpMethod('PUT'));
+router.all('/last-update', handleInvalidHttpMethod('GET'));
 
 module.exports = router;

@@ -45,7 +45,7 @@ describe('GraphQL mobileApp.findMobileApp query resolver', () => {
         }
     });
 
-    it('should throw valid ErrorResponse if error has occured during', async () => {
+    it('should throw valid ErrorResponse if error has occured', async () => {
 
         expect.assertions(1);
 
@@ -106,7 +106,7 @@ describe('GraphQL mobileApp.findMobileAppUsers query resolver', () => {
         }
     });
 
-    it('should throw valid ErrorResponse if error has occured during', async () => {
+    it('should throw valid ErrorResponse if error has occured', async () => {
 
         expect.assertions(1);
 

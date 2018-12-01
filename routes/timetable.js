@@ -7,7 +7,6 @@ const controllers = require('../controllers/timetable');
 const handleInvalidHttpMethod = require('../middlewares/handlers/handleInvalidHttpMethod');
 const userRequestValidationSchema = require('../validationSchemas/timetableUpdateUserRequest');
 
-// TODO: add /last-update endpoint
 router.put('/', authorization);
 router.put('/request-update', authorization);
 router.put('/request-update', reqBodyValidation(userRequestValidationSchema));

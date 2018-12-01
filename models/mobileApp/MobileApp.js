@@ -1,5 +1,7 @@
 const mongoose = require('mongoose');
 
+const createOrUpdate = require('../../functions/createOrUpdateModelMethod');
+
 const mobileAppSchema = new mongoose.Schema(
 
     {
@@ -30,21 +32,6 @@ const mobileAppSchema = new mongoose.Schema(
     { versionKey: false }
 );
 
-mobileAppSchema.statics = {
-
-    async createOrUpdate(data) {
-
-        const existingApp = await this.findOne();
-
-        if (!existingApp) {
-
-            return this.create(data);
-        }
-
-        const updatedApp = Object.assign(existingApp, data);
-
-        return updatedApp.save();
-    }
-};
+mobileAppSchema.statics = { createOrUpdate };
 
 module.exports = mongoose.model('mobileApp', mobileAppSchema);

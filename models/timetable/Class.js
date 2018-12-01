@@ -11,11 +11,6 @@ const classSchema = new mongoose.Schema(
             trim: true
         },
 
-        update: {
-            type: Date,
-            default: Date.now
-        },
-
         timetable: [
             [
                 [lessonSchema]

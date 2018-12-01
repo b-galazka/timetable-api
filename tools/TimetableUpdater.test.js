@@ -93,6 +93,7 @@ describe('TimetableUpdater.drop', () => {
     });
 });
 
+// TODO: update tests
 describe('TimetableUpdater.prototype.save', () => {
 
     let timetableUpdater;

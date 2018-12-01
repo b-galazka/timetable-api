@@ -2,6 +2,7 @@ const Teacher = require('../models/timetable/Teacher');
 const SchoolClass = require('../models/timetable/Class');
 const Classroom = require('../models/timetable/Classroom');
 const Hour = require('../models/timetable/Hour');
+const Update = require('../models/timetable/Update');
 
 class TimetableUpdater {
 
@@ -12,14 +13,19 @@ class TimetableUpdater {
 
     save() {
 
-        const { teachers, classrooms, schoolClasses, hours } = this.scrappedTimetable;
+        return (async () => {
 
-        return Promise.all([
-            Teacher.insertMany(teachers),
-            Classroom.insertMany(classrooms),
-            SchoolClass.insertMany(schoolClasses),
-            Hour.insertMany(hours)
-        ]);
+            const { teachers, classrooms, schoolClasses, hours } = this.scrappedTimetable;
+
+            await Promise.all([
+                Teacher.insertMany(teachers),
+                Classroom.insertMany(classrooms),
+                SchoolClass.insertMany(schoolClasses),
+                Hour.insertMany(hours)
+            ]);
+
+            await Update.createOrUpdate({ dateTime: new Date() });
+        })();
     }
 
     update() {

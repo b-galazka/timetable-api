@@ -116,3 +116,48 @@ describe('Teacher.loadList', () => {
         expectedFields = {};
     });
 });
+
+describe('Teacher.loadFirstOne', () => {
+
+    let dbResponse = [];
+
+    const originalLoadListMethod = Teacher.loadList;
+
+    beforeEach(() => {
+
+        Teacher.loadList = (fields = {}) => {
+
+            if (!isEqual(fields, {})) {
+
+                return Promise.resolve('Teacher.loadList called with invalid params');
+            }
+
+            return Promise.resolve(dbResponse);
+        };
+    });
+
+    it('should return a promise', () => {
+
+        expect(Teacher.loadFirstOne()).toBeInstanceOf(Promise);
+    });
+
+    it('should resolve a promise with the first teacher', async () => {
+
+        expect.assertions(2);
+
+        dbResponse = [{ a: 1 }, { b: 2 }, { c: 3 }];
+
+        expect(await Teacher.loadFirstOne()).toEqual(dbResponse[0]);
+
+        dbResponse = [{ D: 10 }, { E: 20 }, { F: 30 }];
+
+        expect(await Teacher.loadFirstOne()).toEqual(dbResponse[0]);
+    });
+
+
+    afterEach(() => {
+
+        Teacher.find = originalLoadListMethod;
+        dbResponse = [];
+    });
+});

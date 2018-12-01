@@ -666,3 +666,5 @@ describe('GraphQL timetable.findSingleSchoolClass query resolver', () => {
         });
     });
 });
+
+// TODO: add resolvers.findLastUpdate tests

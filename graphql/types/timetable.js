@@ -24,7 +24,6 @@ const TeacherType = new GraphQLObjectType({
         _id: { type: GraphQLObjectId },
         slug: { type: GraphQLString },
         name: { type: GraphQLString },
-        update: { type: GraphQLDateTime },
         timetable: { type: new GraphQLList(new GraphQLList(new GraphQLList(LessonType))) }
     })
 });
@@ -34,7 +33,6 @@ const ClassroomType = new GraphQLObjectType({
     fields: () => ({
         _id: { type: GraphQLObjectId },
         number: { type: GraphQLString },
-        update: { type: GraphQLDateTime },
         timetable: { type: new GraphQLList(new GraphQLList(new GraphQLList(LessonType))) }
     })
 });
@@ -44,7 +42,6 @@ const SchoolClassType = new GraphQLObjectType({
     fields: () => ({
         _id: { type: GraphQLObjectId },
         slug: { type: GraphQLString },
-        update: { type: GraphQLDateTime },
         timetable: { type: new GraphQLList(new GraphQLList(new GraphQLList(LessonType))) }
     })
 });
@@ -119,6 +116,11 @@ const TimetableType = new GraphQLObjectType({
         updateRequests: {
             type: new GraphQLList(TimetableUpdateRequestType),
             resolve: guard(authGuard, resolvers.findTimetableUpdateRequests)
+        },
+
+        lastUpdate: {
+            type: GraphQLDateTime,
+            resolve: resolvers.findLastUpdate
         }
     }
 });

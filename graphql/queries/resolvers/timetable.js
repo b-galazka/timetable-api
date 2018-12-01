@@ -14,7 +14,6 @@ exports.findClassrooms = catchUnknownError(() => Classroom.loadList());
 exports.findSchoolClasses = catchUnknownError(() => SchoolClass.loadList());
 exports.findHours = catchUnknownError(() => Hour.loadList());
 exports.findUpdateRequests = catchUnknownError(() => UpdateRequest.find());
-exports.findLastUpdate = catchUnknownError(() => Update.findOne());
 
 exports.findSingleTeacher = catchUnknownError((parentValue, args) => {
 
@@ -42,4 +41,11 @@ exports.findSingleSchoolClass = catchUnknownError((parentValue, args) => {
     const criteria = (slug === undefined) ? {} : { slug };
 
     return SchoolClass.findOne(criteria, {}, { sort: { slug: 1 } });
+});
+
+exports.findLastUpdate = catchUnknownError(async () => {
+
+    const lastUpdate = await Update.findOne();
+
+    return lastUpdate && lastUpdate.dateTime;
 });

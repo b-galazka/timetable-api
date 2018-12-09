@@ -32,7 +32,6 @@ Schema of a response:
 {  
 &nbsp;&nbsp;&nbsp;&nbsp;slug: string,  
 &nbsp;&nbsp;&nbsp;&nbsp;_id: string,  
-&nbsp;&nbsp;&nbsp;&nbsp;update: datetime ISO string,  
 
 &nbsp;&nbsp;&nbsp;&nbsp;timetable: [  
 
@@ -73,7 +72,6 @@ Schema of a response:
 {  
 &nbsp;&nbsp;&nbsp;&nbsp;slug: string,  
 &nbsp;&nbsp;&nbsp;&nbsp;_id: string,  
-&nbsp;&nbsp;&nbsp;&nbsp;update: datetime ISO string,  
 
 &nbsp;&nbsp;&nbsp;&nbsp;timetable: [  
 
@@ -118,7 +116,6 @@ Schema of a response:
 &nbsp;&nbsp;&nbsp;&nbsp;slug: string,  
 &nbsp;&nbsp;&nbsp;&nbsp;name: string or null,  
 &nbsp;&nbsp;&nbsp;&nbsp;_id: string,  
-&nbsp;&nbsp;&nbsp;&nbsp;update: datetime ISO string,  
 
 &nbsp;&nbsp;&nbsp;&nbsp;timetable: [  
 
@@ -218,7 +215,21 @@ Schema of a request body:
 
 ## POST /graphql
 
-TODO: add description  
+GraphQL endpoint  
+
+## GET /graphql
+
+GraphiQL available only in development enviroment  
+
+## GET /timetable/last-update
+
+Responds with date and time (ISO string) of the latest timetable update. If timetable hasn't been updated yet, responds with 404 status code and `not found` message.  
+
+Schema of a response:
+
+{  
+&nbsp;&nbsp;&nbsp;&nbsp;dateTime: ISO datetime string  
+}  
 
 # How to use:
 

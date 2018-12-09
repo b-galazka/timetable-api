@@ -5,6 +5,7 @@ const Classroom = require('../../../models/timetable/Classroom');
 const SchoolClass = require('../../../models/timetable/Class');
 const Hour = require('../../../models/timetable/Hour');
 const UpdateRequest = require('../../../models/timetable/UpdateRequest');
+const Update = require('../../../models/timetable/Update');
 
 const {
     findTimetable,
@@ -15,7 +16,8 @@ const {
     findUpdateRequests,
     findSingleTeacher,
     findSingleClassroom,
-    findSingleSchoolClass
+    findSingleSchoolClass,
+    findLastUpdate
 } = require('./timetable');
 
 jest.mock('../../../utils/logger', () => require('../../../mocks/utils/logger'));
@@ -65,7 +67,7 @@ describe('GraphQL timetable.findTeachers query resolver', () => {
         }
     });
 
-    it('should throw valid ErrorResponse if error has occured during', async () => {
+    it('should throw valid ErrorResponse if error has occured', async () => {
 
         expect.assertions(1);
 
@@ -122,7 +124,7 @@ describe('GraphQL timetable.findClassrooms query resolver', () => {
         }
     });
 
-    it('should throw valid ErrorResponse if error has occured during', async () => {
+    it('should throw valid ErrorResponse if error has occured', async () => {
 
         expect.assertions(1);
 
@@ -179,7 +181,7 @@ describe('GraphQL timetable.findSchoolClasses query resolver', () => {
         }
     });
 
-    it('should throw valid ErrorResponse if error has occured during', async () => {
+    it('should throw valid ErrorResponse if error has occured', async () => {
 
         expect.assertions(1);
 
@@ -228,7 +230,7 @@ describe('GraphQL timetable.findHours query resolver', () => {
         }
     });
 
-    it('should throw valid ErrorResponse if error has occured during', async () => {
+    it('should throw valid ErrorResponse if error has occured', async () => {
 
         expect.assertions(1);
 
@@ -285,7 +287,7 @@ describe('GraphQL timetable.findUpdateRequests query resolver', () => {
         }
     });
 
-    it('should throw valid ErrorResponse if error has occured during', async () => {
+    it('should throw valid ErrorResponse if error has occured', async () => {
 
         expect.assertions(1);
 
@@ -336,7 +338,7 @@ describe('GraphQL timetable.findSingleTeacher query resolver', () => {
             }
         });
 
-        it('should throw valid ErrorResponse if error has occured during', async () => {
+        it('should throw valid ErrorResponse if error has occured', async () => {
 
             expect.assertions(1);
 
@@ -396,7 +398,7 @@ describe('GraphQL timetable.findSingleTeacher query resolver', () => {
             }
         });
 
-        it('should throw valid ErrorResponse if error has occured during', async () => {
+        it('should throw valid ErrorResponse if error has occured', async () => {
 
             expect.assertions(1);
 
@@ -460,7 +462,7 @@ describe('GraphQL timetable.findSingleClassroom query resolver', () => {
             }
         });
 
-        it('should throw valid ErrorResponse if error has occured during', async () => {
+        it('should throw valid ErrorResponse if error has occured', async () => {
 
             expect.assertions(1);
 
@@ -520,7 +522,7 @@ describe('GraphQL timetable.findSingleClassroom query resolver', () => {
             }
         });
 
-        it('should throw valid ErrorResponse if error has occured during', async () => {
+        it('should throw valid ErrorResponse if error has occured', async () => {
 
             expect.assertions(1);
 
@@ -584,7 +586,7 @@ describe('GraphQL timetable.findSingleSchoolClass query resolver', () => {
             }
         });
 
-        it('should throw valid ErrorResponse if error has occured during', async () => {
+        it('should throw valid ErrorResponse if error has occured', async () => {
 
             expect.assertions(1);
 
@@ -644,7 +646,7 @@ describe('GraphQL timetable.findSingleSchoolClass query resolver', () => {
             }
         });
 
-        it('should throw valid ErrorResponse if error has occured during', async () => {
+        it('should throw valid ErrorResponse if error has occured', async () => {
 
             expect.assertions(1);
 
@@ -667,4 +669,74 @@ describe('GraphQL timetable.findSingleSchoolClass query resolver', () => {
     });
 });
 
-// TODO: add resolvers.findLastUpdate tests
+describe('GraphQL timetable.findLastUpdate query resolver', () => {
+
+    let dbResponse;
+
+    const originalFindOneMethod = Update.findOne;
+
+    beforeEach(() => {
+
+        Update.findOne = (criteria, fields, options) => {
+
+            const areCriteriaValid = criteria === undefined || isEqual(criteria, {});
+            const areFieldsValid = fields === undefined || isEqual(fields, {});
+            const areOptionsValid = options === undefined || isEqual(options, {});
+
+            if (areCriteriaValid && areFieldsValid && areOptionsValid) {
+
+                return Promise.resolve(dbResponse);
+            }
+
+            return Promise.resolve('Update.findOne called with invalid params');
+        };
+    });
+
+    it('should return a dateTime', async () => {
+
+        expect.assertions(2);
+
+        const values = [{ dateTime: 'XYZ' }, { dateTime: 'ZYX' }];
+
+        for (const value of values) {
+
+            dbResponse = value;
+
+            const result = await findLastUpdate({}, {});
+
+            expect(result).toBe(value.dateTime);
+        }
+    });
+
+    it('should return a null if timetable has not been updated yet', async () => {
+
+        expect.assertions(1);
+
+        dbResponse = null;
+
+        const result = await findLastUpdate({}, {});
+
+        expect(result).toBe(null);
+    });
+
+    it('should throw valid ErrorResponse if error has occured', async () => {
+
+        expect.assertions(1);
+
+        Update.findOne = () => Promise.reject(new Error('error message'));
+
+        try {
+
+            await findLastUpdate({}, {});
+
+        } catch (err) {
+
+            expect(err).toEqual(new ErrorResponse('something went wrong', 500));
+        }
+    });
+
+    afterEach(() => {
+
+        Update.findOne = originalFindOneMethod;
+    });
+});

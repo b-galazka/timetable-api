@@ -1,10 +1,11 @@
 const isEqual = require('lodash/isEqual');
 
 const UpdateRequest = require('./UpdateRequest');
+const Update = require('./Update');
 
 const originalFindOneMethod = UpdateRequest.findOne;
 
-let findOneDbResponse;
+let lastUpdateRequestMock;
 
 const findOneMethodMock = (criteria, fields, options) => {
 
@@ -14,7 +15,7 @@ const findOneMethodMock = (criteria, fields, options) => {
 
     if (areCriteriaValid && areFieldsValid && areOptionsValid) {
 
-        return Promise.resolve(findOneDbResponse);
+        return Promise.resolve(lastUpdateRequestMock);
     }
 
     return Promise.resolve('UpdateRequest.findOne called with invalid params');
@@ -37,11 +38,11 @@ describe('UpdateRequest.loadNewest', () => {
 
         expect.assertions(2);
 
-        findOneDbResponse = 'database response';
+        lastUpdateRequestMock = 'database response';
 
         expect(await UpdateRequest.loadNewest()).toBe('database response');
 
-        findOneDbResponse = 'another database response';
+        lastUpdateRequestMock = 'another database response';
 
         expect(await UpdateRequest.loadNewest()).toBe('another database response');
     });
@@ -52,52 +53,97 @@ describe('UpdateRequest.loadNewest', () => {
     });
 });
 
-// TODO: update tests
 describe('UpdateRequest.canBeProcessed', () => {
 
+    let lastUpdateMock;
+
+    const originalUpdateFindOneMethod = Update.findOne;
+
     beforeEach(() => {
+
+        lastUpdateMock = null;
+
+        Update.findOne = (criteria, fields) => {
+
+            if (fields === undefined || isEqual(fields, { dateTime: true })) {
+
+                return Promise.resolve(lastUpdateMock);
+            }
+
+            return Promise.resolve('Update.findOne called with invalid params');
+        };
 
         UpdateRequest.findOne = findOneMethodMock;
     });
 
     it('should return a promise', () => {
 
-        findOneDbResponse = null;
+        lastUpdateRequestMock = null;
 
         expect(UpdateRequest.canBeProcessed()).toBeInstanceOf(Promise);
     });
 
-    it('should resolve a promise with true if there are no records in DB', async () => {
+    it('should resolve a promsie with true if timetable has not been updated yet', async () => {
 
         expect.assertions(1);
 
-        findOneDbResponse = null;
+        const result = await UpdateRequest.canBeProcessed();
 
-        expect(await UpdateRequest.canBeProcessed()).toBe(true);
+        expect(result).toBe(true);
     });
 
-    it('should resolve a promise with true ' +
-        'if last record has been saved enough time ago', async () => {
+    it('should resolve a promsie with false ' +
+        'if timetable has been updated late enough', async () => {
 
         expect.assertions(1);
 
-        findOneDbResponse = { dateTime: 1000 };
+        lastUpdateMock = { dateTime: Date.now() };
 
-        expect(await UpdateRequest.canBeProcessed(1000)).toBe(true);
+        const result = await UpdateRequest.canBeProcessed();
+
+        expect(result).toBe(false);
     });
 
-    it('should resolve a promise with false ' +
-        'if last record has been saved not enough time ago', async () => {
+    it('should resolve a promsie with true if update has not been requested yet', async () => {
 
         expect.assertions(1);
 
-        findOneDbResponse = Date.now();
+        lastUpdateMock = { dateTime: 1000 };
+        lastUpdateRequestMock = null;
 
-        expect(await UpdateRequest.canBeProcessed(1e6)).toBe(false);
+        const result = await UpdateRequest.canBeProcessed();
+
+        expect(result).toBe(true);
+    });
+
+    it('should resolve a promsie with true ' +
+        'if update has been requested enough time ago', async () => {
+
+        expect.assertions(1);
+
+        lastUpdateMock = { dateTime: 1000 };
+        lastUpdateRequestMock = { dateTime: 1000 };
+
+        const result = await UpdateRequest.canBeProcessed();
+
+        expect(result).toBe(true);
+    });
+
+    it('should resolve a promsie with false if update has been requested too early', async () => {
+
+        expect.assertions(1);
+
+        lastUpdateMock = { dateTime: 1000 };
+        lastUpdateRequestMock = { dateTime: Date.now() };
+
+        const result = await UpdateRequest.canBeProcessed();
+
+        expect(result).toBe(false);
     });
 
     afterEach(() => {
 
+        Update.findOne = originalUpdateFindOneMethod;
         UpdateRequest.findOne = originalFindOneMethod;
     });
 });

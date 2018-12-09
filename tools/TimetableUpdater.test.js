@@ -3,6 +3,7 @@ const Teacher = require('../models/timetable/Teacher');
 const Classroom = require('../models/timetable/Classroom');
 const SchoolClass = require('../models/timetable/Class');
 const Hour = require('../models/timetable/Hour');
+const Update = require('../models/timetable/Update');
 
 jest.mock('../models/timetable/Teacher', () => require('../mocks/3rdPartyModules/mongooseModel')());
 jest.mock('../models/timetable/Class', () => require('../mocks/3rdPartyModules/mongooseModel')());
@@ -93,13 +94,29 @@ describe('TimetableUpdater.drop', () => {
     });
 });
 
-// TODO: update tests
 describe('TimetableUpdater.prototype.save', () => {
 
     let timetableUpdater;
     let spy;
+    let isTimetableUpdated = false;
+
+    const originalCreateOrUpdateMethod = Update.createOrUpdate;
+    const originalTeacherInsertManyMethod = Teacher.insertMany;
+    const BuiltInDate = Date;
 
     beforeEach(() => {
+
+        const currentDate = new BuiltInDate();
+
+        Date = function () { return currentDate; };
+
+        Update.createOrUpdate = jest.fn(() => {
+
+            setImmediate(() => {
+
+                isTimetableUpdated = true;
+            });
+        });
 
         timetableUpdater = new TimetableUpdater({
             teachers: ['teachers'],
@@ -160,7 +177,7 @@ describe('TimetableUpdater.prototype.save', () => {
 
     it('should resolve a promise when all data is saved', async () => {
 
-        expect.assertions(4);
+        expect.assertions(5);
 
         Teacher.collection.data = ['data'];
         Classroom.collection.data = ['data'];
@@ -173,9 +190,39 @@ describe('TimetableUpdater.prototype.save', () => {
         expect(Classroom.collection.data).toEqual(['data', 'classrooms']);
         expect(SchoolClass.collection.data).toEqual(['data', 'school classes']);
         expect(Hour.collection.data).toEqual(['data', 'hours']);
+        expect(isTimetableUpdated).toBe(true);
+    });
+
+    it('should call Update.createOrUpdate if timetable has been updated successfully', async () => {
+
+        expect.assertions(1);
+
+        await timetableUpdater.update();
+
+        expect(Update.createOrUpdate).toBeCalledWith({ dateTime: new Date() });
+    });
+
+    it('should not call Update.createOrUpdate if timetable has failed', async () => {
+
+        expect.assertions(1);
+
+        Teacher.insertMany = jest.fn(() => Promise.reject(new Error()));
+
+        try {
+
+            await timetableUpdater.update();
+
+        } catch (err) {}
+
+        expect(Update.createOrUpdate).not.toHaveBeenCalled();
     });
 
     afterEach(() => {
+
+        Update.createOrUpdate = originalCreateOrUpdateMethod;
+        Teacher.insertMany = originalTeacherInsertManyMethod;
+        isTimetableUpdated = false;
+        Date = BuiltInDate;
 
         if (spy) {
 
@@ -189,7 +236,11 @@ describe('TimetableUpdater.prototype.update', () => {
 
     let timetableUpdater;
 
+    const originalCreateOrUpdateMethod = Update.createOrUpdate;
+
     beforeEach(() => {
+
+        Update.createOrUpdate = jest.fn();
 
         timetableUpdater = new TimetableUpdater({
             teachers: ['teachers'],
@@ -199,9 +250,13 @@ describe('TimetableUpdater.prototype.update', () => {
         });
     });
 
-    it('should return a promise', () => {
+    it('should return a promise', async () => {
 
-        expect(timetableUpdater.update()).toBeInstanceOf(Promise);
+        const updatePromise = timetableUpdater.update();
+
+        expect(updatePromise).toBeInstanceOf(Promise);
+
+        await updatePromise;
     });
 
     it('should replace data', async () => {
@@ -213,11 +268,16 @@ describe('TimetableUpdater.prototype.update', () => {
         SchoolClass.collection.data = ['data'];
         Hour.collection.data = ['data'];
 
-        await timetableUpdater.save();
+        await timetableUpdater.update();
 
         expect(Teacher.collection.data).toEqual(['teachers']);
         expect(Classroom.collection.data).toEqual(['classrooms']);
         expect(SchoolClass.collection.data).toEqual(['school classes']);
         expect(Hour.collection.data).toEqual(['hours']);
+    });
+
+    afterEach(() => {
+
+        Update.createOrUpdate = originalCreateOrUpdateMethod;
     });
 });

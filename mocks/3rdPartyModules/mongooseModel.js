@@ -41,7 +41,7 @@ class MongooseModel {
                     collection.data = [];
                 }
 
-                this.collection.data.push(...data);
+                collection.data.push(...data);
 
                 resolve(data);
             });

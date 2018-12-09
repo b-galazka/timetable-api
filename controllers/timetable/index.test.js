@@ -1,9 +1,12 @@
-const { updateTimetable, handleUserTimetableUpdateRequest } = require('./');
+const isEqual = require('lodash/isEqual');
+
+const { updateTimetable, handleUserTimetableUpdateRequest, getLastUpdate } = require('./');
 const ExpressRequest = require('../../mocks/3rdPartyModules/ExpressRequest');
 const ExpressResponse = require('../../mocks/3rdPartyModules/ExpressResponse');
 const TimetableUpdater = require('../../tools/TimetableUpdater');
 const TimetablesComparator = require('../../tools/TimetablesComparator');
 const UpdateRequest = require('../../models/timetable/UpdateRequest');
+const Update = require('../../models/timetable/Update');
 
 jest.mock('../../tools/TimetableUpdater', () => require('../../mocks/tools/TimetableUpdater'));
 
@@ -232,4 +235,107 @@ describe('update.handleUserTimetableUpdateRequest controller', () => {
     });
 });
 
-// TODO: add controllers.getLastUpdate tests
+describe('update.getLastUpdate controller', () => {
+
+    let req;
+    let res;
+    let responseValue;
+    let spy;
+
+    const originalFindOneMethod = Update.findOne;
+
+    beforeEach(() => {
+
+        responseValue = null;
+
+        Update.findOne = (criteria, fields, options) => {
+
+            const areCriteriaValid = criteria === undefined || isEqual(criteria, {});
+            const areFieldsValid = isEqual(fields, { _id: false });
+            const areOptionsValid = options === undefined || isEqual(options, {});
+
+            if (areCriteriaValid && areFieldsValid && areOptionsValid) {
+
+                return Promise.resolve(responseValue);
+            }
+
+            return Promise.resolve('Update.findOne called with invalid params');
+        };
+
+        req = new ExpressRequest();
+        res = new ExpressResponse();
+    });
+
+    it('should respond with latest timetable update datetime', async () => {
+
+        expect.assertions(4);
+
+        spy = jest.spyOn(res, 'send');
+        responseValue = { dateTime: 'XYZ' };
+
+        await getLastUpdate(req, res);
+
+        expect(spy).toHaveBeenCalledTimes(1);
+        expect(spy).toHaveBeenCalledWith(responseValue);
+
+        spy.mockReset();
+        spy.mockRestore();
+
+        spy = jest.spyOn(res, 'send');
+        responseValue = { dateTime: 'ZYX' };
+
+        await getLastUpdate(req, res);
+
+        expect(spy).toHaveBeenCalledTimes(1);
+        expect(spy).toHaveBeenCalledWith(responseValue);
+    });
+
+    it('should respond with status 404 if timetable has not been updated yet', async () => {
+
+        expect.assertions(1);
+
+        spy = jest.spyOn(res, 'status');
+
+        await getLastUpdate(req, res);
+
+        expect(spy).toHaveBeenCalledWith(404);
+    });
+
+    it('should respond with "not found" JSON message ' +
+        'if timetable has not been updated yet', async () => {
+
+        expect.assertions(2);
+
+        spy = jest.spyOn(res, 'send');
+
+        await getLastUpdate(req, res);
+
+        expect(spy).toHaveBeenCalledTimes(1);
+        expect(spy).toHaveBeenCalledWith({ message: 'not found' });
+    });
+
+    it('should call next(err) if error has occured during data loading', async () => {
+
+        expect.assertions(1);
+
+        const err = new Error('error message');
+        const nextFn = jest.fn();
+
+        Update.findOne = () => Promise.reject(err);
+
+        await getLastUpdate(req, res, nextFn);
+
+        expect(nextFn).toHaveBeenCalledWith(err);
+    });
+
+    afterEach(() => {
+
+        Update.findOne = originalFindOneMethod;
+
+        if (spy) {
+
+            spy.mockReset();
+            spy.mockRestore();
+        }
+    });
+});

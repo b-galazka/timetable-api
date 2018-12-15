@@ -231,6 +231,11 @@ Schema of a response:
 &nbsp;&nbsp;&nbsp;&nbsp;dateTime: ISO datetime string  
 }  
 
+# Requirements
+
+* NodeJS 8 or newer
+* MongoDB 3 or newer
+
 # How to use:
 
 1. Run `npm install` command.
